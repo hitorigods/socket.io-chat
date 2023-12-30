@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
@@ -80,6 +81,6 @@ if (cluster.isPrimary) {
 	const port = process.env.PORT;
 
 	server.listen(port, () => {
-		console.log(`server running at http://localhost:${port}`);
+		console.log(`server running at ${process.env.SERVER_ADDRSSS}:${port}`);
 	});
 }
