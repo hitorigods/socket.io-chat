@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Noto_Sans_JP, Inter } from 'next/font/google';
+import '@/assets/font/SFMono/SFMono.css';
+import '@fontsource-variable/noto-sans-jp';
 
 import { JotaiProvider } from '@/providers/jotai';
 
@@ -19,10 +21,12 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="ja">
-			<body className={`${inter.className} bg-bg`}>
+			<body
+				className={`${inter.className} bg-dark bg-[url('/_assets/img/bg.jpg')] bg-cover font-default text-white`}
+			>
 				<JotaiProvider>
 					<div className="min-h-screen">
-						<div className="grid h-screen place-content-center place-items-center">
+						<div className="grid h-screen place-content-center place-items-center gap-[40px]">
 							{children}
 						</div>
 					</div>

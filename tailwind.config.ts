@@ -10,12 +10,16 @@ const config: Config = {
 		extend: {
 			colors: {
 				transparent: 'transparent',
-				white: '#ffffff',
-				primary: '#EE4540',
-				secondary: '#C72C41',
+				white: '#fff5ff',
+				black: '#1a171a',
+				primary: '#ffb900',
+				secondary: '#f05',
 				text: '#fff',
-				bg: '#2D132C',
+				dark: '#121218',
 				line: '#801336',
+			},
+			fontFamily: {
+				default: ['SF Mono', 'Noto Sans JP Variable', 'sans-serif'],
 			},
 		},
 	},
