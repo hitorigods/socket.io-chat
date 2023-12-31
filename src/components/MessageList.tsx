@@ -1,9 +1,12 @@
 'use client';
 
-import React, { FormEventHandler, useState } from 'react';
-import Message from '@/models/message';
+import React, { FormEventHandler, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
+
 import { atomMessageBoard, atomSocket, atomUserName } from '@/stores/atoms';
+
+import Message from '@/models/message';
 
 export default function MessageList() {
 	const [message, setMessage] = useState<string>('');
@@ -11,6 +14,8 @@ export default function MessageList() {
 	const [messageBoard] = useAtom(atomMessageBoard);
 	const [userName] = useAtom(atomUserName);
 	const [socket] = useAtom(atomSocket);
+
+	const router = useRouter();
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault();
@@ -25,6 +30,10 @@ export default function MessageList() {
 		socket.emit('message', sendMessage);
 		setMessage('');
 	};
+
+	useEffect(() => {
+		if (!userName) router.push('/');
+	}, [router, userName]);
 
 	return (
 		<>

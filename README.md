@@ -21,9 +21,9 @@ https://hitorigods-socket-io-next.onrender.com/
 1. ⭕開発ブランチを用意
 1. ⭕フォルダ構成を整理
 1. ⭕JotaiにDevtoolsを導入
-1. ルームに直アクセスでTOPにリダイレクト
+1. ⭕ルームに直アクセスでTOPにリダイレクト
+1. ORM（prisma）導入
 1. データベース（Supabase）準備
-1. ORM（prisma）設定
 1. チャット履歴のデータベース用意
 1. データベース保存
 1. チャット復元
