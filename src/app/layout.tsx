@@ -22,7 +22,7 @@ export default function RootLayout({
 	return (
 		<html lang="ja">
 			<body
-				className={`${inter.className} bg-dark bg-[url('/_assets/img/bg.jpg')] bg-cover font-default text-white`}
+				className={`${inter.className} bg-dark bg-[url('/_assets/img/bg.jpg')] bg-cover font-default text-white selection:bg-primary selection:text-white`}
 			>
 				<JotaiProvider>
 					<div className="min-h-screen">

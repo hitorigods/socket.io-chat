@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 import { atomMessageBoard, atomSocket, atomUserName } from '@/stores/atoms';
 
 import Message from '@/models/message';
+import InputButton from '@/components/InputButton';
 
 export default function MessageList() {
 	const [message, setMessage] = useState<string>('');
@@ -19,6 +20,8 @@ export default function MessageList() {
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault();
+
+		if (!message) return;
 
 		const sendMessage: Message = {
 			id: crypto.randomUUID(),
@@ -44,7 +47,7 @@ export default function MessageList() {
 							{messageBoard.map((message: Message) => (
 								<li
 									key={message.id}
-									className="duration-350 bg-white px-4 py-2 transition-all ease-in-out"
+									className="bg-dark p-4 text-white transition-all duration-300 ease-in-out"
 								>
 									{message.author}:{message.body}
 								</li>
@@ -54,19 +57,14 @@ export default function MessageList() {
 				)}
 				<section className="">
 					<form onSubmit={handleSubmit}>
-						<label className="block overflow-hidden rounded bg-white">
-							<input
-								className="bg-transparent p-3"
-								name="name"
-								placeholder="メッセージを入力してください"
-								value={message}
-								onChange={(e) => setMessage(e.target.value)}
-								autoComplete={'off'}
-							/>
-							<button className="w-[75px] bg-secondary px-4 py-3 text-lg font-bold tracking-widest text-white hover:bg-primary">
-								送信
-							</button>
-						</label>
+						<InputButton
+							label="送信"
+							name="name"
+							placeholder="メッセージを入力してください"
+							value={message}
+							disabled={!message}
+							onChange={(e) => setMessage(e.target.value)}
+						/>
 					</form>
 				</section>
 			</div>
