@@ -4,12 +4,8 @@ import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { io } from 'socket.io-client';
-import Message from '@/app/models/message';
-import {
-	messageBoardAtom,
-	socketAtom,
-	userNameAtom,
-} from '@/app/globalStates/atoms';
+import Message from '@/models/message';
+import { messageBoardAtom, socketAtom, userNameAtom } from '@/store/atoms';
 
 // ユーザー名の入力とサーバーへの接続を行うコンポーネント
 export default function ConnectionForm() {

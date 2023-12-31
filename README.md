@@ -18,11 +18,12 @@ https://hitorigods-socket-io-next.onrender.com/
 1. ⭕サーバーサイド
 1. ⭕クライアントサイド
 1. ⭕デプロイ
-1. 開発ブランチを用意
+1. ⭕開発ブランチを用意
 1. フォルダ構成を整理
 1. 状態管理をJotaiからZustandに変更
 1. ルームに直アクセスでTOPにリダイレクト
 1. データベース（Supabase）準備
+1. ORM（prisma）設定
 1. チャット履歴のデータベース用意
 1. データベース保存
 1. チャット復元
@@ -31,12 +32,6 @@ https://hitorigods-socket-io-next.onrender.com/
 1. ログインユーザーの投稿者名とアカウント名をデータベースに収める
 1. 投稿者名を投稿者名に
 1. 投稿者名を編集可能に
-
-## ▼ 学習マップ
-
-### ○ Socket.IO チュートリアル
-
-https://github.com/hitorigods/socket.io-tutorial
 
 ## ▼ 参考
 

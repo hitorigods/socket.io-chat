@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { Socket } from 'socket.io-client';
-import Message from '@/app/models/message';
+import Message from '@/models/message';
 
 // グローバルな状態を管理するためのatomを定義
 // atomはjotaiの機能で、状態を管理するためのもの

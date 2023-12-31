@@ -1,13 +1,9 @@
 'use client';
 
 import React, { FormEventHandler, useState } from 'react';
-import Message from '@/app/models/message';
+import Message from '@/models/message';
 import { useAtom } from 'jotai';
-import {
-	messageBoardAtom,
-	socketAtom,
-	userNameAtom,
-} from '@/app/globalStates/atoms';
+import { messageBoardAtom, socketAtom, userNameAtom } from '@/store/atoms';
 
 // メッセージの入力と一覧を行うコンポーネント
 export default function MessageList() {
