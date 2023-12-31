@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import Head from 'next/head';
 import { Inter } from 'next/font/google';
-import '@/styles/globals.css';
 
-//jotaiからProviderコンポーネントをインポート
-import { Provider } from 'jotai';
+import { JotaiProvider } from '@/providers/jotai';
+
+import '@/styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,9 +19,14 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="ja">
-			<body className={inter.className}>
-				{/* jotaiのAtomを利用するためのProvider */}
-				<Provider>{children}</Provider>
+			<body className={`${inter.className} bg-bg`}>
+				<JotaiProvider>
+					<div className="min-h-screen">
+						<div className="grid h-screen place-content-center place-items-center">
+							{children}
+						</div>
+					</div>
+				</JotaiProvider>
 			</body>
 		</html>
 	);
