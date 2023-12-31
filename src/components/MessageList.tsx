@@ -37,30 +37,37 @@ export default function MessageList() {
 
 	return (
 		<>
-			<section>
-				<form onSubmit={handleSubmit}>
-					<input
-						className="border border-gray-400 p-2"
-						name="message"
-						placeholder="enter your message"
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-						autoComplete={'off'}
-					/>
-					<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-						Send
-					</button>
-				</form>
-			</section>
-			<section>
-				<ul>
-					{messageBoard.map((message: Message) => (
-						<li key={message.id}>
-							{message.author}:{message.body}
-						</li>
-					))}
-				</ul>
-			</section>
+			<div className="grid gap-[50px]">
+				<section>
+					<ul className="grid gap-[1px] overflow-hidden rounded border border-gray-200 shadow-md">
+						{messageBoard.map((message: Message) => (
+							<li
+								key={message.id}
+								className=" duration-350 bg-white px-4 py-2 transition-all ease-in-out "
+							>
+								{message.author}:{message.body}
+							</li>
+						))}
+					</ul>
+				</section>
+				<section className="">
+					<form onSubmit={handleSubmit}>
+						<label className="block overflow-hidden rounded bg-white">
+							<input
+								className="bg-transparent p-3"
+								name="name"
+								placeholder="メッセージを入力してください"
+								value={message}
+								onChange={(e) => setMessage(e.target.value)}
+								autoComplete={'off'}
+							/>
+							<button className="w-[75px] bg-secondary px-4 py-3 text-lg font-bold tracking-widest text-white hover:bg-primary">
+								送信
+							</button>
+						</label>
+					</form>
+				</section>
+			</div>
 		</>
 	);
 }

@@ -19,8 +19,14 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="ja">
-			<body className={inter.className}>
-				<JotaiProvider>{children}</JotaiProvider>
+			<body className={`${inter.className} bg-bg`}>
+				<JotaiProvider>
+					<div className="min-h-screen">
+						<div className="grid h-screen place-content-center place-items-center">
+							{children}
+						</div>
+					</div>
+				</JotaiProvider>
 			</body>
 		</html>
 	);

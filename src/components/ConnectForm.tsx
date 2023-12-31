@@ -57,17 +57,19 @@ export default function ConnectionForm() {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<input
-				className="border border-gray-400 p-2"
-				name="name"
-				placeholder="enter your name"
-				value={userName}
-				onChange={handleChange}
-				autoComplete={'off'}
-			/>
-			<button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-				Connect
-			</button>
+			<label className="block overflow-hidden rounded bg-white">
+				<input
+					className="bg-transparent p-3"
+					name="name"
+					placeholder="表示名を入力してください"
+					value={userName}
+					onChange={handleChange}
+					autoComplete={'off'}
+				/>
+				<button className="w-[75px] bg-primary px-4 py-3 text-lg font-bold tracking-widest text-white hover:bg-secondary">
+					接続
+				</button>
+			</label>
 		</form>
 	);
 }
