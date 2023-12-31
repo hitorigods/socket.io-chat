@@ -1,25 +1,30 @@
 {
-	"name": "socket.io-tutorial",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"start": "nodemon index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"type": "module",
-	"dependencies": {
-		"@socket.io/cluster-adapter": "^0.2.2",
-		"express": "4",
-		"nodemon": "^3.0.2",
-		"socket.io": "^4.7.2",
-		"sqlite": "^5.1.1",
-		"sqlite3": "5.1.7-rc.0"
-	},
-	"devDependencies": {
-		"dotenv": "^16.3.1"
-	}
+  "name": "socket.io-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
 }
