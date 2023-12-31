@@ -25,6 +25,7 @@ export default function SocketHandler(
 	}
 	// Socket.IOのサーバーを作成する
 	const io = new SocketServer(res.socket.server, {
+		// 13.5以降のバージョンでは不要？
 		addTrailingSlash: false,
 	});
 
