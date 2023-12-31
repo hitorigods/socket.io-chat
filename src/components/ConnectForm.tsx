@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 
 import Message from '@/models/message';
 import { atomMessageBoard, atomSocket, atomUserName } from '@/stores/atoms';
+import InputButton from '@/components/InputButton';
 
 export default function ConnectionForm() {
 	const [userName, setUserName] = useAtom(atomUserName);
@@ -57,19 +58,14 @@ export default function ConnectionForm() {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<label className="block overflow-hidden rounded bg-white">
-				<input
-					className="bg-transparent p-3"
-					name="name"
-					placeholder="表示名を入力してください"
-					value={userName}
-					onChange={handleChange}
-					autoComplete={'off'}
-				/>
-				<button className="w-[75px] bg-primary px-4 py-3 text-lg font-bold tracking-widest text-white hover:bg-secondary">
-					接続
-				</button>
-			</label>
+			<InputButton
+				label="接続"
+				name="name"
+				placeholder="表示名を入力してください"
+				value={userName}
+				disabled={!userName}
+				onChange={handleChange}
+			/>
 		</form>
 	);
 }
