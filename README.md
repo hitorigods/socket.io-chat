@@ -2,31 +2,38 @@
 
 ## ▼ テーマ
 
-### ○ Socket.IO のクライアントを Next.js で再構築
-
-Socket.IO チュートリアルの続き
-
-https://github.com/hitorigods/socket.io-tutorial
+1. Socket.IO のクライアントを Next.js 構築
+1. チャット履歴をSupabaseで登録
+1. ログイン認証をGoogle認証に
 
 ## ▼ デプロイ
 
 ### ○ Render
 
-https://hitorigods-socket-io-tutorial-onrender.onrender.com/
+https://hitorigods-socket-io-next.onrender.com/
 
-## ▼ チュートリアル
+## ▼ TODO
 
-https://socket.io/docs/v4/tutorial/introduction
+1. ⭕create-next-app
+1. ⭕サーバーサイド
+1. ⭕クライアントサイド
+1. ⭕デプロイ
+1. ⭕開発ブランチを用意
+1. フォルダ構成を整理
+1. 状態管理をJotaiからZustandに変更
+1. ルームに直アクセスでTOPにリダイレクト
+1. データベース（Supabase）準備
+1. ORM（prisma）設定
+1. チャット履歴のデータベース用意
+1. データベース保存
+1. チャット復元
+1. OAuth実装（Supabase？）
+1. ログインユーザーのデータベース用意
+1. ログインユーザーの投稿者名とアカウント名をデータベースに収める
+1. 投稿者名を投稿者名に
+1. 投稿者名を編集可能に
 
 ## ▼ 参考
-
-### ○ サーバー監視サービス
-
-#### Uptime Robot
-
-https://uptimerobot.com/
-
-https://laboradian.com/uptime-robot/
 
 ### ○ Next.js で WebSocket アプリケーションを作成する(サーバー編)
 
@@ -40,6 +47,14 @@ https://qiita.com/ochiochi/items/102d14649396d351ab80
 
 https://qiita.com/house_neko/items/ad4fea17cbbdf7ce0ec7
 
-### ○ 【未使用】Vite版 ボイラープレート
+### ○ サーバー監視サービス
 
-https://github.com/ymuichiro/vite-mui-react-express-template
+#### Uptime Robot
+
+https://uptimerobot.com/
+
+https://laboradian.com/uptime-robot/
+
+### ○ OAuth & OIDC 入門解説
+
+https://www.youtube.com/watch?v=PKPj_MmLq5E

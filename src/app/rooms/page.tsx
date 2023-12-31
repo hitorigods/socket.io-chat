@@ -1,6 +1,6 @@
 'use client';
 import { Suspense } from 'react';
-import MessageList from '@/app/components/MessageList';
+import MessageList from '@/components/MessageList';
 
 // メッセージの入力と一覧を行うページコンポーネント
 export default function Rooms() {
