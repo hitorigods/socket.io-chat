@@ -19,8 +19,8 @@ https://hitorigods-socket-io-next.onrender.com/
 1. ⭕クライアントサイド
 1. ⭕デプロイ
 1. ⭕開発ブランチを用意
-1. フォルダ構成を整理
-1. 状態管理をJotaiからZustandに変更
+1. ⭕フォルダ構成を整理
+1. ⭕JotaiにDevtoolsを導入
 1. ルームに直アクセスでTOPにリダイレクト
 1. データベース（Supabase）準備
 1. ORM（prisma）設定

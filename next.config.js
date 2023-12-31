@@ -6,6 +6,7 @@ const nextConfig = {
 	env: {
 		isProd: isProd,
 	},
+	transpilePackages: ['jotai-devtools'],
 };
 
 module.exports = nextConfig;
