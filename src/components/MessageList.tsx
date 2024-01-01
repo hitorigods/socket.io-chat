@@ -6,7 +6,7 @@ import { useAtom } from 'jotai';
 
 import { messageBoardAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 
-import Message from '@/models/message';
+import { Message } from '@/models/message';
 import InputButton from '@/components/InputButton';
 
 export default function MessageList() {

@@ -35,27 +35,27 @@ async function usersCreate() {
 /**
  * Profileテーブルの初期データを作成する
  */
-async function profileCreate() {
+async function profileCreate(userIds: string[]) {
 	const profiles: Prisma.ProfileCreateInput[] = [
 		{
 			avaterUrl: 'http://localhost:3000/avater/avater01.png',
 			displayName: 'Test User 01',
 			user: {
-				connect: { email: 'test01@test.com' },
+				connect: { id: userIds[0] },
 			},
 		},
 		{
 			avaterUrl: 'http://localhost:3000/avater/avater02.png',
 			displayName: 'Test User 02',
 			user: {
-				connect: { email: 'test02@test.com' },
+				connect: { id: userIds[1] },
 			},
 		},
 		{
 			avaterUrl: 'http://localhost:3000/avater/avater03.png',
 			displayName: 'Test User 03',
 			user: {
-				connect: { email: 'test03@test.com' },
+				connect: { id: userIds[2] },
 			},
 		},
 	];
@@ -110,7 +110,7 @@ async function messageCreate(userIds: string[], roomIds: string[]) {
 		},
 		{
 			title: 'Test Message 02',
-			published: true,
+			published: false,
 			user: {
 				connect: { id: userIds[1] },
 			},
@@ -120,7 +120,7 @@ async function messageCreate(userIds: string[], roomIds: string[]) {
 		},
 		{
 			title: 'Test Message 03',
-			published: true,
+			published: false,
 			user: {
 				connect: { id: userIds[2] },
 			},
@@ -130,7 +130,7 @@ async function messageCreate(userIds: string[], roomIds: string[]) {
 		},
 		{
 			title: 'Test Message 04',
-			published: true,
+			published: false,
 			user: {
 				connect: { id: userIds[0] },
 			},
@@ -140,12 +140,62 @@ async function messageCreate(userIds: string[], roomIds: string[]) {
 		},
 		{
 			title: 'Test Message 05',
-			published: true,
+			published: false,
 			user: {
 				connect: { id: userIds[0] },
 			},
 			room: {
 				connect: { id: roomIds[1] },
+			},
+		},
+		{
+			title: 'Test Message 06',
+			published: true,
+			user: {
+				connect: { id: userIds[1] },
+			},
+			room: {
+				connect: { id: roomIds[1] },
+			},
+		},
+		{
+			title: 'Test Message 07',
+			published: true,
+			user: {
+				connect: { id: userIds[0] },
+			},
+			room: {
+				connect: { id: roomIds[0] },
+			},
+		},
+		{
+			title: 'Test Message 08',
+			published: true,
+			user: {
+				connect: { id: userIds[0] },
+			},
+			room: {
+				connect: { id: roomIds[0] },
+			},
+		},
+		{
+			title: 'Test Message 09',
+			published: true,
+			user: {
+				connect: { id: userIds[0] },
+			},
+			room: {
+				connect: { id: roomIds[0] },
+			},
+		},
+		{
+			title: 'Test Message 10 Test Message 10 Test Message 10',
+			published: true,
+			user: {
+				connect: { id: userIds[0] },
+			},
+			room: {
+				connect: { id: roomIds[0] },
 			},
 		},
 	];
@@ -167,10 +217,10 @@ async function main() {
 	await prisma.user.deleteMany();
 
 	const users = await usersCreate();
-	await profileCreate();
+	const user_ids = users.map((user) => user.id);
+	await profileCreate(user_ids);
 	const rooms = await roomCreate();
 	if (rooms) {
-		const user_ids = users.map((user) => user.id);
 		const room_ids = rooms.map((room) => room.id);
 		await messageCreate(user_ids, room_ids);
 	} else {

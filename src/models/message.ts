@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { SetStateAction } from 'jotai';
 
 const MessageSchemaDef = z.object({
 	id: z.string(),
@@ -7,6 +8,6 @@ const MessageSchemaDef = z.object({
 	body: z.string(),
 });
 
-type Message = z.infer<typeof MessageSchemaDef>;
-
-export default Message;
+export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
+export type Message = z.infer<typeof MessageSchemaDef>;
+export type SetMessageBoard = SetAtom<[SetStateAction<Message[]>], void>;
