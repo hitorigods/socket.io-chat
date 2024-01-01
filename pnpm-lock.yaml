@@ -14,6 +14,9 @@ dependencies:
   '@supabase/supabase-js':
     specifier: ^2.39.1
     version: 2.39.1
+  '@tanstack/react-query':
+    specifier: ^5.17.0
+    version: 5.17.0(react@18.2.0)
   bcryptjs:
     specifier: ^2.4.3
     version: 2.4.3
@@ -1039,6 +1042,19 @@ packages:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@tanstack/query-core@5.17.0:
+    resolution: {integrity: sha512-LoBaPtbMY26kRS+ohII4thTsWkJJsXKGitOLikTo2aqPA4yy7cfFJITs8DRnuERT7tLF5xfG9Lnm33Vp/38Vmw==}
+    dev: false
+
+  /@tanstack/react-query@5.17.0(react@18.2.0):
+    resolution: {integrity: sha512-iNSn6ZA7mHUjrT0a271eKoa1oR1HznlrGbb475awft1kuP3zrhyUCrI8tlGowOr7zRoAxJholjwxO+gfz1IObw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.17.0
+      react: 18.2.0
     dev: false
 
   /@tsconfig/node10@1.0.9:

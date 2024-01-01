@@ -1,7 +1,7 @@
 'use client';
 
 import { Message } from '@/models/message';
-import MessageItem from '@/components/messages/MessageItem';
+import MessageItem from '@/components/message/MessageItem';
 
 interface Props {
 	roomMessages: Message[];

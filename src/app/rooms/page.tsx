@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 
 import Heading from '@/components/Heading';
-import MessageArea from '@/components/messages/MessageArea';
+import MessageArea from '@/components/message/MessageArea';
 
 export default function Rooms() {
 	return (

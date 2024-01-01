@@ -6,8 +6,8 @@ import { useAtom } from 'jotai';
 
 import { roomMessagesAtom, userNameAtom } from '@/stores/atoms';
 
-import MessageList from '@/components/messages/MessageList';
-import MessageForm from '@/components/messages/MessageForm';
+import MessageList from '@/components/message/MessageList';
+import MessageForm from '@/components/message/MessageForm';
 
 export default function MessageArea() {
 	const [roomMessages] = useAtom(roomMessagesAtom);
