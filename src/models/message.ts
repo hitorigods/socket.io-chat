@@ -10,4 +10,4 @@ const MessageSchemaDef = z.object({
 
 export type SetAtom<Args extends any[], Result> = (...args: Args) => Result;
 export type Message = z.infer<typeof MessageSchemaDef>;
-export type SetMessageBoard = SetAtom<[SetStateAction<Message[]>], void>;
+export type setRoomMessages = SetAtom<[SetStateAction<Message[]>], void>;

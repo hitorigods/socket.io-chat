@@ -2,9 +2,9 @@
 
 import { io } from 'socket.io-client';
 
-import { Message, SetMessageBoard } from '@/models/message';
+import { Message, setRoomMessages } from '@/models/message';
 
-const initializer = (socket: any, setMessageBoard: SetMessageBoard) => {
+const initializer = (socket: any, setRoomMessages: setRoomMessages) => {
 	socket.on('connect', () => {
 		console.log('Connected to the server');
 	});
@@ -14,22 +14,22 @@ const initializer = (socket: any, setMessageBoard: SetMessageBoard) => {
 	});
 
 	socket.on('message', (newMessage: Message) => {
-		setMessageBoard((messageBoard: Message[]) => {
-			const newMessageBoard = Array.from(
-				new Map(messageBoard.map((message) => [message.id, message])).values()
+		setRoomMessages((roomMessages: Message[]) => {
+			const newroomMessages = Array.from(
+				new Map(roomMessages.map((message) => [message.id, message])).values()
 			);
-			newMessageBoard.push(newMessage);
-			return newMessageBoard;
+			newroomMessages.push(newMessage);
+			return newroomMessages;
 		});
 	});
 };
 
 export function connectionSocket(
-	setMessageBoard: SetMessageBoard,
+	setRoomMessages: setRoomMessages,
 	setSocket: (socket: any) => void
 ) {
 	const socket = io({ autoConnect: false });
 	socket.connect();
-	initializer(socket, setMessageBoard);
+	initializer(socket, setRoomMessages);
 	setSocket(socket);
 }

@@ -15,29 +15,36 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ TODO
 
-1. ⭕create-next-app
-1. ⭕サーバーサイド
-1. ⭕クライアントサイド
-1. ⭕デプロイ
-1. ⭕開発ブランチを用意
-1. ⭕フォルダ構成を整理
-1. ⭕JotaiにDevtoolsを導入
-1. ⭕ルームに直アクセスでTOPにリダイレクト
-1. ⭕ORM（prisma）導入
-1. ⭕データベース（Supabase）用意
-1. ⭕チャット履歴/ユーザー/ユーザープロフィールのテーブル用意
-1. データベース保存
-1. チャット復元
-1. RLS設定
-1. メールアドレス認証
-1. OAuth実装
-   1. Google
-   1. Github
-1. ログインエラー通知
-1. ログインユーザーの投稿者名とアカウント名をデータベースに収める
-1. 投稿者名を投稿者名に
-1. 投稿者名を編集可能に
-1. 投稿が自分か他人か判定してレイアウト変える
+1. 画面実装
+   1. ⭕create-next-app
+   2. ⭕サーバーサイド
+   3. ⭕クライアントサイド
+   4. ⭕デプロイ
+   5. ⭕開発ブランチを用意
+   6. ⭕フォルダ構成を整理
+   7. ⭕JotaiにDevtoolsを導入
+   8. ⭕ルームに直アクセスでTOPにリダイレクト
+   9. ヘッダー・フッター設置
+   10. TOPへ戻るボタン
+   11. 投稿が自分か他人か判定してレイアウト変える
+2. データベース
+   1. ⭕ORM（prisma）導入
+   2. ⭕Supabase用意
+   3. ⭕チャット履歴/ユーザー/ユーザープロフィールのテーブル用意
+   4. ⭕seedデータ登録
+   5. フェッチ（TanStack Query）実装
+   6. データベースからチャット復元
+   7. データベース保存
+   8. ログインユーザーを登録
+   9. RLS設定
+   10. 所有ユーザーの削除・更新権限
+3. 認証機能
+   1. メールアドレス認証
+   2. OAuth実装
+   3. Google
+   4. Github
+   5. ログインエラー通知
+   6. 投稿者名をニックネーム編集可能に
 
 ## ▼ 備忘録
 
@@ -63,17 +70,17 @@ https://github.com/privatenumber/tsx
 #### ② package.jsonに追記
 
 ```
-	"prisma": {
-		"seed": "tsx prisma/seed.ts"
-	},
+"prisma": {
+  "seed": "tsx prisma/seed.ts"
+},
 ```
 
 以下は解決できず
 
 ```
-    "prisma": {
-    	"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
-    },
+"prisma": {
+  "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+},
 ```
 
 https://github.com/prisma/prisma/issues/7053
@@ -137,7 +144,3 @@ https://katblog.manadream.net/index.php/2022/07/07/supabase-local/
 #### ○ OAuth & OIDC 入門解説
 
 https://www.youtube.com/watch?v=PKPj_MmLq5E
-
-```
-
-```

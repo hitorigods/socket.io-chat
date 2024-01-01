@@ -3,13 +3,13 @@
 import { Suspense } from 'react';
 
 import Heading from '@/components/Heading';
-import ConnectionForm from '@/components/ConnectForm';
+import ConnectForm from '@/components/ConnectForm';
 
 export default function Home() {
 	return (
 		<Suspense fallback="loading...">
 			<Heading title="Top" />
-			<ConnectionForm />
+			<ConnectForm />
 		</Suspense>
 	);
 }

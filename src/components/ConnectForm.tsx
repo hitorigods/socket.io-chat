@@ -4,13 +4,13 @@ import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { messageBoardAtom, socketAtom, userNameAtom } from '@/stores/atoms';
+import { roomMessagesAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
 import { connectionSocket } from '@/utils/connectionSocket';
 
-export default function ConnectionForm() {
+export default function ConnectForm() {
 	const [userName, setUserName] = useAtom(userNameAtom);
-	const [, setMessageBoard] = useAtom(messageBoardAtom);
+	const [, setRoomMessages] = useAtom(roomMessagesAtom);
 	const [, setSocket] = useAtom(socketAtom);
 	const router = useRouter();
 
@@ -20,7 +20,7 @@ export default function ConnectionForm() {
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/sockets`,
 			{ method: 'POST' }
 		);
-		connectionSocket(setMessageBoard, setSocket);
+		connectionSocket(setRoomMessages, setSocket);
 		router.push('/rooms');
 	};
 

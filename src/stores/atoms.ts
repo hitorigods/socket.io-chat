@@ -7,8 +7,8 @@ export const socketAtom = atom(null as unknown as Socket);
 socketAtom.debugLabel = 'socketAtom';
 
 // 状態：メッセージ一覧
-export const messageBoardAtom = atom<Array<Message>>([]);
-messageBoardAtom.debugLabel = 'messageBoardAtom';
+export const roomMessagesAtom = atom<Array<Message>>([]);
+roomMessagesAtom.debugLabel = 'roomMessagesAtom';
 
 // 状態：ユーザー名
 export const userNameAtom = atom('');

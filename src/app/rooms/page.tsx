@@ -3,13 +3,13 @@
 import { Suspense } from 'react';
 
 import Heading from '@/components/Heading';
-import MessageList from '@/components/MessageList';
+import MessageArea from '@/components/messages/MessageArea';
 
 export default function Rooms() {
 	return (
 		<Suspense fallback="loading...">
 			<Heading title="Rooms" />
-			<MessageList />
+			<MessageArea />
 		</Suspense>
 	);
 }
