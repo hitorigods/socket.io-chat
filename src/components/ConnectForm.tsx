@@ -3,51 +3,24 @@
 import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
-import { io } from 'socket.io-client';
 
-import Message from '@/models/message';
-import { atomMessageBoard, atomSocket, atomUserName } from '@/stores/atoms';
+import { roomMessagesAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
+import { connectionSocket } from '@/utils/connectionSocket';
 
-export default function ConnectionForm() {
-	const [userName, setUserName] = useAtom(atomUserName);
-	const [, setMessageBoard] = useAtom(atomMessageBoard);
-	const [, setSocket] = useAtom(atomSocket);
-
+export default function ConnectForm() {
+	const [userName, setUserName] = useAtom(userNameAtom);
+	const [, setRoomMessages] = useAtom(roomMessagesAtom);
+	const [, setSocket] = useAtom(socketAtom);
 	const router = useRouter();
-
-	const socketInitializer = (socket: any) => {
-		socket.on('connect', () => {
-			console.log('Connected to the server');
-		});
-
-		socket.on('disconnect', () => {
-			console.log('Disconnected from the server');
-		});
-
-		socket.on('message', (newMessage: Message) => {
-			setMessageBoard((messageBoard) => {
-				const newMessageBoard = Array.from(
-					new Map(messageBoard.map((message) => [message.id, message])).values()
-				);
-				newMessageBoard.push(newMessage);
-				return newMessageBoard;
-			});
-		});
-	};
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
-
-		await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/sockets', {
-			method: 'POST',
-		});
-
-		const socket = io({ autoConnect: false });
-		socket.connect();
-		socketInitializer(socket);
-		setSocket(socket);
-
+		const SocketHandler = await fetch(
+			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/sockets`,
+			{ method: 'POST' }
+		);
+		connectionSocket(setRoomMessages, setSocket);
 		router.push('/rooms');
 	};
 

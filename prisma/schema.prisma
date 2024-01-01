@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  name      String    @db.VarChar(255)
+  email     String    @unique
+  password  String?
+  message   Message[]
+  Profile   Profile?
+}
+
+model Profile {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  avaterUrl   String?
+  displayName String?  @db.VarChar(255)
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     String   @unique @db.Uuid
+}
+
+model Room {
+  id        String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  title     String    @db.VarChar(255)
+  published Boolean   @default(false)
+  message   Message[]
+}
+
+model Message {
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @db.VarChar(255)
+  published Boolean  @default(false)
+  user      User     @relation(fields: [user_id], references: [id])
+  user_id   String   @db.Uuid
+  room      Room     @relation(fields: [room_id], references: [id])
+  room_id   String   @db.Uuid
+}
