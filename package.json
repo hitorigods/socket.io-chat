@@ -6,7 +6,13 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"prisma:studio": "dotenv -e .env.local -- prisma studio",
+		"prisma:push": "dotenv -e .env.local -- prisma db push dev",
+		"prisma:migrate": "dotenv -e .env.local -- prisma migrate dev --name init",
+		"prisma:pull": "dotenv -e .env.local -- prisma db pull dev",
+		"prisma:reset": "dotenv -e .env.local -- prisma migrate reset",
+		"prisma:generate": "dotenv -e .env.local -- prisma generate"
 	},
 	"dependencies": {
 		"@fontsource-variable/noto-sans-jp": "^5.0.17",

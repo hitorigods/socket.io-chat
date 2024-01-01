@@ -23,13 +23,12 @@ https://hitorigods-socket-io-next.onrender.com/
 1. ⭕JotaiにDevtoolsを導入
 1. ⭕ルームに直アクセスでTOPにリダイレクト
 1. ⭕ORM（prisma）導入
-1. ⭕データベース（Supabase）準備
-1. ⭕チャット履歴のデータベース用意
-1. ⭕ログインユーザーのデータベース用意
+1. ⭕データベース（Supabase）用意
+1. ⭕チャット履歴/ユーザー/ユーザープロフィールのテーブル用意
 1. データベース保存
 1. チャット復元
 1. RLS設定
-1. OAuth実装（Supabase？）
+1. OAuth実装
 1. ログインエラー通知
 1. ログインユーザーの投稿者名とアカウント名をデータベースに収める
 1. 投稿者名を投稿者名に
@@ -38,11 +37,17 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ 備忘録
 
-### Prisma Migrate を.env.localで実行
+### Prisma Studio
 
 ```
-NPM
-$ ./node_modules/.bin/dotenv -e .env.local -- npx prisma migrate dev --name init
+PNPM
+$ pnpm dlx prisma generate
+$ pnpm dlx prisma studio
+```
+
+### Prisma Migrateをdotenvを使い.env.localで実行
+
+```
 
 PNPM
 $ ./node_modules/.bin/dotenv -e .env.local -- pnpm dlx prisma migrate dev --name init
@@ -77,6 +82,10 @@ https://uptimerobot.com/
 https://laboradian.com/uptime-robot/
 
 ## ▼ DB系
+
+### prisma チートシート (CLI)
+
+https://qiita.com/ryskBonn92/items/c45e22ce5f37d82ec8de
 
 ### Prismaデコレーター一覧
 

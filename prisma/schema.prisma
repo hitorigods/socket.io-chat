@@ -12,19 +12,28 @@ datasource db {
 
 model User {
   id        String    @id @default(uuid())
-  email     String?   @unique
-  name      String?
-  password  String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  email     String    @unique
+  name      String?
+  password  String?
   message   Message[]
+  Profile   Profile?
+}
+
+model Profile {
+  id      String  @id @default(uuid())
+  bio     String?
+  user    User    @relation(fields: [user_id], references: [id])
+  user_id String  @unique
 }
 
 model Message {
   id        String   @id @default(uuid())
-  text      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  title     String   @db.VarChar(255)
+  published Boolean  @default(false)
   user      User     @relation(fields: [user_id], references: [id])
-  user_id   String
+  user_id   String   @unique
 }
