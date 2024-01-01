@@ -22,18 +22,31 @@ https://hitorigods-socket-io-next.onrender.com/
 1. ⭕フォルダ構成を整理
 1. ⭕JotaiにDevtoolsを導入
 1. ⭕ルームに直アクセスでTOPにリダイレクト
-1. ORM（prisma）導入
-1. データベース（Supabase）準備
-1. チャット履歴のデータベース用意
+1. ⭕ORM（prisma）導入
+1. ⭕データベース（Supabase）準備
+1. ⭕チャット履歴のデータベース用意
+1. ⭕ログインユーザーのデータベース用意
 1. データベース保存
 1. チャット復元
+1. RLS設定
 1. OAuth実装（Supabase？）
 1. ログインエラー通知
-1. ログインユーザーのデータベース用意
 1. ログインユーザーの投稿者名とアカウント名をデータベースに収める
 1. 投稿者名を投稿者名に
 1. 投稿者名を編集可能に
 1. 投稿が自分か他人か判定してレイアウト変える
+
+## ▼ 備忘録
+
+### Prisma Migrate を.env.localで実行
+
+```
+NPM
+$ ./node_modules/.bin/dotenv -e .env.local -- npx prisma migrate dev --name init
+
+PNPM
+$ ./node_modules/.bin/dotenv -e .env.local -- pnpm dlx prisma migrate dev --name init
+```
 
 ## ▼ チートシート
 
@@ -41,7 +54,7 @@ https://hitorigods-socket-io-next.onrender.com/
 
 https://tailwindcomponents.com/cheatsheet/
 
-## ▼ 参考
+## ▼ Socket系参考
 
 ### ○ Next.js で WebSocket アプリケーションを作成する(サーバー編)
 
@@ -62,6 +75,22 @@ https://qiita.com/house_neko/items/ad4fea17cbbdf7ce0ec7
 https://uptimerobot.com/
 
 https://laboradian.com/uptime-robot/
+
+## ▼ DB系
+
+### Prismaデコレーター一覧
+
+https://qiita.com/curry__30/items/95d3655fa23d84b959a3
+
+### uuidの是非
+
+https://techblog.raccoon.ne.jp/archives/1627262796.html
+
+### supabaseをローカルにダウンロード
+
+https://katblog.manadream.net/index.php/2022/07/07/supabase-local/
+
+## ▼ OAuth系
 
 ### ○ OAuth & OIDC 入門解説
 
