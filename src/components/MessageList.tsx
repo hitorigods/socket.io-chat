@@ -4,7 +4,7 @@ import React, { FormEventHandler, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { atomMessageBoard, atomSocket, atomUserName } from '@/stores/atoms';
+import { messageBoardAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 
 import Message from '@/models/message';
 import InputButton from '@/components/InputButton';
@@ -12,9 +12,9 @@ import InputButton from '@/components/InputButton';
 export default function MessageList() {
 	const [message, setMessage] = useState<string>('');
 
-	const [messageBoard] = useAtom(atomMessageBoard);
-	const [userName] = useAtom(atomUserName);
-	const [socket] = useAtom(atomSocket);
+	const [messageBoard] = useAtom(messageBoardAtom);
+	const [userName] = useAtom(userNameAtom);
+	const [socket] = useAtom(socketAtom);
 
 	const router = useRouter();
 

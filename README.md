@@ -29,7 +29,10 @@ https://hitorigods-socket-io-next.onrender.com/
 1. データベース保存
 1. チャット復元
 1. RLS設定
+1. メールアドレス認証
 1. OAuth実装
+   1. Google
+   1. Github
 1. ログインエラー通知
 1. ログインユーザーの投稿者名とアカウント名をデータベースに収める
 1. 投稿者名を投稿者名に
@@ -38,12 +41,42 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ 備忘録
 
-### Prisma Migrateをdotenvを使い.env.localで実行
+### ■ Prisma Migrateをdotenvを使い.env.localで実行
 
 ```
 PNPM
 $ ./node_modules/.bin/dotenv -e .env.local -- pnpm dlx prisma migrate dev --name init
 ```
+
+### ■ prisma/seed.tsでts-nodeがエラーになる問題
+
+#### ① tsx をインストール
+
+```
+$ pnpm i -D tsx
+```
+
+https://github.com/privatenumber/tsx
+
+※PATHを通すため一度グローバルインストールをした
+
+#### ② package.jsonに追記
+
+```
+	"prisma": {
+		"seed": "tsx prisma/seed.ts"
+	},
+```
+
+以下は解決できず
+
+```
+    "prisma": {
+    	"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    },
+```
+
+https://github.com/prisma/prisma/issues/7053
 
 ## ▼ チートシート
 
@@ -87,6 +120,10 @@ https://qiita.com/ryskBonn92/items/c45e22ce5f37d82ec8de
 
 https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 
+#### ○ Supabase入門
+
+https://zenn.dev/chot/articles/ddd2844ad3ae61
+
 #### ○ uuidの是非
 
 https://techblog.raccoon.ne.jp/archives/1627262796.html
@@ -100,3 +137,7 @@ https://katblog.manadream.net/index.php/2022/07/07/supabase-local/
 #### ○ OAuth & OIDC 入門解説
 
 https://www.youtube.com/watch?v=PKPj_MmLq5E
+
+```
+
+```

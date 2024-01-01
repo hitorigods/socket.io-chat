@@ -6,13 +6,13 @@ import { useAtom } from 'jotai';
 import { io } from 'socket.io-client';
 
 import Message from '@/models/message';
-import { atomMessageBoard, atomSocket, atomUserName } from '@/stores/atoms';
+import { messageBoardAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
 
 export default function ConnectionForm() {
-	const [userName, setUserName] = useAtom(atomUserName);
-	const [, setMessageBoard] = useAtom(atomMessageBoard);
-	const [, setSocket] = useAtom(atomSocket);
+	const [userName, setUserName] = useAtom(userNameAtom);
+	const [, setMessageBoard] = useAtom(messageBoardAtom);
+	const [, setSocket] = useAtom(socketAtom);
 
 	const router = useRouter();
 
