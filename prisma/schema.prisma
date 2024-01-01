@@ -15,7 +15,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   email     String    @unique
-  name      String?
+  name      String    @db.VarChar(255)
   password  String?
   message   Message[]
   Profile   Profile?
@@ -36,4 +36,15 @@ model Message {
   published Boolean  @default(false)
   user      User     @relation(fields: [user_id], references: [id])
   user_id   String   @unique
+  room      Room     @relation(fields: [room_id], references: [id])
+  room_id   String   @unique
+}
+
+model Room {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  title     String    @db.VarChar(255)
+  published Boolean   @default(false)
+  message   Message[]
 }

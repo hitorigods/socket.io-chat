@@ -1,14 +1,15 @@
-# Socket.IO + Next.js + TypeScript
+# Socket.IO + Next.js + Supabase + OAuth
 
 ## ▼ テーマ
 
 1. Socket.IO のクライアントを Next.js 構築
 1. チャット履歴をSupabaseで登録
 1. ログイン認証をGoogle認証に
+1. 簡単なRLS
 
 ## ▼ デプロイ
 
-### ○ Render
+#### ○ Render
 
 https://hitorigods-socket-io-next.onrender.com/
 
@@ -37,18 +38,9 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ 備忘録
 
-### Prisma Studio
-
-```
-PNPM
-$ pnpm dlx prisma generate
-$ pnpm dlx prisma studio
-```
-
 ### Prisma Migrateをdotenvを使い.env.localで実行
 
 ```
-
 PNPM
 $ ./node_modules/.bin/dotenv -e .env.local -- pnpm dlx prisma migrate dev --name init
 ```
@@ -59,21 +51,25 @@ $ ./node_modules/.bin/dotenv -e .env.local -- pnpm dlx prisma migrate dev --name
 
 https://tailwindcomponents.com/cheatsheet/
 
-## ▼ Socket系参考
+https://tailwindcomponents.com/
 
-### ○ Next.js で WebSocket アプリケーションを作成する(サーバー編)
+## ▼ 参考
+
+### ■ Socket系参考
+
+#### ○ Next.js で WebSocket アプリケーションを作成する(サーバー編)
 
 https://qiita.com/ochiochi/items/dbf5040fd665326e8fb5
 
-### ○ Next.js で WebSocket アプリケーションを作成する(クライアント編)
+#### ○ Next.js で WebSocket アプリケーションを作成する(クライアント編)
 
 https://qiita.com/ochiochi/items/102d14649396d351ab80
 
-### ○ WebSocket を使ったアプリは Render にデプロイすると簡単だよという話
+#### ○ WebSocket を使ったアプリは Render にデプロイすると簡単だよという話
 
 https://qiita.com/house_neko/items/ad4fea17cbbdf7ce0ec7
 
-### ○ サーバー監視サービス
+#### ○ サーバー監視サービス
 
 #### Uptime Robot
 
@@ -81,26 +77,26 @@ https://uptimerobot.com/
 
 https://laboradian.com/uptime-robot/
 
-## ▼ DB系
+### ■ DB系
 
-### prisma チートシート (CLI)
+#### ○ prisma チートシート (CLI)
 
 https://qiita.com/ryskBonn92/items/c45e22ce5f37d82ec8de
 
-### Prismaデコレーター一覧
+#### ○ Prismaデコレーター一覧
 
 https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 
-### uuidの是非
+#### ○ uuidの是非
 
 https://techblog.raccoon.ne.jp/archives/1627262796.html
 
-### supabaseをローカルにダウンロード
+#### ○ supabaseをローカルにダウンロード
 
 https://katblog.manadream.net/index.php/2022/07/07/supabase-local/
 
-## ▼ OAuth系
+### ■ OAuth系
 
-### ○ OAuth & OIDC 入門解説
+#### ○ OAuth & OIDC 入門解説
 
 https://www.youtube.com/watch?v=PKPj_MmLq5E
