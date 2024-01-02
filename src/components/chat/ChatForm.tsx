@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 
 import { socketAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-import { SchemaChat } from '@/schemas/chat';
+import { FetchChat } from '@/schemas/chat';
 
 type Props = {
 	userName: string;
@@ -13,23 +13,25 @@ type Props = {
 
 export default function ChatForm({ userName }: Props) {
 	const [socket] = useAtom(socketAtom);
-	const [chat, setChat] = useState<string>('');
+	const [inputChat, setInputChat] = useState<string>('');
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault();
-		if (!chat) return;
+		if (!inputChat) return;
 
-		const sendChat: SchemaChat = {
-			id: crypto.randomUUID(),
-			room: 1,
-			author: userName,
-			body: chat,
+		const newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'> = {
+			title: inputChat,
+			published: true,
+			// TODO: ログイン中のユーザーIDを設定する
+			user_id: 'e597b29d-1aa4-4291-8829-9d985350dade',
+			// TODO: チャットにルームIDを格納し設定する
+			room_id: crypto.randomUUID(),
 		};
 
-		socket.emit('chat', sendChat);
-		console.log(`send client: chat: ${sendChat}`);
+		socket.emit('chat', newChat);
+		console.log(`send client: chat: ${newChat}`);
 
-		setChat('');
+		setInputChat('');
 	};
 
 	return (
@@ -42,9 +44,9 @@ export default function ChatForm({ userName }: Props) {
 					label="送信"
 					name="name"
 					placeholder="メッセージを入力してください"
-					value={chat}
-					disabled={!chat}
-					onChange={(e) => setChat(e.target.value)}
+					value={inputChat}
+					disabled={!inputChat}
+					onChange={(e) => setInputChat(e.target.value)}
 				/>
 			</form>
 		</section>

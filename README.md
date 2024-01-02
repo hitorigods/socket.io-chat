@@ -24,21 +24,25 @@ https://hitorigods-socket-io-next.onrender.com/
    6. ⭕フォルダ構成を整理
    7. ⭕JotaiにDevtoolsを導入
    8. ⭕ルームに直アクセスでTOPにリダイレクト
-   9. 見た目を整える
-      1. ⭕ヘッダー・フッター設置
-      2. ⭕TOPへ戻るボタン
-      3. 投稿が自分か他人か判定してレイアウト変える
+   9. TOPに戻ったときにソケットを切断する
+   10. 投稿が自分か他人か判定してレイアウト変える
+   11. ルームIDで複数チャットできるように
+   12. 見た目を整える
+       1. ⭕ヘッダー・フッター設置
+       2. ⭕TOPへ戻るボタン
 2. データベース
    1. ⭕ORM（prisma）導入
    2. ⭕Supabase用意
    3. ⭕チャット履歴/ユーザー/ユーザープロフィールのテーブル用意
    4. ⭕seedデータ登録
-   5. フェッチ（TanStack Query）実装
-   6. データベースからチャット復元
-   7. データベース保存
+   5. ⭕フェッチ（TanStack Query）実装
+   6. ⭕データベースからチャット復元
+   7. データベース更新
    8. ログインユーザーを登録
    9. RLS設定
    10. 所有ユーザーのみチャット削除・更新
+   11. ルームID用のデータベースを作る
+   12. プロフィールID用のデータベースを作る
 3. 認証機能
    1. メールアドレス認証
    2. OAuth実装
@@ -110,6 +114,13 @@ https://hassakulab.com/posts/npm-script-with-dotenv/
 
 https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
 
+### ■ PrismaでseedファイルをプッシュするとSupabaseのパーミッションがおかしくなることが多発
+
+今のところプロジェクト作り直すしかどうしようもないので、GUIからCSVファイルをエク
+スポート/インポートで凌ぐ・・・
+
+https://github.com/supabase/supabase/issues/4883
+
 ## ▼ チートシート
 
 ### Tailwind CSS
@@ -122,17 +133,11 @@ https://tailwindcomponents.com/
 
 ### ■ Socket系参考
 
-#### ○ Next.js で WebSocket アプリケーションを作成する(サーバー編)
+#### ○ Next.js で WebSocket アプリケーションを作成する
 
 https://qiita.com/ochiochi/items/dbf5040fd665326e8fb5
 
-#### ○ Next.js で WebSocket アプリケーションを作成する(クライアント編)
-
 https://qiita.com/ochiochi/items/102d14649396d351ab80
-
-#### ○ WebSocket を使ったアプリは Render にデプロイすると簡単だよという話
-
-https://qiita.com/house_neko/items/ad4fea17cbbdf7ce0ec7
 
 https://qiita.com/okumurakengo/items/92ad5aacd08c4e25ebeb
 

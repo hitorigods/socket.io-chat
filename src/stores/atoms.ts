@@ -13,3 +13,7 @@ roomChatsAtom.debugLabel = 'roomChatsAtom';
 // 状態：ユーザー名
 export const userNameAtom = atom('');
 userNameAtom.debugLabel = 'userNameAtom';
+
+// 状態：チャット内容
+export const inputChatAtom = atom('');
+inputChatAtom.debugLabel = 'inputChatAtom';

@@ -16,6 +16,14 @@ export type FetchChat = {
 	updatedAt: string;
 	title: string;
 	published?: boolean;
+	user_id: string;
+	room_id: string;
+};
+
+export type EditedChat = {
+	id: string;
+	title: string;
+	published?: boolean;
 	user_id?: string;
 	room_id?: string;
 };
