@@ -1,25 +1,32 @@
 'use client';
 
-import { Message } from '@/schemas/message';
+import { FetchMessage } from '@/schemas/message';
 import MessageItem from '@/components/message/MessageItem';
+import { useFetchMessages } from '@/hooks/useFetchMessages';
 
-interface Props {
-	roomMessages: Message[];
-}
+export default function MessageList() {
+	const { status, data: messages, error } = useFetchMessages();
 
-export default function MessageList({ roomMessages }: Props) {
+	if (status === 'pending') {
+		return <span>Loading...</span>;
+	}
+
+	if (status === 'error') {
+		return <span>Error: {error.message}</span>;
+	}
+
 	return (
-		<>
-			<section>
+		<section>
+			{messages.length && (
 				<ul className="grid gap-[1px] overflow-hidden rounded shadow-md">
-					{roomMessages.map((message: Message) => (
+					{messages.map((message: FetchMessage) => (
 						<MessageItem
 							key={message.id}
 							message={message}
 						/>
 					))}
 				</ul>
-			</section>
-		</>
+			)}
+		</section>
 	);
 }

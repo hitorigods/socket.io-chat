@@ -22,7 +22,6 @@
 	},
 	"dependencies": {
 		"@fontsource-variable/noto-sans-jp": "^5.0.17",
-		"@prisma/client": "5.7.1",
 		"@supabase/auth-helpers-nextjs": "^0.8.7",
 		"@supabase/auth-ui-react": "^0.4.6",
 		"@supabase/auth-ui-shared": "^0.1.8",
@@ -40,7 +39,9 @@
 	},
 	"devDependencies": {
 		"@emotion/react": "^11.11.3",
+		"@prisma/client": "5.7.1",
 		"@tanstack/eslint-plugin-query": "^5.14.6",
+		"@tanstack/react-query-devtools": "^5.17.0",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/cors": "^2.8.17",
 		"@types/node": "^20.10.6",

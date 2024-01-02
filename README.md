@@ -88,6 +88,24 @@ https://github.com/prisma/prisma/issues/7053
 
 ### ■ supabase CLIで型ファイルを生成
 
+npm scriptsを用意してコマンドを叩くが、SupabaseプロジェクトIDをgitに残したくない
+ので、 `.env.local`の環境変数`SUPABASE_PROJECT_ID`を用意して、`tsx`で
+`supabase-types.ts`を実行
+
+```
+$ pnpm run supabase:types
+
+↓実行
+$ dotenv -e .env.local -- tsx supabase-types.ts
+
+↓内部処理
+$ supabase gen types typescript --project-id ${process.env.SUPABASE_PROJECT_ID} > src/libs/supabase.types.ts
+```
+
+https://hassakulab.com/posts/npm-script-with-dotenv/
+
+※ts-nodeだとCommonJSモジュール扱いになりエラーがでたのでtsxを利用
+
 クラウド版なら以下から作成できる
 
 https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro

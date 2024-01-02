@@ -1,15 +1,10 @@
-import {
-	useQuery,
-	useMutation,
-	useQueryClient,
-	QueryClient,
-	QueryClientProvider,
-} from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import supabase from '@/libs/supabase';
-import { FetchMessage, Message } from '@/schemas/message';
+import { Database } from '@/libs/supabase.types';
+import { FetchMessage } from '@/schemas/message';
 
-export const useQueryMessages = () => {
+export const useFetchMessages = () => {
 	const getMessages = async () => {
 		const { data, error } = await supabase
 			.from('message')

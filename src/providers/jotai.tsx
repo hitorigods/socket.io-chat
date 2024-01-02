@@ -3,11 +3,11 @@
 import { Provider } from 'jotai';
 import { DevTools } from 'jotai-devtools';
 
-type JotaiProviderProps = {
+type ProviderProps = {
 	children: React.ReactNode;
 };
 
-export function JotaiProvider(props: JotaiProviderProps) {
+export function JotaiProvider(props: ProviderProps) {
 	return (
 		<Provider>
 			<DevTools />

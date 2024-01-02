@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 
 import { socketAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-import { Message } from '@/schemas/message';
+import { SchemaMessage } from '@/schemas/message';
 
 type Props = {
 	userName: string;
@@ -19,7 +19,7 @@ export default function MessageForm({ userName }: Props) {
 		event.preventDefault();
 		if (!message) return;
 
-		const sendMessage: Message = {
+		const sendMessage: SchemaMessage = {
 			id: crypto.randomUUID(),
 			room: 1,
 			author: userName,
@@ -27,12 +27,17 @@ export default function MessageForm({ userName }: Props) {
 		};
 
 		socket.emit('message', sendMessage);
+		console.log(`send client: message: ${sendMessage}`);
+
 		setMessage('');
 	};
 
 	return (
 		<section className="">
-			<form onSubmit={handleSubmit}>
+			<form
+				onSubmit={handleSubmit}
+				className="grid place-items-center"
+			>
 				<InputButton
 					label="送信"
 					name="name"

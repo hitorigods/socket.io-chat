@@ -3,7 +3,7 @@ import { SetStateAction } from 'jotai';
 
 import { SetAtom } from '@/types/atom';
 
-const MessageSchemaDef = z.object({
+const schemaMessage = z.object({
 	id: z.string(),
 	room: z.number(),
 	author: z.string(),
@@ -19,5 +19,5 @@ export type FetchMessage = {
 	user_id?: string;
 };
 
-export type Message = z.infer<typeof MessageSchemaDef>;
-export type SetMessages = SetAtom<[SetStateAction<Message[]>], void>;
+export type SchemaMessage = z.infer<typeof schemaMessage>;
+export type SetMessages = SetAtom<[SetStateAction<SchemaMessage[]>], void>;

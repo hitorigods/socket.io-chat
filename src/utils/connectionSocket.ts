@@ -2,7 +2,7 @@
 
 import { io } from 'socket.io-client';
 
-import { Message, SetMessages } from '@/schemas/message';
+import { SchemaMessage, SetMessages } from '@/schemas/message';
 
 const initializer = (socket: any, setRoomMessages: SetMessages) => {
 	socket.on('connect', () => {
@@ -13,8 +13,8 @@ const initializer = (socket: any, setRoomMessages: SetMessages) => {
 		console.log('Disconnected from the server');
 	});
 
-	socket.on('message', (newMessage: Message) => {
-		setRoomMessages((roomMessages: Message[]) => {
+	socket.on('message', (newMessage: SchemaMessage) => {
+		setRoomMessages((roomMessages: SchemaMessage[]) => {
 			const newroomMessages = Array.from(
 				new Map(roomMessages.map((message) => [message.id, message])).values()
 			);
