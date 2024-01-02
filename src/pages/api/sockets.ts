@@ -30,13 +30,13 @@ export default function SocketHandler(
 		const clientId = socket.id;
 		console.log(`client id: ${clientId} connected`);
 
-		socket.on('message', (data) => {
-			io.emit('message', data);
-			console.log(`Received client id: ${clientId} message: ${data}`);
-		});
-
 		socket.on('disconnect', () => {
 			console.log(`client id: ${clientId} disconnected`);
+		});
+
+		socket.on('chat', (data) => {
+			io.emit('chat', data);
+			console.log(`Received client id: ${clientId} chat: ${data}`);
 		});
 	});
 

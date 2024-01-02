@@ -2,15 +2,35 @@
 
 import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
+import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
-import { roomMessagesAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-import { connectionSocket } from '@/utils/connectionSocket';
+import { socketAtom, userNameAtom } from '@/stores/atoms';
+import { FetchChat } from '@/schemas/chat';
+import { useMutateChat } from '@/hooks/useQueryChats';
+
+const initializer = (socket: any, createMutationChat: any) => {
+	socket.on('connect', () => {
+		console.log('Connected to the server');
+	});
+
+	socket.on('disconnect', () => {
+		console.log('Disconnected from the server');
+	});
+
+	socket.on(
+		'chat',
+		(newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>) => {
+			createMutationChat.mutate(newChat);
+		}
+	);
+};
 
 export default function ConnectForm() {
+	const { createMutationChat } = useMutateChat();
+
 	const [userName, setUserName] = useAtom(userNameAtom);
-	const [, setRoomMessages] = useAtom(roomMessagesAtom);
 	const [, setSocket] = useAtom(socketAtom);
 	const router = useRouter();
 
@@ -20,7 +40,12 @@ export default function ConnectForm() {
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/sockets`,
 			{ method: 'POST' }
 		);
-		connectionSocket(setRoomMessages, setSocket);
+
+		const socket = io({ autoConnect: false });
+		socket.connect();
+		initializer(socket, createMutationChat);
+		setSocket(socket);
+
 		router.push('/rooms');
 	};
 

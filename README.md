@@ -24,20 +24,25 @@ https://hitorigods-socket-io-next.onrender.com/
    6. ⭕フォルダ構成を整理
    7. ⭕JotaiにDevtoolsを導入
    8. ⭕ルームに直アクセスでTOPにリダイレクト
-   9. ヘッダー・フッター設置
-   10. TOPへ戻るボタン
-   11. 投稿が自分か他人か判定してレイアウト変える
+   9. TOPに戻ったときにソケットを切断する
+   10. 投稿が自分か他人か判定してレイアウト変える
+   11. ルームIDで複数チャットできるように
+   12. 見た目を整える
+       1. ⭕ヘッダー・フッター設置
+       2. ⭕TOPへ戻るボタン
 2. データベース
    1. ⭕ORM（prisma）導入
    2. ⭕Supabase用意
    3. ⭕チャット履歴/ユーザー/ユーザープロフィールのテーブル用意
    4. ⭕seedデータ登録
-   5. フェッチ（TanStack Query）実装
-   6. データベースからチャット復元
-   7. データベース保存
+   5. ⭕フェッチ（TanStack Query）実装
+   6. ⭕データベースからチャット復元
+   7. データベース更新
    8. ログインユーザーを登録
    9. RLS設定
-   10. 所有ユーザーの削除・更新権限
+   10. 所有ユーザーのみチャット削除・更新
+   11. ルームID用のデータベースを作る
+   12. プロフィールID用のデータベースを作る
 3. 認証機能
    1. メールアドレス認証
    2. OAuth実装
@@ -85,6 +90,37 @@ https://github.com/privatenumber/tsx
 
 https://github.com/prisma/prisma/issues/7053
 
+### ■ supabase CLIで型ファイルを生成
+
+npm scriptsを用意してコマンドを叩くが、SupabaseプロジェクトIDをgitに残したくない
+ので、 `.env.local`の環境変数`SUPABASE_PROJECT_ID`を用意して、`tsx`で
+`supabase-types.ts`を実行
+
+```
+$ pnpm run supabase:types
+
+↓実行
+$ dotenv -e .env.local -- tsx supabase-types.ts
+
+↓内部処理
+$ supabase gen types typescript --project-id ${process.env.SUPABASE_PROJECT_ID} > src/libs/supabase.types.ts
+```
+
+https://hassakulab.com/posts/npm-script-with-dotenv/
+
+※ts-nodeだとCommonJSモジュール扱いになりエラーがでたのでtsxを利用
+
+クラウド版なら以下から作成できる
+
+https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
+
+### ■ PrismaでseedファイルをプッシュするとSupabaseのパーミッションがおかしくなることが多発
+
+今のところプロジェクト作り直すしかどうしようもないので、GUIからCSVファイルをエク
+スポート/インポートで凌ぐ・・・
+
+https://github.com/supabase/supabase/issues/4883
+
 ## ▼ チートシート
 
 ### Tailwind CSS
@@ -97,17 +133,13 @@ https://tailwindcomponents.com/
 
 ### ■ Socket系参考
 
-#### ○ Next.js で WebSocket アプリケーションを作成する(サーバー編)
+#### ○ Next.js で WebSocket アプリケーションを作成する
 
 https://qiita.com/ochiochi/items/dbf5040fd665326e8fb5
 
-#### ○ Next.js で WebSocket アプリケーションを作成する(クライアント編)
-
 https://qiita.com/ochiochi/items/102d14649396d351ab80
 
-#### ○ WebSocket を使ったアプリは Render にデプロイすると簡単だよという話
-
-https://qiita.com/house_neko/items/ad4fea17cbbdf7ce0ec7
+https://qiita.com/okumurakengo/items/92ad5aacd08c4e25ebeb
 
 #### ○ サーバー監視サービス
 
@@ -130,6 +162,12 @@ https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 #### ○ Supabase入門
 
 https://zenn.dev/chot/articles/ddd2844ad3ae61
+
+#### ○ Supabase + useQuery
+
+https://makerkit.dev/blog/saas/supabase-react-query
+
+https://zenn.dev/yu_undefined/scraps/ee259f6dd080a5
 
 #### ○ uuidの是非
 

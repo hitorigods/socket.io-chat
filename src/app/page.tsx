@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import Heading from '@/components/Heading';
 import ConnectForm from '@/components/ConnectForm';
