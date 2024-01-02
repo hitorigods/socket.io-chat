@@ -5,31 +5,31 @@ import { useAtom } from 'jotai';
 
 import { socketAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-import { SchemaMessage } from '@/schemas/message';
+import { SchemaChat } from '@/schemas/chat';
 
 type Props = {
 	userName: string;
 };
 
-export default function MessageForm({ userName }: Props) {
+export default function ChatForm({ userName }: Props) {
 	const [socket] = useAtom(socketAtom);
-	const [message, setMessage] = useState<string>('');
+	const [chat, setChat] = useState<string>('');
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault();
-		if (!message) return;
+		if (!chat) return;
 
-		const sendMessage: SchemaMessage = {
+		const sendChat: SchemaChat = {
 			id: crypto.randomUUID(),
 			room: 1,
 			author: userName,
-			body: message,
+			body: chat,
 		};
 
-		socket.emit('message', sendMessage);
-		console.log(`send client: message: ${sendMessage}`);
+		socket.emit('chat', sendChat);
+		console.log(`send client: chat: ${sendChat}`);
 
-		setMessage('');
+		setChat('');
 	};
 
 	return (
@@ -42,9 +42,9 @@ export default function MessageForm({ userName }: Props) {
 					label="送信"
 					name="name"
 					placeholder="メッセージを入力してください"
-					value={message}
-					disabled={!message}
-					onChange={(e) => setMessage(e.target.value)}
+					value={chat}
+					disabled={!chat}
+					onChange={(e) => setChat(e.target.value)}
 				/>
 			</form>
 		</section>

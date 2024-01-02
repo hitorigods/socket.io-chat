@@ -3,14 +3,35 @@
 import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
+import { io } from 'socket.io-client';
 
-import { roomMessagesAtom, socketAtom, userNameAtom } from '@/stores/atoms';
+import { roomChatsAtom, socketAtom, userNameAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-import { connectionSocket } from '@/utils/connectionSocket';
+import { SchemaChat, SetChats } from '@/schemas/chat';
+
+const initializer = (socket: any, setRoomChats: SetChats) => {
+	socket.on('connect', () => {
+		console.log('Connected to the server');
+	});
+
+	socket.on('disconnect', () => {
+		console.log('Disconnected from the server');
+	});
+
+	socket.on('chat', (newChat: SchemaChat) => {
+		setRoomChats((roomChats: SchemaChat[]) => {
+			const newroomChats = Array.from(
+				new Map(roomChats.map((chat) => [chat.id, chat])).values()
+			);
+			newroomChats.push(newChat);
+			return newroomChats;
+		});
+	});
+};
 
 export default function ConnectForm() {
 	const [userName, setUserName] = useAtom(userNameAtom);
-	const [, setRoomMessages] = useAtom(roomMessagesAtom);
+	const [, setRoomChats] = useAtom(roomChatsAtom);
 	const [, setSocket] = useAtom(socketAtom);
 	const router = useRouter();
 
@@ -20,7 +41,12 @@ export default function ConnectForm() {
 			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/sockets`,
 			{ method: 'POST' }
 		);
-		connectionSocket(setRoomMessages, setSocket);
+
+		const socket = io({ autoConnect: false });
+		socket.connect();
+		initializer(socket, setRoomChats);
+		setSocket(socket);
+
 		router.push('/rooms');
 	};
 

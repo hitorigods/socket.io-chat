@@ -17,7 +17,7 @@ export type UserTable = {
 	updatedAt: string;
 	email: string;
 	password?: string;
-	message?: string[];
+	chat?: string[];
 	Profile?: number;
 };
 
@@ -30,7 +30,7 @@ export type ProfileTable = {
 	user_id: string;
 };
 
-export type MessageTable = {
+export type ChatTable = {
 	id: string;
 	createdAt: string;
 	updatedAt: string;
@@ -46,5 +46,5 @@ export type RoomTable = {
 	updatedAt: string;
 	title: string;
 	published: boolean;
-	message: string[];
+	chat: string[];
 };

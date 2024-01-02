@@ -6,10 +6,10 @@ import { useAtom } from 'jotai';
 
 import { userNameAtom } from '@/stores/atoms';
 
-import MessageList from '@/components/message/MessageList';
-import MessageForm from '@/components/message/MessageForm';
+import ChatList from '@/components/chat/ChatList';
+import ChatForm from '@/components/chat/ChatForm';
 
-export default function MessageArea() {
+export default function ChatArea() {
 	const [userName] = useAtom(userNameAtom);
 
 	const router = useRouter();
@@ -21,8 +21,8 @@ export default function MessageArea() {
 	return (
 		<>
 			<div className="grid gap-[50px]">
-				<MessageList />
-				<MessageForm userName={userName} />
+				<ChatList />
+				<ChatForm userName={userName} />
 			</div>
 		</>
 	);

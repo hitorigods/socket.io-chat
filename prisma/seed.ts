@@ -30,65 +30,65 @@ async function usersCreate() {
 }
 
 /**
- * messageテーブルの初期データを作成する
+ * chatテーブルの初期データを作成する
  */
-async function messageCreate(userIds: string[]) {
-	const messages: Prisma.messageCreateInput[] = [
+async function chatCreate(user_ids: string[]) {
+	const chats: Prisma.chatCreateInput[] = [
 		{
-			title: 'Test Message 01',
+			title: 'Test Chat 01',
 			published: true,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 02',
+			title: 'Test Chat 02',
 			published: false,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 03',
+			title: 'Test Chat 03',
 			published: false,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 04',
+			title: 'Test Chat 04',
 			published: false,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 05',
+			title: 'Test Chat 05',
 			published: false,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 06',
+			title: 'Test Chat 06',
 			published: true,
-			user_id: userIds[1],
+			// user_id: user_ids[1],
 		},
 		{
-			title: 'Test Message 07',
+			title: 'Test Chat 07',
 			published: true,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 08',
+			title: 'Test Chat 08',
 			published: true,
-			user_id: userIds[1],
+			// user_id: user_ids[1],
 		},
 		{
-			title: 'Test Message 09',
+			title: 'Test Chat 09',
 			published: true,
-			user_id: userIds[0],
+			// user_id: user_ids[0],
 		},
 		{
-			title: 'Test Message 10 Test Message 10 Test Message 10',
+			title: 'Test Chat 10 Test Chat 10 Test Chat 10',
 			published: true,
-			user_id: userIds[1],
+			// user_id: user_ids[1],
 		},
-	];
+	] as any[];
 
-	for (const message of messages) {
-		await prisma.message.create({
-			data: message,
+	for (const chat of chats) {
+		await prisma.chat.create({
+			data: chat,
 		});
 	}
 }
@@ -97,12 +97,12 @@ async function messageCreate(userIds: string[]) {
  * メイン処理
  */
 async function main() {
-	await prisma.message.deleteMany();
+	await prisma.chat.deleteMany();
 	await prisma.user.deleteMany();
 
 	const users = await usersCreate();
 	const user_ids = users.map((user) => user.id);
-	await messageCreate(user_ids);
+	await chatCreate(user_ids);
 }
 
 main()

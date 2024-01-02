@@ -9,11 +9,12 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      message: {
+      chat: {
         Row: {
           createdAt: string
           id: string
           published: boolean
+          room_id: string
           title: string
           updatedAt: string
           user_id: string
@@ -22,6 +23,7 @@ export interface Database {
           createdAt?: string
           id?: string
           published?: boolean
+          room_id?: string
           title: string
           updatedAt?: string
           user_id: string
@@ -30,11 +32,20 @@ export interface Database {
           createdAt?: string
           id?: string
           published?: boolean
+          room_id?: string
           title?: string
           updatedAt?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "chat_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       user: {
         Row: {
