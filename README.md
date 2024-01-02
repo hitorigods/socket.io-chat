@@ -132,6 +132,12 @@ https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 
 https://zenn.dev/chot/articles/ddd2844ad3ae61
 
+#### ○ Supabase + useQuery
+
+https://makerkit.dev/blog/saas/supabase-react-query
+
+https://zenn.dev/yu_undefined/scraps/ee259f6dd080a5
+
 #### ○ uuidの是非
 
 https://techblog.raccoon.ne.jp/archives/1627262796.html
