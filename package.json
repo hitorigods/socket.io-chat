@@ -14,7 +14,8 @@
 		"prisma:pull": "dotenv -e .env.local -- prisma db pull dev",
 		"prisma:reset": "dotenv -e .env.local -- prisma migrate reset",
 		"prisma:generate": "dotenv -e .env.local -- prisma generate",
-		"prisma:seed": "dotenv -e .env.local -- prisma db seed"
+		"prisma:seed": "dotenv -e .env.local -- prisma db seed",
+		"supabase:types": "dotenv -e .env.local -- tsx supabase-types.ts"
 	},
 	"prisma": {
 		"seed": "tsx prisma/seed.ts"
@@ -39,6 +40,7 @@
 	},
 	"devDependencies": {
 		"@emotion/react": "^11.11.3",
+		"@tanstack/eslint-plugin-query": "^5.14.6",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/cors": "^2.8.17",
 		"@types/node": "^20.10.6",
@@ -55,6 +57,7 @@
 		"postcss": "^8",
 		"prettier": "^3.1.1",
 		"prisma": "^5.7.1",
+		"supabase": "^1.127.4",
 		"tailwindcss": "^3.3.0",
 		"ts-node": "^10.9.2",
 		"tsx": "^4.7.0",

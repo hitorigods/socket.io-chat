@@ -1,6 +1,6 @@
 'use client';
 
-import { Message } from '@/models/message';
+import { Message } from '@/schemas/message';
 import MessageItem from '@/components/message/MessageItem';
 
 interface Props {

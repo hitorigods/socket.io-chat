@@ -9,15 +9,15 @@ import supabase from '@/libs/supabase';
 import { Database } from '@/libs/supabase.types';
 
 export const fetchMessageDase = async () => {
-	try {
-		let { data: message, error } = await supabase
-			.from('message')
-			.select('title');
-		return message;
-	} catch (error) {
-		console.error(error);
-		return error;
+	const { data: message, error } = await supabase
+		.from('message')
+		.select('title');
+
+	if (error) {
+		throw new Error(error.message);
 	}
+
+	return message;
 };
 
 export default function Home() {

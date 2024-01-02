@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 
 import { socketAtom } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-import { Message } from '@/models/message';
+import { Message } from '@/schemas/message';
 
 type Props = {
 	userName: string;

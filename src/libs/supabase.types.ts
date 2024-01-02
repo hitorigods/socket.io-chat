@@ -9,45 +9,11 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      _prisma_migrations: {
-        Row: {
-          applied_steps_count: number
-          checksum: string
-          finished_at: string | null
-          id: string
-          logs: string | null
-          migration_name: string
-          rolled_back_at: string | null
-          started_at: string
-        }
-        Insert: {
-          applied_steps_count?: number
-          checksum: string
-          finished_at?: string | null
-          id: string
-          logs?: string | null
-          migration_name: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Update: {
-          applied_steps_count?: number
-          checksum?: string
-          finished_at?: string | null
-          id?: string
-          logs?: string | null
-          migration_name?: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Relationships: []
-      }
       message: {
         Row: {
           createdAt: string
           id: string
           published: boolean
-          room_id: string
           title: string
           updatedAt: string
           user_id: string
@@ -56,86 +22,9 @@ export interface Database {
           createdAt?: string
           id?: string
           published?: boolean
-          room_id: string
-          title: string
-          updatedAt: string
-          user_id: string
-        }
-        Update: {
-          createdAt?: string
-          id?: string
-          published?: boolean
-          room_id?: string
-          title?: string
-          updatedAt?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "message_room_id_fkey"
-            columns: ["room_id"]
-            isOneToOne: false
-            referencedRelation: "room"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "message_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      profile: {
-        Row: {
-          avaterUrl: string | null
-          createdAt: string
-          displayName: string | null
-          id: string
-          updatedAt: string
-          user_id: string
-        }
-        Insert: {
-          avaterUrl?: string | null
-          createdAt?: string
-          displayName?: string | null
-          id?: string
-          updatedAt: string
-          user_id: string
-        }
-        Update: {
-          avaterUrl?: string | null
-          createdAt?: string
-          displayName?: string | null
-          id?: string
-          updatedAt?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "profile_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      room: {
-        Row: {
-          createdAt: string
-          id: string
-          published: boolean
-          title: string
-          updatedAt: string
-        }
-        Insert: {
-          createdAt?: string
-          id?: string
-          published?: boolean
           title: string
           updatedAt?: string
+          user_id: string
         }
         Update: {
           createdAt?: string
@@ -143,6 +32,7 @@ export interface Database {
           published?: boolean
           title?: string
           updatedAt?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -151,24 +41,21 @@ export interface Database {
           createdAt: string
           email: string
           id: string
-          name: string
-          password: string | null
+          password: string
           updatedAt: string
         }
         Insert: {
           createdAt?: string
           email: string
           id?: string
-          name: string
-          password?: string | null
+          password: string
           updatedAt?: string
         }
         Update: {
           createdAt?: string
           email?: string
           id?: string
-          name?: string
-          password?: string | null
+          password?: string
           updatedAt?: string
         }
         Relationships: []

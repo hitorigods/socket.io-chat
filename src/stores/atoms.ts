@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import { Socket } from 'socket.io-client';
-import { Message } from '@/models/message';
+import { Message } from '@/schemas/message';
 
 // 状態：WebSocketコネクション
 export const socketAtom = atom(null as unknown as Socket);

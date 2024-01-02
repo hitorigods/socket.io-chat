@@ -86,6 +86,12 @@ https://github.com/privatenumber/tsx
 
 https://github.com/prisma/prisma/issues/7053
 
+### ■ supabase CLIで型ファイルを生成
+
+クラウド版なら以下から作成できる
+
+https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
+
 ## ▼ チートシート
 
 ### Tailwind CSS

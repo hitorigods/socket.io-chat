@@ -2,9 +2,9 @@
 
 import { io } from 'socket.io-client';
 
-import { Message, setRoomMessages } from '@/models/message';
+import { Message, SetMessages } from '@/schemas/message';
 
-const initializer = (socket: any, setRoomMessages: setRoomMessages) => {
+const initializer = (socket: any, setRoomMessages: SetMessages) => {
 	socket.on('connect', () => {
 		console.log('Connected to the server');
 	});
@@ -25,7 +25,7 @@ const initializer = (socket: any, setRoomMessages: setRoomMessages) => {
 };
 
 export function connectionSocket(
-	setRoomMessages: setRoomMessages,
+	setRoomMessages: SetMessages,
 	setSocket: (socket: any) => void
 ) {
 	const socket = io({ autoConnect: false });
