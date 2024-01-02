@@ -1,8 +1,13 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+
 import { FetchChat } from '@/schemas/chat';
 import ChatItem from '@/components/chat/ChatItem';
 import { useQueryChats } from '@/hooks/useQueryChats';
+import { chatItemsAtom } from '@/stores/atoms';
 
 export default function ChatList() {
 	const { status, data: chats, error } = useQueryChats();

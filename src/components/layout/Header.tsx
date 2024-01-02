@@ -4,10 +4,10 @@ import { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { socketAtom, userNameAtom } from '@/stores/atoms';
+import { socketAtom } from '@/stores/atoms';
 
 export default function Header() {
-	const [socket, setSocket] = useAtom(socketAtom);
+	const [socket] = useAtom(socketAtom);
 
 	const router = useRouter();
 

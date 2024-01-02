@@ -1,5 +1,3 @@
-'use client';
-
 import { Suspense, useEffect } from 'react';
 
 import Heading from '@/components/Heading';
