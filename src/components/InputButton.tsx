@@ -16,7 +16,7 @@ export default function InputButton({
 	onChange,
 }: Props) {
 	return (
-		<label className="flex w-[400px] overflow-hidden rounded bg-white">
+		<label className="flex w-[500px] overflow-hidden rounded bg-white">
 			<input
 				className="flex-1 bg-transparent p-3 tracking-widest text-dark focus:outline-none"
 				name={name}
@@ -26,7 +26,7 @@ export default function InputButton({
 				autoComplete={'off'}
 			/>
 			<button
-				className="w-[75px] bg-primary px-4 py-3 text-lg font-bold tracking-widest text-white transition-all duration-300 ease-in-out hover:bg-secondary disabled:cursor-not-allowed disabled:bg-disabled"
+				className="w-[100px] bg-primary py-3 indent-[.5em] text-lg font-bold tracking-[.5em] text-white transition-all duration-300 ease-in-out hover:bg-secondary disabled:cursor-not-allowed disabled:bg-disabled"
 				disabled={disabled}
 			>
 				{label}

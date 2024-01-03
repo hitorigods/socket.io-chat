@@ -18,14 +18,16 @@ export default function ChatList() {
 
 	return chats?.length ? (
 		<section>
-			<ul className="grid gap-[10px]">
-				{chats.map((chat: FetchChat) => (
-					<ChatItem
-						key={chat.id}
-						chat={chat}
-					/>
-				))}
-			</ul>
+			<div className="scrollbar max-h-[calc(100vh-420px)] overflow-y-auto overscroll-y-none px-[40px]">
+				<ul className="grid gap-[10px]">
+					{chats.map((chat: FetchChat) => (
+						<ChatItem
+							key={chat.id}
+							chat={chat}
+						/>
+					))}
+				</ul>
+			</div>
 		</section>
 	) : null;
 }

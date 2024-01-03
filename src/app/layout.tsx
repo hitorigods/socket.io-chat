@@ -26,7 +26,7 @@ export default function RootLayout({
 					<JotaiProvider>
 						<div className="grid min-h-screen grid-rows-[50px_1fr_50px]">
 							<Header />
-							<main className="grid place-content-center place-items-center gap-[40px]">
+							<main className="grid place-items-center gap-[40px] px-[20px] py-[50px]">
 								{children}
 							</main>
 							<Footer />

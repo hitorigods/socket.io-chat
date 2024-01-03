@@ -6,8 +6,10 @@ import ConnectForm from '@/components/ConnectForm';
 export default function Home() {
 	return (
 		<Suspense fallback="loading...">
-			<Heading title="Top" />
-			<ConnectForm />
+			<div className="grid gap-[50px]">
+				<Heading title="Top" />
+				<ConnectForm />
+			</div>
 		</Suspense>
 	);
 }

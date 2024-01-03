@@ -6,8 +6,10 @@ import ChatArea from '@/components/chat/ChatArea';
 export default function Rooms() {
 	return (
 		<Suspense fallback="loading...">
-			<Heading title="Rooms" />
-			<ChatArea />
+			<div className="grid h-full content-between">
+				<Heading title="Rooms" />
+				<ChatArea />
+			</div>
 		</Suspense>
 	);
 }

@@ -20,7 +20,7 @@ export default function ChatArea() {
 
 	return (
 		<>
-			<div className="grid gap-[50px]">
+			<div className="grid content-between gap-[40px]">
 				<ChatList />
 				<ChatForm userName={userName} />
 			</div>
