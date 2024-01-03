@@ -22,7 +22,7 @@ export default function ChatList() {
 
 	return chats?.length ? (
 		<section>
-			<ul className="grid gap-[1px] overflow-hidden rounded shadow-md">
+			<ul className="grid gap-[10px]">
 				{chats.map((chat: FetchChat) => (
 					<ChatItem
 						key={chat.id}

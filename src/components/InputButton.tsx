@@ -26,7 +26,7 @@ export default function InputButton({
 				autoComplete={'off'}
 			/>
 			<button
-				className="w-[75px] bg-primary px-4 py-3 text-lg font-bold tracking-widest text-white transition-all duration-300 ease-in-out hover:bg-secondary disabled:cursor-not-allowed disabled:bg-gray-400"
+				className="w-[75px] bg-primary px-4 py-3 text-lg font-bold tracking-widest text-white transition-all duration-300 ease-in-out hover:bg-secondary disabled:cursor-not-allowed disabled:bg-disabled"
 				disabled={disabled}
 			>
 				{label}

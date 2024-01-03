@@ -17,6 +17,7 @@ const config: Config = {
 				text: '#fff',
 				dark: '#121218',
 				line: '#801336',
+				disabled: '#605f71',
 			},
 			fontFamily: {
 				default: ['SF Mono', 'Noto Sans JP Variable', 'sans-serif'],
