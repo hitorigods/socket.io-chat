@@ -4,7 +4,11 @@ import React, { MouseEventHandler } from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
 
-import { atomIsEditedChat } from '@/stores/atoms';
+import {
+	atomInputChat,
+	atomEditedChat,
+	atomIsEditedChat,
+} from '@/stores/atoms';
 import { useMutateChat } from '@/hooks/useQueryChats';
 import { useDateLocale } from '@/hooks/useDateLocale';
 import { FetchChat } from '@/schemas/chat';
@@ -15,16 +19,16 @@ interface Props {
 
 export default function ChatItem({ chat }: Props) {
 	const { deleteMutationChat } = useMutateChat();
+	const [stateInputChat, setStateInputChat] = useAtom(atomInputChat);
+	const [stateEditedChat, setStateEditedChat] = useAtom(atomEditedChat);
 	const [stateIsEditedChat, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 
 	const editedHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
-		console.log('stateIsEditedChat: ', stateIsEditedChat);
 
 		setStateIsEditedChat(true);
-		// const newChat = { ...chat, title: editedTitle };
-		// updateMutationChat.mutate(newChat);
-		// setEditedTitle('');
+		setStateEditedChat(chat);
+		setStateInputChat(chat.title);
 	};
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = (event) => {

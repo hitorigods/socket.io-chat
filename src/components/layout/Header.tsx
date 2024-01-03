@@ -23,7 +23,7 @@ export default function Header() {
 		event.preventDefault();
 		stateSocket.disconnect();
 		setStateUserName('');
-		setStateEditedChat('');
+		setStateEditedChat(null);
 		setStateIsEditedChat(false);
 		router.push('/');
 	};

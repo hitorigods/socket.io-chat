@@ -4,6 +4,7 @@ type Props = {
 	placeholder?: string;
 	value: string;
 	disabled?: boolean;
+	isEdited?: boolean;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -13,6 +14,7 @@ export default function InputButton({
 	placeholder,
 	value,
 	disabled,
+	isEdited,
 	onChange,
 }: Props) {
 	return (
@@ -26,8 +28,9 @@ export default function InputButton({
 				autoComplete={'off'}
 			/>
 			<button
-				className="w-[100px] bg-primary py-3 indent-[.5em] text-lg font-bold tracking-[.5em] text-white transition-all duration-300 ease-in-out hover:bg-secondary disabled:cursor-not-allowed disabled:bg-disabled"
+				className="w-[100px] bg-primary py-3 indent-[.5em] text-lg font-bold tracking-[.5em] text-white transition-all duration-300 ease-in-out hover:bg-secondary disabled:cursor-not-allowed disabled:bg-disabled data-[isEdited=true]:bg-secondary data-[isEdited=true]:hover:bg-primary data-[isEdited=true]:disabled:bg-disabled"
 				disabled={disabled}
+				data-isEdited={isEdited}
 			>
 				{label}
 			</button>

@@ -17,10 +17,14 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ 雑感
 
-- リアルタイム通信はSocket.IOでなくてもSupabaseのリアルタイム機能で十分だったのでは…？
+- Socket.ioを試す目的で始めたが、リアルタイム通信はSocket.IOでなくてもSupabaseのリアルタイム機能で十分だったのでは…？
+  - ログイン中のユーザーとか活動中のルームとかのリアルタイム判定とかで使うとか？
 - データの取得をフロントエンドで絞り混んでいるがバックエンド側で取得できるようにすべき（Supabaseのカスタムフック？）
 - フォルダ構成の手探り感が…。
-  - 細かく分けているがutil/hooks/libs/stores/shemasをもっとまとめたりコンポーネントに並列でまとめるとかのほうが運用しやすい？
+  - util/hooks/libs/stores/shemasなど細かく分けているがもっとまとめたりコンポーネント依存を元にフォルダでまとめるとかのほうが運用しやすい？
+- Supabaseクラウド版で開発していたが3日で無料枠制限に到達…。ローカル版で開発必須だった
+- 次回Next.jsでバックエンド使うならT3スタックで始めたい
+  - Prismaをうまく活用できてないのとtRPCも試したい
 
 ---
 
@@ -30,20 +34,21 @@ https://hitorigods-socket-io-next.onrender.com/
    1. ⭕create-next-app
    2. ⭕Socket部分のサーバーサイド
    3. ⭕Socket部分のクライアントサイド
-   4. ⭕デプロイ
+   4. ⭕Renderにデプロイ
    5. ⭕フォルダ構成を整理
    6. ⭕JotaiにDevtoolsを導入
    7. ⭕ルームに直アクセスでTOPにリダイレクト
    8. ⭕TOPに戻ったときにソケットを切断する
    9. チャットの編集・削除機能
+      1. 入力フォームをまたぐのでチャット内容のAtom用意
    10. 投稿が自分か他人か判定してレイアウト変える
    11. チャット内容にバリデーション（Zod）
    12. ログインフォームにバリデーション（Zod）
    13. Socket機能を一つにまとめて分離
-   14. 見た目を整える
+   14. チャット更新の度に最新にスクロール移動
+   15. 見た目を整える
        1. ⭕ヘッダー・フッター設置
        2. ⭕TOPへ戻るボタン
-       3. チャット部分をスクロールバーにして更新の度に最新に移動
 2. データベース
    1. ⭕ORM（prisma）導入
    2. ⭕Supabase用意
@@ -51,12 +56,13 @@ https://hitorigods-socket-io-next.onrender.com/
    4. ⭕seedデータ登録
    5. ⭕フェッチ（TanStack Query）実装
    6. ⭕データベースからチャット復元
-   7. ⭕データベース更新
-   8. ログインユーザーを登録
-   9. RLS設定
-   10. 所有ユーザーのみチャット削除・更新
-   11. ルームID用のデータベースを作る
-   12. プロフィールID用のデータベースを作る
+   7. ⭕データベース操作
+   8. ⭕データベース更新されたらupdateAtを更新する（SQL）
+   9. ログインユーザーを登録
+   10. RLS設定
+   11. 所有ユーザーのみチャット削除・更新
+   12. ルームID用のデータベースを作る
+   13. プロフィールID用のデータベースを作る
 3. 認証機能
    1. メールアドレス認証
    2. OAuth実装
@@ -72,8 +78,9 @@ https://hitorigods-socket-io-next.onrender.com/
    5. サーバー監視サービスでRendar/Supabaseを落ちなくする
 5. 💀**BugFix**💀
    1. ⭕ビルドデータでリアルタイム更新できない（ウィンドウの再フォーカスでは更新される）
-      1. ⇒ `useQuery`の`refetchInterval`を指定 ※run dev状態では問題なかったのになぜ？
-      2. ⇒ `refetchInterval`の通信コストも本来は望ましくない？
+      1. ⇒ `useQuery`のオプション`refetchInterval`で対処
+         1. ⇒ run dev状態では問題なかったのになぜ？
+         2. ⇒ `refetchInterval`の通信コストも本来は望ましくない？
 
 ---
 
@@ -172,6 +179,10 @@ https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 
 https://supabase.com/docs/guides/cli/getting-started?platform=windows
 
+### ■ Snaplet
+
+https://docs.snaplet.dev/recipes/supabase
+
 ### ■ React Query
 
 https://tanstack.com/query/v4/docs/react/installation
@@ -212,11 +223,15 @@ https://laboradian.com/uptime-robot/
 
 https://zenn.dev/chot/articles/ddd2844ad3ae61
 
+https://zenn.dev/yu_undefined/scraps/ee259f6dd080a5
+
 #### ○ Supabase + useQuery
 
 https://makerkit.dev/blog/saas/supabase-react-query
 
-https://zenn.dev/yu_undefined/scraps/ee259f6dd080a5
+#### ○ Supabase の DB で行が更新されたら updated_at も同時に更新する
+
+https://zenn.dev/panda_program/scraps/b97575650ef08c
 
 #### ○ uuidの是非
 

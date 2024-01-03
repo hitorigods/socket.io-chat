@@ -62,7 +62,7 @@ export const useMutateChat = () => {
    * チャットデータを更新する
    */
   const updateMutationChat = useMutation({
-    mutationFn: async (chat: EditedChat) => {
+    mutationFn: async (chat: FetchChat) => {
       const { data, error } = await supabase
         .from("chat")
         .update({ title: chat.title })
@@ -82,11 +82,11 @@ export const useMutateChat = () => {
         );
         queryClient.setQueryData(["query:chats"], newChats);
       }
-      setEditedChat("");
+      setEditedChat(null);
     },
     onError(error: any) {
       console.error(error.message);
-      setEditedChat("");
+      setEditedChat(null);
     },
   });
 
@@ -112,11 +112,11 @@ export const useMutateChat = () => {
           previousTodos.filter((chat) => chat.id !== variables),
         );
       }
-      setEditedChat("");
+      setEditedChat(null);
     },
     onError(error: any) {
       console.error(error.message);
-      setEditedChat("");
+      setEditedChat(null);
     },
   });
 
