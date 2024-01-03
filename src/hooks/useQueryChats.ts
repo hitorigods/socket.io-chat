@@ -6,6 +6,8 @@ import { FetchChat, EditedChat } from '@/schemas/chat';
 import { inputChatAtom } from '@/stores/atoms';
 
 export const useQueryChats = () => {
+	// const queryClient = useQueryClient();
+	// queryClient.invalidateQueries({ queryKey: ['chats'] });
 	const getChats = async () => {
 		const { data, error } = await supabase
 			.from('chat')
@@ -20,6 +22,7 @@ export const useQueryChats = () => {
 		queryKey: ['chats'],
 		queryFn: getChats,
 		staleTime: Infinity,
+		refetchInterval: 250,
 	});
 };
 
@@ -43,6 +46,7 @@ export const useMutateChat = () => {
 			if (previousChats && result != null) {
 				queryClient.setQueryData(['chats'], [...previousChats, result[0]]);
 			}
+			console.log('After getQueryData:', queryClient.getQueryData(['chats']));
 		},
 		onError(error: any) {
 			console.error(error.message);
@@ -60,7 +64,9 @@ export const useMutateChat = () => {
 				.eq('id', chat.id)
 				.select();
 			if (error) throw new Error(error.message);
-			console.log(data);
+			console.log('updateMutationChat useMutation data:', data);
+
+			queryClient.invalidateQueries({ queryKey: ['chats'] });
 			return data;
 		},
 		onSuccess: (result: FetchChat[], variables: FetchChat) => {

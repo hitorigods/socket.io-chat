@@ -7,11 +7,15 @@
 1. ログイン認証をGoogle認証に
 1. 簡単なRLS
 
+---
+
 ## ▼ デプロイ
 
 #### ○ Render
 
 https://hitorigods-socket-io-next.onrender.com/
+
+---
 
 ## ▼ TODO
 
@@ -27,13 +31,14 @@ https://hitorigods-socket-io-next.onrender.com/
    9. ⭕TOPに戻ったときにソケットを切断する
    10. 投稿が自分か他人か判定してレイアウト変える
    11. ルームIDで複数チャットできるように
-   12. 見た目を整える
+   12. チャット内容にバリデーション（Zod）
+   13. ログインフォームにバリデーション（Zod）
+   14. 見た目を整える
        1. ⭕ヘッダー・フッター設置
        2. ⭕TOPへ戻るボタン
        3. チャット部分をスクロールバーにして更新の度に最新に移動
-   13. BugFix
-       1. チャット0件のときに「0」が出ているバグ
-       2. ビルドデータでリアルタイム更新できない
+   15. 💀**BugFix**💀
+       1. ⭕ビルドデータでリアルタイム更新できない（ウィンドウの再フォーカスでは更新される） ⇒ `useQuery`の`refetchInterval`を指定 ※run dev状態では問題なかったのになぜ？`refetchInterval`の通信コストも本来は望ましくない？
 2. データベース
    1. ⭕ORM（prisma）導入
    2. ⭕Supabase用意
@@ -47,7 +52,7 @@ https://hitorigods-socket-io-next.onrender.com/
    10. 所有ユーザーのみチャット削除・更新
    11. ルームID用のデータベースを作る
    12. プロフィールID用のデータベースを作る
-   13. BugFix
+   13. 💀**BugFix**💀
 3. 認証機能
    1. メールアドレス認証
    2. OAuth実装
@@ -55,7 +60,9 @@ https://hitorigods-socket-io-next.onrender.com/
    4. Github
    5. ログインエラー通知
    6. 投稿者名をニックネーム編集可能に
-   7. BugFix
+   7. 💀**BugFix**💀
+
+---
 
 ## ▼ 備忘録
 
@@ -98,9 +105,7 @@ https://github.com/prisma/prisma/issues/7053
 
 ### ■ supabase CLIで型ファイルを生成
 
-npm scriptsを用意してコマンドを叩くが、SupabaseプロジェクトIDをgitに残したくない
-ので、 `.env.local`の環境変数`SUPABASE_PROJECT_ID`を用意して、`tsx`で
-`supabase-types.ts`を実行
+npm scriptsを用意してコマンドを叩くが、SupabaseプロジェクトIDをgitに残したくないので、 `.env.local`の環境変数`SUPABASE_PROJECT_ID`を用意して、`tsx`で `supabase-types.ts`を実行
 
 ```
 $ pnpm run supabase:types
@@ -122,18 +127,35 @@ https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intr
 
 ### ■ PrismaでseedファイルをプッシュするとSupabaseのパーミッションがおかしくなることが多発
 
-今のところプロジェクト作り直すしかどうしようもないので、GUIからCSVファイルをエク
-スポート/インポートで凌ぐ・・・
+今のところプロジェクト作り直すしかどうしようもないので、GUIからCSVファイルをエクスポート/インポートで凌ぐ・・・
 
 https://github.com/supabase/supabase/issues/4883
 
+---
+
 ## ▼ チートシート
 
-### Tailwind CSS
+### ■ Tailwind CSS
 
 https://tailwindcomponents.com/cheatsheet/
 
 https://tailwindcomponents.com/
+
+### ■ prisma チートシート (CLI)
+
+https://qiita.com/ryskBonn92/items/c45e22ce5f37d82ec8de
+
+### ■ Prismaデコレーター一覧
+
+https://qiita.com/curry__30/items/95d3655fa23d84b959a3
+
+## ▼ 公式
+
+### ■ React Query
+
+https://tanstack.com/query/v4/docs/react/installation
+
+---
 
 ## ▼ 参考
 
@@ -147,6 +169,10 @@ https://qiita.com/ochiochi/items/102d14649396d351ab80
 
 https://qiita.com/okumurakengo/items/92ad5aacd08c4e25ebeb
 
+#### ○ React Queryと組み合わせる
+
+https://tkdodo.eu/blog/using-web-sockets-with-react-query
+
 #### ○ サーバー監視サービス
 
 #### Uptime Robot
@@ -156,14 +182,6 @@ https://uptimerobot.com/
 https://laboradian.com/uptime-robot/
 
 ### ■ DB系
-
-#### ○ prisma チートシート (CLI)
-
-https://qiita.com/ryskBonn92/items/c45e22ce5f37d82ec8de
-
-#### ○ Prismaデコレーター一覧
-
-https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 
 #### ○ Supabase入門
 

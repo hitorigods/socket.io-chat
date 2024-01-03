@@ -1,37 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-
+import { useEffect } from 'react';
 import { FetchChat } from '@/schemas/chat';
 import ChatItem from '@/components/chat/ChatItem';
 import { useQueryChats } from '@/hooks/useQueryChats';
-import { chatItemsAtom } from '@/stores/atoms';
 
 export default function ChatList() {
-	const { status, data: chats, error } = useQueryChats();
+	const { isLoading, isError, data: chats, error } = useQueryChats();
 
-	if (status === 'pending') {
+	useEffect(() => {
+		console.log('useEffect chats:', chats);
+	}, [chats]);
+
+	if (isLoading) {
 		return <span>Loading...</span>;
 	}
 
-	if (status === 'error') {
+	if (isError) {
 		return <span>Error: {error.message}</span>;
 	}
 
-	return (
+	return chats?.length ? (
 		<section>
-			{chats.length && (
-				<ul className="grid gap-[1px] overflow-hidden rounded shadow-md">
-					{chats.map((chat: FetchChat) => (
-						<ChatItem
-							key={chat.id}
-							chat={chat}
-						/>
-					))}
-				</ul>
-			)}
+			<ul className="grid gap-[1px] overflow-hidden rounded shadow-md">
+				{chats.map((chat: FetchChat) => (
+					<ChatItem
+						key={chat.id}
+						chat={chat}
+					/>
+				))}
+			</ul>
 		</section>
-	);
+	) : null;
 }
