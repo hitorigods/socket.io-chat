@@ -5,10 +5,8 @@ import supabase from '@/libs/supabase';
 import { FetchChat, EditedChat } from '@/schemas/chat';
 import { inputChatAtom } from '@/stores/atoms';
 
-export const useQueryChats = () => {
-	// const queryClient = useQueryClient();
-	// queryClient.invalidateQueries({ queryKey: ['chats'] });
-	const getChats = async () => {
+export const useQueryChat = () => {
+	const selectorQuery = async () => {
 		const { data, error } = await supabase
 			.from('chat')
 			.select('*')
@@ -18,12 +16,15 @@ export const useQueryChats = () => {
 		}
 		return data;
 	};
-	return useQuery<FetchChat[], Error>({
-		queryKey: ['chats'],
-		queryFn: getChats,
+
+	const getAllChats = useQuery<FetchChat[], Error>({
+		queryKey: ['query:chats'],
+		queryFn: selectorQuery,
 		staleTime: Infinity,
 		refetchInterval: 250,
 	});
+
+	return { getAllChats };
 };
 
 export const useMutateChat = () => {
@@ -42,11 +43,15 @@ export const useMutateChat = () => {
 			return data;
 		},
 		onSuccess: (result: FetchChat[]) => {
-			const previousChats = queryClient.getQueryData<FetchChat[]>(['chats']);
+			const previousChats = queryClient.getQueryData<FetchChat[]>([
+				'query:chats',
+			]);
 			if (previousChats && result != null) {
-				queryClient.setQueryData(['chats'], [...previousChats, result[0]]);
+				queryClient.setQueryData(
+					['query:chats'],
+					[...previousChats, result[0]]
+				);
 			}
-			console.log('After getQueryData:', queryClient.getQueryData(['chats']));
 		},
 		onError(error: any) {
 			console.error(error.message);
@@ -64,18 +69,18 @@ export const useMutateChat = () => {
 				.eq('id', chat.id)
 				.select();
 			if (error) throw new Error(error.message);
-			console.log('updateMutationChat useMutation data:', data);
-
-			queryClient.invalidateQueries({ queryKey: ['chats'] });
+			queryClient.invalidateQueries({ queryKey: ['query:chats'] });
 			return data;
 		},
 		onSuccess: (result: FetchChat[], variables: FetchChat) => {
-			const previousTodos = queryClient.getQueryData<FetchChat[]>(['chats']);
+			const previousTodos = queryClient.getQueryData<FetchChat[]>([
+				'query:chats',
+			]);
 			if (previousTodos && result != null) {
 				const newChats = previousTodos.map((chat) =>
 					chat.id === variables.id ? result[0] : chat
 				);
-				queryClient.setQueryData(['chats'], newChats);
+				queryClient.setQueryData(['query:chats'], newChats);
 			}
 			setInputChat('');
 		},
@@ -98,10 +103,12 @@ export const useMutateChat = () => {
 			return data;
 		},
 		onSuccess: (_, variables) => {
-			const previousTodos = queryClient.getQueryData<FetchChat[]>(['chats']);
+			const previousTodos = queryClient.getQueryData<FetchChat[]>([
+				'query:chats',
+			]);
 			if (previousTodos) {
 				queryClient.setQueryData(
-					['chats'],
+					['query:chats'],
 					previousTodos.filter((chat) => chat.id !== variables)
 				);
 			}

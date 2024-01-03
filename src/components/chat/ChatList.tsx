@@ -1,23 +1,19 @@
 'use client';
 
-import { useEffect } from 'react';
 import { FetchChat } from '@/schemas/chat';
 import ChatItem from '@/components/chat/ChatItem';
-import { useQueryChats } from '@/hooks/useQueryChats';
+import { useQueryChat } from '@/hooks/useQueryChats';
 
 export default function ChatList() {
-	const { isLoading, isError, data: chats, error } = useQueryChats();
-
-	useEffect(() => {
-		console.log('useEffect chats:', chats);
-	}, [chats]);
+	const { getAllChats } = useQueryChat();
+	const { isLoading, isError, data: chats, error } = getAllChats;
 
 	if (isLoading) {
-		return <span>Loading...</span>;
+		return <div>Loading...</div>;
 	}
 
 	if (isError) {
-		return <span>Error: {error.message}</span>;
+		return <div>Error: {error.message}</div>;
 	}
 
 	return chats?.length ? (

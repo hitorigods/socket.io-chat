@@ -10,7 +10,6 @@ interface Props {
 
 export default function ChatItem({ chat }: Props) {
 	const utcDate = new Date(chat.updatedAt);
-	// 日本のタイムゾーンに変換
 	const localDate = utcDate.toLocaleString('ja-JP', {
 		year: 'numeric',
 		month: '2-digit',
@@ -23,7 +22,7 @@ export default function ChatItem({ chat }: Props) {
 
 	return (
 		<>
-			<li className="flex place-items-center gap-[10px]">
+			<li className="flex place-items-center gap-[15px]">
 				<div className="">
 					<Image
 						src="/favicon.ico"
@@ -39,6 +38,14 @@ export default function ChatItem({ chat }: Props) {
 						<p className="text-xs">{chat.user_id}</p>
 						<p className="text-xs">{localDate}</p>
 					</div>
+				</div>
+				<div className="grid w-[60px] gap-[1px] overflow-hidden rounded-md">
+					<button className="grid bg-dark p-[10px] text-xs tracking-widest text-white">
+						編集
+					</button>
+					<button className="grid bg-danger p-[10px] text-xs tracking-widest text-white">
+						削除
+					</button>
 				</div>
 			</li>
 		</>

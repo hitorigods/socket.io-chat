@@ -28,7 +28,7 @@ export default function ChatForm({ userName }: Props) {
 			room_id: crypto.randomUUID(),
 		};
 
-		socket.emit('chat', newChat);
+		socket.emit('socket:chat', newChat);
 		console.log(`send client: chat: ${newChat}`);
 
 		setInputChat('');
