@@ -18,7 +18,7 @@ export default function ChatList() {
 
 	return chats?.length ? (
 		<section>
-			<div className="scrollbar max-h-[calc(100vh-420px)] overflow-y-auto overscroll-y-none px-[40px]">
+			<div className="scrollbar h-[calc(100vh-420px)] overflow-y-auto overscroll-y-none px-[40px]">
 				<ul className="grid gap-[10px]">
 					{chats.map((chat: FetchChat) => (
 						<ChatItem

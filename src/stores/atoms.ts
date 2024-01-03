@@ -1,19 +1,19 @@
-import { atom } from 'jotai';
-import { Socket } from 'socket.io-client';
-import { FetchChat } from '@/schemas/chat';
+import { atom } from "jotai";
+import { Socket } from "socket.io-client";
+import { FetchChat } from "@/schemas/chat";
 
 // 状態：WebSocketコネクション
-export const socketAtom = atom(null as unknown as Socket);
-socketAtom.debugLabel = 'socketAtom';
-
-// 状態：メッセージ一覧
-export const chatItemsAtom = atom<FetchChat[]>([]);
-chatItemsAtom.debugLabel = 'chatItemsAtom';
+export const atomSocket = atom(null as unknown as Socket);
+atomSocket.debugLabel = "atomSocket";
 
 // 状態：ユーザー名
-export const userNameAtom = atom('');
-userNameAtom.debugLabel = 'userNameAtom';
+export const atomUserName = atom("");
+atomUserName.debugLabel = "atomUserName";
 
-// 状態：チャット内容
-export const inputChatAtom = atom('');
-inputChatAtom.debugLabel = 'inputChatAtom';
+// 状態：チャットの編集内容
+export const atomEditedChat = atom("");
+atomEditedChat.debugLabel = "atomEditedChat";
+
+// 状態：チャット編集中の判定
+export const atomIsEditedChat = atom(false);
+atomIsEditedChat.debugLabel = "atomIsEditedChat";

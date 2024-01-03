@@ -4,17 +4,17 @@ import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
-import { useQueryClient, QueryClient } from '@tanstack/react-query';
+// import { useQueryClient, QueryClient } from '@tanstack/react-query';
 
 import InputButton from '@/components/InputButton';
-import { socketAtom, userNameAtom } from '@/stores/atoms';
+import { atomSocket, atomUserName } from '@/stores/atoms';
 import { FetchChat } from '@/schemas/chat';
-import { useMutateChat } from '@/hooks/useQueryChats';
+// import { useMutateChat } from '@/hooks/useQueryChats';
 
 const initializer = (
-	socket: any,
-	createMutationChat: any,
-	queryClient: QueryClient
+	socket: any
+	// createMutationChat: any,
+	// queryClient: QueryClient
 ) => {
 	socket.on('connect', () => {
 		console.log('Connected to the server');
@@ -25,21 +25,22 @@ const initializer = (
 	});
 
 	socket.on(
-		'chat',
+		'socket:chat',
 		(newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>) => {
 			console.log(`ConnectForm received: ${newChat.title}`);
-			createMutationChat.mutate(newChat);
+			// チャット更新はuseQuery側でするのとサーバー側でDBに保存するのでコメントアウト
+			// createMutationChat.mutate(newChat);
 		}
 	);
 };
 
 export default function ConnectForm() {
-	const { createMutationChat } = useMutateChat();
+	// const { createMutationChat } = useMutateChat();
 
-	const [userName, setUserName] = useAtom(userNameAtom);
-	const [, setSocket] = useAtom(socketAtom);
+	const [stateUserName, setStateUserName] = useAtom(atomUserName);
+	const [, setStateSocket] = useAtom(atomSocket);
 	const router = useRouter();
-	const queryClient = useQueryClient();
+	// const queryClient = useQueryClient();
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
@@ -50,15 +51,16 @@ export default function ConnectForm() {
 
 		const socket = io({ autoConnect: false });
 		socket.connect();
-		initializer(socket, createMutationChat, queryClient);
-		setSocket(socket);
+		initializer(socket);
+		// initializer(socket, createMutationChat, queryClient);
+		setStateSocket(socket);
 
 		router.push('/rooms');
 	};
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
 		event.preventDefault();
-		setUserName(event.target.value);
+		setStateUserName(event.target.value);
 	};
 
 	return (
@@ -67,8 +69,8 @@ export default function ConnectForm() {
 				label="接続"
 				name="name"
 				placeholder="表示名を入力してください"
-				value={userName}
-				disabled={!userName}
+				value={stateUserName}
+				disabled={!stateUserName}
 				onChange={handleChange}
 			/>
 		</form>

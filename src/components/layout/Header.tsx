@@ -4,16 +4,27 @@ import { MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { socketAtom } from '@/stores/atoms';
+import {
+	atomSocket,
+	atomUserName,
+	atomEditedChat,
+	atomIsEditedChat,
+} from '@/stores/atoms';
 
 export default function Header() {
-	const [socket] = useAtom(socketAtom);
+	const [stateSocket] = useAtom(atomSocket);
+	const [, setStateUserName] = useAtom(atomUserName);
+	const [, setStateEditedChat] = useAtom(atomEditedChat);
+	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 
 	const router = useRouter();
 
 	const backHandle = async (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		socket.disconnect();
+		stateSocket.disconnect();
+		setStateUserName('');
+		setStateEditedChat('');
+		setStateIsEditedChat(false);
 		router.push('/');
 	};
 
@@ -21,7 +32,7 @@ export default function Header() {
 		<>
 			<header className="sticky top-0 grid place-content-center place-items-center bg-dark/50">
 				<p className="text-base uppercase tracking-wider">
-					<button onClick={backHandle}>Header</button>
+					<button onClick={backHandle}>Socket.io Chat App</button>
 				</p>
 			</header>
 		</>

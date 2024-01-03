@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 
 import supabase from "@/libs/supabase";
 import { EditedChat, FetchChat } from "@/schemas/chat";
-import { inputChatAtom } from "@/stores/atoms";
+import { atomEditedChat } from "@/stores/atoms";
 
 export const useQueryChat = () => {
   const selectorQuery = async () => {
@@ -29,7 +29,7 @@ export const useQueryChat = () => {
 
 export const useMutateChat = () => {
   const queryClient = useQueryClient();
-  const [, setInputChat] = useAtom(inputChatAtom);
+  const [, setEditedChat] = useAtom(atomEditedChat);
 
   /**
    * チャットデータを作成する
@@ -64,7 +64,7 @@ export const useMutateChat = () => {
   const updateMutationChat = useMutation({
     mutationFn: async (chat: EditedChat) => {
       const { data, error } = await supabase
-        .from("chats")
+        .from("chat")
         .update({ title: chat.title })
         .eq("id", chat.id)
         .select();
@@ -82,11 +82,11 @@ export const useMutateChat = () => {
         );
         queryClient.setQueryData(["query:chats"], newChats);
       }
-      setInputChat("");
+      setEditedChat("");
     },
     onError(error: any) {
       console.error(error.message);
-      setInputChat("");
+      setEditedChat("");
     },
   });
 
@@ -96,7 +96,7 @@ export const useMutateChat = () => {
   const deleteMutationChat = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase
-        .from("chats")
+        .from("chat")
         .delete()
         .eq("id", id);
       if (error) throw new Error(error.message);
@@ -112,11 +112,11 @@ export const useMutateChat = () => {
           previousTodos.filter((chat) => chat.id !== variables),
         );
       }
-      setInputChat("");
+      setEditedChat("");
     },
     onError(error: any) {
       console.error(error.message);
-      setInputChat("");
+      setEditedChat("");
     },
   });
 
