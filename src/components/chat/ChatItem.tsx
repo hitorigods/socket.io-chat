@@ -40,10 +40,10 @@ export default function ChatItem({ chat }: Props) {
 					</div>
 				</div>
 				<div className="grid w-[60px] gap-[1px] overflow-hidden rounded-md">
-					<button className="grid bg-dark p-[10px] text-xs tracking-widest text-white">
+					<button className="grid bg-dark p-[10px] text-xs font-bold tracking-widest text-white">
 						編集
 					</button>
-					<button className="grid bg-danger p-[10px] text-xs tracking-widest text-white">
+					<button className="grid bg-danger p-[10px] text-xs font-bold tracking-widest text-white">
 						削除
 					</button>
 				</div>

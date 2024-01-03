@@ -144,6 +144,10 @@ https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intr
 
 https://github.com/supabase/supabase/issues/4883
 
+↓この辺かも？
+
+https://supabase.com/docs/guides/cli/managing-environments
+
 ---
 
 ## ▼ チートシート
@@ -164,9 +168,17 @@ https://qiita.com/curry__30/items/95d3655fa23d84b959a3
 
 ## ▼ 公式
 
+### ■ Supabase CLI
+
+https://supabase.com/docs/guides/cli/getting-started?platform=windows
+
 ### ■ React Query
 
 https://tanstack.com/query/v4/docs/react/installation
+
+### ■ Socket.io
+
+https://socket.io/docs/v4/
 
 ---
 
