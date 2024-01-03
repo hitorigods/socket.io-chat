@@ -7,5 +7,13 @@
   "semi": true,
 	"proseWrap": "always",
 	"singleAttributePerLine" : true,
-	"endOfLine": "lf"
+	"endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 9999
+      }
+    }
+  ]
 }

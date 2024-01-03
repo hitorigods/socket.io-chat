@@ -4,13 +4,18 @@ import { ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
+import { useQueryClient, QueryClient } from '@tanstack/react-query';
 
 import InputButton from '@/components/InputButton';
 import { socketAtom, userNameAtom } from '@/stores/atoms';
 import { FetchChat } from '@/schemas/chat';
 import { useMutateChat } from '@/hooks/useQueryChats';
 
-const initializer = (socket: any, createMutationChat: any) => {
+const initializer = (
+	socket: any,
+	createMutationChat: any,
+	queryClient: QueryClient
+) => {
 	socket.on('connect', () => {
 		console.log('Connected to the server');
 	});
@@ -22,6 +27,7 @@ const initializer = (socket: any, createMutationChat: any) => {
 	socket.on(
 		'chat',
 		(newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>) => {
+			console.log(`ConnectForm received: ${newChat.title}`);
 			createMutationChat.mutate(newChat);
 		}
 	);
@@ -33,6 +39,7 @@ export default function ConnectForm() {
 	const [userName, setUserName] = useAtom(userNameAtom);
 	const [, setSocket] = useAtom(socketAtom);
 	const router = useRouter();
+	const queryClient = useQueryClient();
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
@@ -43,7 +50,7 @@ export default function ConnectForm() {
 
 		const socket = io({ autoConnect: false });
 		socket.connect();
-		initializer(socket, createMutationChat);
+		initializer(socket, createMutationChat, queryClient);
 		setSocket(socket);
 
 		router.push('/rooms');

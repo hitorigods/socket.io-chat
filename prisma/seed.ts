@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
  * userテーブルの初期データを作成する
  */
 async function usersCreate() {
-	const users: Prisma.userCreateInput[] = [
+	const users = [
 		{
 			email: 'test01@test.com',
 			password: bcrypt.hashSync('test01', 8),
@@ -33,7 +33,7 @@ async function usersCreate() {
  * chatテーブルの初期データを作成する
  */
 async function chatCreate(user_ids: string[]) {
-	const chats: Prisma.chatCreateInput[] = [
+	const chats = [
 		{
 			title: 'Test Chat 01',
 			published: true,
