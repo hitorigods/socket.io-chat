@@ -6,14 +6,14 @@ import { useAtom } from 'jotai';
 
 import {
 	atomSocket,
-	atomUserName,
+	atomUser,
 	atomEditedChat,
 	atomIsEditedChat,
 } from '@/stores/atoms';
 
 export default function Header() {
 	const [stateSocket] = useAtom(atomSocket);
-	const [, setStateUserName] = useAtom(atomUserName);
+	const [, setStateUser] = useAtom(atomUser);
 	const [, setStateEditedChat] = useAtom(atomEditedChat);
 	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 
@@ -22,7 +22,12 @@ export default function Header() {
 	const backHandle = async (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		stateSocket?.disconnect();
-		setStateUserName('');
+		setStateUser({
+			id: '',
+			nickname: '',
+			avatarUrl: '',
+			profile_id: '',
+		});
 		setStateEditedChat(null);
 		setStateIsEditedChat(false);
 		router.push('/');

@@ -3,7 +3,7 @@ import { SetStateAction } from 'jotai';
 
 import { SetAtom } from '@/types/atom';
 
-const schemaChat = z.object({
+const chatSchema = z.object({
 	id: z.string(),
 	room: z.number(),
 	author: z.string(),
@@ -28,5 +28,5 @@ export type EditedChat = {
 	Room_id?: string;
 };
 
-export type SchemaChat = z.infer<typeof schemaChat>;
-export type SetChats = SetAtom<[SetStateAction<SchemaChat[]>], void>;
+export type ChatSchema = z.infer<typeof chatSchema>;
+export type SetChatSchema = SetAtom<[SetStateAction<ChatSchema[]>], void>;

@@ -89,28 +89,30 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ 備忘録
 
+### ■ supabase CLIでデータ操作
+
 ローカルにマイグレーションファイルを新規作成
 
 ```
-supabase migration new [create\_[ファイル名]]
+$ supabase migration new [create\_[ファイル名]]
 ```
 
 作成したマイグレーションファイルにサーバーの差分を取得
 
 ```
-supabase db diff --linked > supabase\migrations\[タイムスタンプ]_create_[ファイル名].sql
+$ supabase db diff --linked > supabase\migrations\[タイムスタンプ]_create_[ファイル名].sql
 ```
 
 マイグレーションファイルをローカルに反映
 
 ```
-supabase db reset
+$ supabase db reset
 ```
 
 リモートのデータのみをローカルのシードファイルに残す
 
 ```
-supabase db dump -f supabase/seed.sql --data-only
+$ supabase db dump -f supabase/seed.sql --data-only
 ```
 
 ### ■ supabase CLIで型ファイルを生成

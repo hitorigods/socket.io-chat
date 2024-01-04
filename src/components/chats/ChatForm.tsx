@@ -11,13 +11,14 @@ import {
 } from '@/stores/atoms';
 import { useChatMutate } from '@/hooks/useChatMutate';
 import { FetchChat } from '@/schemas/chat';
+import { UserSchema } from '@/schemas/user';
 import InputButton from '@/components/InputButton';
 
 type Props = {
-	stateUserName: string;
+	stateUser: UserSchema;
 };
 
-export default function ChatForm({ stateUserName }: Props) {
+export default function ChatForm({ stateUser }: Props) {
 	const { createChatMutation, updateChatMutation } = useChatMutate();
 	const [stateSocket] = useAtom(atomSocket);
 	const [stateInputChat, setStateInputChat] = useAtom(atomInputChat);

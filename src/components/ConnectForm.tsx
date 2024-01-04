@@ -6,7 +6,7 @@ import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
 import InputButton from '@/components/InputButton';
-import { atomSocket, atomUserName } from '@/stores/atoms';
+import { atomSocket, atomUser } from '@/stores/atoms';
 import { FetchChat } from '@/schemas/chat';
 
 const initializer = (socket: any) => {
@@ -27,7 +27,7 @@ const initializer = (socket: any) => {
 };
 
 export default function ConnectForm() {
-	const [stateUserName, setStateUserName] = useAtom(atomUserName);
+	const [stateUser, setStateUser] = useAtom(atomUser);
 	const [, setStateSocket] = useAtom(atomSocket);
 	const router = useRouter();
 
@@ -48,7 +48,7 @@ export default function ConnectForm() {
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
 		event.preventDefault();
-		setStateUserName(event.target.value);
+		setStateUser({ ...stateUser, nickname: event.target.value });
 	};
 
 	return (
@@ -57,8 +57,8 @@ export default function ConnectForm() {
 				label="接続"
 				name="name"
 				placeholder="表示名を入力してください"
-				value={stateUserName}
-				disabled={!stateUserName}
+				value={stateUser.nickname}
+				disabled={!stateUser.nickname}
 				onChange={handleChange}
 			/>
 		</form>

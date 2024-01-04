@@ -4,25 +4,25 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { atomUserName } from '@/stores/atoms';
+import { atomUser } from '@/stores/atoms';
 
 import ChatList from '@/components/chats/ChatList';
 import ChatForm from '@/components/chats/ChatForm';
 
 export default function ChatArea() {
-	const [stateUserName] = useAtom(atomUserName);
+	const [stateUser] = useAtom(atomUser);
 
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!stateUserName) router.push('/');
-	}, [router, stateUserName]);
+		if (!stateUser) router.push('/');
+	}, [router, stateUser]);
 
 	return (
 		<>
 			<div className="grid content-between gap-[40px]">
 				<ChatList />
-				<ChatForm stateUserName={stateUserName} />
+				<ChatForm stateUser={stateUser} />
 			</div>
 		</>
 	);

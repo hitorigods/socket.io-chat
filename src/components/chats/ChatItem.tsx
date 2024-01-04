@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useAtom } from 'jotai';
 
 import {
+	atomUser,
 	atomInputChat,
 	atomEditedChat,
 	atomIsEditedChat,
@@ -19,6 +20,7 @@ interface Props {
 
 export default function ChatItem({ chat }: Props) {
 	const { deleteChatMutation } = useChatMutate();
+	const [stateUser, setStateUser] = useAtom(atomUser);
 	const [, setStateInputChat] = useAtom(atomInputChat);
 	const [, setStateEditedChat] = useAtom(atomEditedChat);
 	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
@@ -53,7 +55,7 @@ export default function ChatItem({ chat }: Props) {
 				<div className="grid w-[650px] max-w-full gap-[10px] overflow-hidden rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-300 ease-in-out">
 					<p className="text-xl leading-normal">{chat.title}</p>
 					<div className="flex justify-between gap-[20px]">
-						<p className="text-xs">{chat.User_id}</p>
+						<p className="text-xs">{stateUser.nickname}</p>
 						<p className="text-xs">{localDate}</p>
 					</div>
 				</div>
