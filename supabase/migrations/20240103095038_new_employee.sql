@@ -1,9 +1,9 @@
-alter database postgres set timezone to 'Asia/Tokyo';
+ALTER DATABASE postgres SET timezone TO 'Asia/Tokyo';
 
-create extension if not exists moddatetime schema extensions;
+CREATE extension IF NOT EXISTS moddatetime SCHEMA extensions;
 
-create trigger handle_user_updated_at before update on public.user
-  for each row execute procedure moddatetime ("updatedAt");
+CREATE TRIGGER handle_user_updated_at BEFORE UPDATE ON "public"."User"
+  FOR each ROW EXECUTE PROCEDURE moddatetime ("updatedAt");
 
-create trigger handle_chat_updated_at before update on public.chat
-  for each row execute procedure moddatetime ("updatedAt");
+CREATE TRIGGER handle_chat_updated_at BEFORE UPDATE ON "public"."Chat"
+  FOR each ROW EXECUTE PROCEDURE moddatetime ("updatedAt");

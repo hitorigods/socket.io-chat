@@ -43,9 +43,9 @@ export default function ChatForm({ stateUserName }: Props) {
 				title: stateInputChat,
 				published: true,
 				// TODO: ログイン中のユーザーIDを設定する
-				user_id: 'e597b29d-1aa4-4291-8829-9d985350dade',
+				User_id: 'e597b29d-1aa4-4291-8829-9d985350dade',
 				// TODO: チャットにルームIDを格納し設定する
-				room_id: crypto.randomUUID(),
+				Room_id: crypto.randomUUID(),
 			};
 			console.log('newChat: ', newChat);
 

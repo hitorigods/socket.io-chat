@@ -39,16 +39,12 @@ https://hitorigods-socket-io-next.onrender.com/
    6. ⭕JotaiにDevtoolsを導入
    7. ⭕ルームに直アクセスでTOPにリダイレクト
    8. ⭕TOPに戻ったときにソケットを切断する
-   9. チャットの編集・削除機能
-      1. 入力フォームをまたぐのでチャット内容のAtom用意
-   10. 投稿が自分か他人か判定してレイアウト変える
+   9. ⭕チャットの編集・削除機能
+      1. 編集・削除するときにアラート表示（dialogモーダル？）
+   10. ログインフォーム作る
    11. チャット内容にバリデーション（Zod）
    12. ログインフォームにバリデーション（Zod）
    13. Socket機能を一つにまとめて分離
-   14. チャット更新の度に最新にスクロール移動
-   15. 見た目を整える
-       1. ⭕ヘッダー・フッター設置
-       2. ⭕TOPへ戻るボタン
 2. データベース
    1. ⭕ORM（prisma）導入
    2. ⭕Supabase用意
@@ -63,6 +59,7 @@ https://hitorigods-socket-io-next.onrender.com/
    11. 所有ユーザーのみチャット削除・更新
    12. ルームID用のデータベースを作る
    13. プロフィールID用のデータベースを作る
+   14. supabase CLIでseedデータ作る（Snaplet）
 3. 認証機能
    1. メールアドレス認証
    2. OAuth実装
@@ -70,13 +67,17 @@ https://hitorigods-socket-io-next.onrender.com/
       2. Github
    3. ログインエラー通知
    4. 投稿者名をニックネーム編集可能に
-4. 拡張機能
+4. レイアウト調整
+   1. TOPへ戻るボタン
+   2. チャット更新の度に最新にスクロール移動
+   3. 投稿が自分か他人か判定してレイアウト変える
+5. 拡張機能
    1. ルームIDで複数チャットできるように
    2. アバター画像をSupabseのStorageで運用
    3. 他ユーザーのログイン通知、入退室が目に見えるように
    4. ルーム作成・削除機能
    5. サーバー監視サービスでRendar/Supabaseを落ちなくする
-5. 💀**BugFix**💀
+6. 💀**BugFix**💀
    1. ⭕ビルドデータでリアルタイム更新できない（ウィンドウの再フォーカスでは更新される）
       1. ⇒ `useQuery`のオプション`refetchInterval`で対処
          1. ⇒ run dev状態では問題なかったのになぜ？
@@ -164,6 +165,8 @@ https://supabase.com/docs/guides/cli/managing-environments
 https://tailwindcomponents.com/cheatsheet/
 
 https://tailwindcomponents.com/
+
+https://zenn.dev/ixkaito/articles/advanced-tailwindcss
 
 ### ■ prisma チートシート (CLI)
 

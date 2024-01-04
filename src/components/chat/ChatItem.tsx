@@ -44,7 +44,7 @@ export default function ChatItem({ chat }: Props) {
 				<div className="">
 					<Image
 						src="/favicon.ico"
-						alt={chat.user_id}
+						alt={chat.User_id}
 						width={64}
 						height={64}
 						className="h-16 w-16 rounded-full"
@@ -53,7 +53,7 @@ export default function ChatItem({ chat }: Props) {
 				<div className="grid w-[650px] max-w-full gap-[10px] overflow-hidden rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-300 ease-in-out">
 					<p className="text-xl leading-normal">{chat.title}</p>
 					<div className="flex justify-between gap-[20px]">
-						<p className="text-xs">{chat.user_id}</p>
+						<p className="text-xs">{chat.User_id}</p>
 						<p className="text-xs">{localDate}</p>
 					</div>
 				</div>

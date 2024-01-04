@@ -8,9 +8,9 @@ import { atomEditedChat } from "@/stores/atoms";
 export const useQueryChat = () => {
   const selectorQuery = async () => {
     const { data, error } = await supabase
-      .from("chat")
+      .from("Chat")
       .select("*")
-      .order("updatedAt", { ascending: false });
+      .order("createdAt", { ascending: false });
     if (error) {
       throw new Error(error.message);
     }
@@ -38,7 +38,7 @@ export const useMutateChat = () => {
     mutationFn: async (
       chat: Omit<FetchChat, "id" | "createdAt" | "updatedAt">,
     ) => {
-      const { data, error } = await supabase.from("chat").insert(chat).select();
+      const { data, error } = await supabase.from("Chat").insert(chat).select();
       if (error) throw new Error(error.message);
       return data;
     },
@@ -64,7 +64,7 @@ export const useMutateChat = () => {
   const updateMutationChat = useMutation({
     mutationFn: async (chat: FetchChat) => {
       const { data, error } = await supabase
-        .from("chat")
+        .from("Chat")
         .update({ title: chat.title })
         .eq("id", chat.id)
         .select();
@@ -96,7 +96,7 @@ export const useMutateChat = () => {
   const deleteMutationChat = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase
-        .from("chat")
+        .from("Chat")
         .delete()
         .eq("id", id);
       if (error) throw new Error(error.message);
