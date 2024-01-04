@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { JotaiProvider } from '@/providers/Jotai';
+
 import { FetchQueryProvider } from '@/providers/FetchQuey';
 import { AuthProvider } from '@/providers/Auth';
 

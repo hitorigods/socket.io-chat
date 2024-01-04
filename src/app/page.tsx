@@ -11,7 +11,6 @@ export default function Home() {
 			<div className="grid gap-[50px]">
 				<Heading title="Top" />
 				<ConnectForm />
-				<Link href="/auth">ログイン画面へリンク</Link>
 				<AuthSignOut />
 			</div>
 		</Suspense>

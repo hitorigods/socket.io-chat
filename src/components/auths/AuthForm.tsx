@@ -1,10 +1,15 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { FormEvent } from 'react';
 
 import { useMutateAuth } from '@/hooks/useAuthMutate';
 
-export default function AuthForm() {
+type Props = {
+	isLoginMode: boolean;
+	setIsLoginMode: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 	const {
 		authEmail,
 		setAuthEmail,
@@ -13,8 +18,6 @@ export default function AuthForm() {
 		loginAuthMutaion,
 		registerAuthMutaion,
 	} = useMutateAuth();
-
-	const [isLoginMode, setIsLoginMode] = useState(true);
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -25,43 +28,45 @@ export default function AuthForm() {
 		}
 	};
 	return (
-		<form onSubmit={handleSubmit}>
-			<div>
-				<input
-					type="text"
-					required
-					className="text-dark"
-					placeholder="メールアドレスを入力してください"
-					value={authEmail}
-					onChange={(event) => setAuthEmail(event.target.value)}
-				/>
-			</div>
-			<div>
-				<input
-					type="password"
-					required
-					className="text-dark"
-					placeholder="パスワードを入力してください"
-					value={authPassword}
-					onChange={(event) => setAuthPassword(event.target.value)}
-				/>
-			</div>
-			<div className="">
+		<div className="">
+			<form onSubmit={handleSubmit}>
+				<div>
+					<input
+						type="text"
+						required
+						className="text-dark"
+						placeholder="メールアドレスを入力してください"
+						value={authEmail}
+						onChange={(event) => setAuthEmail(event.target.value)}
+					/>
+				</div>
+				<div>
+					<input
+						type="password"
+						required
+						className="text-dark"
+						placeholder="パスワードを入力してください"
+						value={authPassword}
+						onChange={(event) => setAuthPassword(event.target.value)}
+					/>
+				</div>
+				<div className="">
+					<button
+						type="button"
+						onClick={() => setIsLoginMode(!isLoginMode)}
+						className="cursor-pointer"
+					>
+						{isLoginMode ? '新規登録はこちら' : 'ログインはこちら'}
+					</button>
+				</div>
 				<button
-					type="button"
-					onClick={() => setIsLoginMode(!isLoginMode)}
-					className="cursor-pointer"
+					type="submit"
+					className=""
 				>
-					{isLoginMode ? '新規登録はこちら' : 'ログインはこちら'}
+					<span className=""></span>
+					{isLoginMode ? 'ログイン' : '登録'}
 				</button>
-			</div>
-			<button
-				type="submit"
-				className=""
-			>
-				<span className=""></span>
-				{isLoginMode ? 'ログイン' : '登録'}
-			</button>
-		</form>
+			</form>
+		</div>
 	);
 }

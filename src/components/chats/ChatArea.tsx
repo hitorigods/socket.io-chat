@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
 import { atomUser } from '@/stores/atoms';
-
 import ChatList from '@/components/chats/ChatList';
 import ChatForm from '@/components/chats/ChatForm';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
@@ -14,51 +14,50 @@ type Props = {
 export function AuthProvider(props: Props) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const [stateUser, setStateUser] = useAtom(atomUser);
+	const [, setStateUser] = useAtom(atomUser);
 
 	const validateSession = useCallback(async () => {
-		const { data: settionData, error: settionError } =
-			await supabase.auth.getSession();
-
-		if (settionError) {
-			console.error(settionError);
-		}
-
-		if (!settionData?.session) {
-			router.push('/auth');
-			return;
-		}
-
 		const {
-			data: { user },
-		} = await supabase.auth.getUser();
-		console.log('user', user);
+			data: { session },
+		} = await supabase.auth.getSession();
 
-		// TODO: ProfilesからユーザーIDに該当するデータを取得
-		const userProfileData = {
-			id: 'test_id',
-			nickname: 'Test User',
-			avatarUrl: '',
-		};
-
-		setStateUser({
-			id: user?.id || '',
-			nickname: userProfileData.nickname || '',
-			avatarUrl: userProfileData.avatarUrl || '',
-			profile_id: userProfileData.id || '',
-		});
-
-		if (!user && pathname !== '/auth') {
+		if (!session && pathname !== '/auth') {
 			await router.push('/auth');
+			router.refresh();
+			return;
 		}
 	}, [router, pathname]);
 
-	supabase.auth.onAuthStateChange((event, _) => {
+	supabase.auth.onAuthStateChange(async (event, _) => {
+		console.log('event', event);
 		if (event === 'SIGNED_IN' && pathname === '/auth') {
+			const {
+				data: { session },
+			} = await supabase.auth.getSession();
+			console.log('session', session);
+
+			const user = session?.user;
+
+			// TODO: ProfilesからユーザーIDに該当するデータを取得
+			const userProfileData = {
+				id: 'test_id',
+				nickname: 'Test User',
+				avatarUrl: '',
+			};
+
+			setStateUser({
+				id: user?.id || '',
+				nickname: userProfileData.nickname || '',
+				avatarUrl: userProfileData.avatarUrl || '',
+				profile_id: userProfileData.id || '',
+			});
+
 			router.push('/');
+			router.refresh();
 		}
 		if (event === 'SIGNED_OUT') {
 			router.push('/auth');
+			router.refresh();
 		}
 	});
 

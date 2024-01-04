@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FormEventHandler, useState } from 'react';
+import React, { FormEventHandler } from 'react';
 import { useAtom } from 'jotai';
 
 import {
@@ -40,8 +40,8 @@ export default function ChatForm({ stateUser }: Props) {
 			const newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'> = {
 				title: stateInputChat,
 				published: true,
-				// TODO: ログイン中のユーザーIDを設定する
-				User_id: '6dd402f7-2dcf-473a-a863-71de78e35d7e',
+				// ログイン中のユーザーIDを設定する
+				User_id: stateUser.id,
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: crypto.randomUUID(),
 			};
