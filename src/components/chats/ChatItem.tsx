@@ -13,6 +13,7 @@ import {
 import { useChatMutate } from '@/hooks/useChatMutate';
 import { useDateLocale } from '@/hooks/useDateLocale';
 import { FetchChat } from '@/schemas/chat';
+import EditButton from '../buttons/EditButton';
 
 interface Props {
 	chat: FetchChat;
@@ -60,18 +61,15 @@ export default function ChatItem({ chat }: Props) {
 					</div>
 				</div>
 				<div className="grid w-[60px] gap-[1px] overflow-hidden rounded-md">
-					<button
-						className="grid bg-dark py-[10px] indent-[.5em] text-xs font-bold tracking-[.5em] text-white"
+					<EditButton
+						label="編集"
 						onClick={editedHandler}
-					>
-						編集
-					</button>
-					<button
-						className="grid bg-danger py-[10px] indent-[.5em] text-xs font-bold tracking-[.5em] text-white"
+					/>
+					<EditButton
+						label="削除"
+						type="danger"
 						onClick={deleteHandler}
-					>
-						削除
-					</button>
+					/>
 				</div>
 			</li>
 		</>
