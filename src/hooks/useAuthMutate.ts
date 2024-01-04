@@ -42,8 +42,6 @@ export const useAuthMutate = () => {
 			if (error) throw new Error(error.message);
 		},
 		onSuccess: () => {
-			createProfileMutaion.mutate();
-
 			alert('登録完了しました');
 			reset();
 		},

@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
-import InputButton from '@/components/InputButton';
 import { atomSocket, atomUser } from '@/stores/atoms';
 import { FetchChat } from '@/schemas/chats';
+import InputButton from '@/components/InputButton';
 
 const initializer = (socket: any) => {
 	socket.on('connect', () => {

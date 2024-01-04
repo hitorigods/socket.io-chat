@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import supabase from '@/libs/supabase';
-import { ProfileSchema, RowProfile, InsertProfile } from '@/schemas/profiles';
+import { RowProfile, InsertProfile } from '@/schemas/profiles';
+import { UserSchema } from '@/schemas/users';
 
 export const useProfileMutate = () => {
 	const queryClient = useQueryClient();
@@ -15,20 +16,7 @@ export const useProfileMutate = () => {
 	};
 
 	const createProfileMutaion = useMutation({
-		mutationFn: async () => {
-			const {
-				data: { session },
-			} = await supabase.auth.getSession();
-			if (!session) throw new Error('ログインしてください');
-
-			console.log("profileNickname", profileNickname);
-
-			const row = {
-				nickname: profileNickname,
-				avatarUrl: profileAvatarUrl,
-				User_id: session.user.id,
-			};
-
+		mutationFn: async (row: InsertProfile) => {
 			const { data, error } = await supabase
 				.from('Profiles')
 				.insert(row)
@@ -56,18 +44,11 @@ export const useProfileMutate = () => {
 	});
 
 	const updateProfileMutaion = useMutation({
-		mutationFn: async (row: ProfileSchema) => {
-			const {
-				data: { session },
-			} = await supabase.auth.getSession();
-			if (!session) throw new Error('ログインしてください');
-
-			const newRow = { ...row, User_id: session.user.id };
-
+		mutationFn: async (row: RowProfile) => {
 			const { data, error } = await supabase
 				.from('Profiles')
 				.update({ nickname: row.nickname, avatarUrl: row.avatarUrl })
-				.eq('id', row.id)
+				.eq('Profile_id', row.id)
 				.select();
 			if (error) throw new Error(error.message);
 			return data;
@@ -77,10 +58,10 @@ export const useProfileMutate = () => {
 				'query:profiles',
 			]);
 			if (previousRows && result != null) {
-				const newChats = previousRows.map((row) =>
+				const newRows = previousRows.map((row) =>
 					row.id === variables.id ? result[0] : row
 				);
-				queryClient.setQueryData(['query:profiles'], newChats);
+				queryClient.setQueryData(['query:profiles'], newRows);
 			}
 			alert('プロフィールを更新しました');
 			reset();

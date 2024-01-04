@@ -26,32 +26,37 @@ export function AuthProvider(props: Props) {
 			router.refresh();
 			return;
 		}
-	}, [router, pathname]);
+
+		const userID = session?.user?.id;
+		if (!userID) return;
+
+		let profileData;
+		try {
+			const { data, error } = await supabase
+				.from('Profiles')
+				.select()
+				.eq('User_id', userID)
+				.limit(1)
+				.single();
+			profileData = data;
+		} catch (error) {}
+
+		if (!profileData && pathname !== '/profile') {
+			await router.push('/profile');
+			router.refresh();
+			return;
+		}
+
+		setStateUser({
+			id: userID || '',
+			nickname: profileData?.nickname || '',
+			avatarUrl: profileData?.avatarUrl || '',
+			Profile_id: profileData?.id || '',
+		});
+	}, [router, pathname, setStateUser]);
 
 	supabase.auth.onAuthStateChange(async (event, _) => {
-		console.log('event', event);
 		if (event === 'SIGNED_IN' && pathname === '/auth') {
-			const {
-				data: { session },
-			} = await supabase.auth.getSession();
-			console.log('session', session);
-
-			const user = session?.user;
-
-			// TODO: ProfilesからユーザーIDに該当するデータを取得
-			const userProfileData = {
-				id: 'test_id',
-				nickname: 'Test User',
-				avatarUrl: '',
-			};
-
-			setStateUser({
-				id: user?.id || '',
-				nickname: userProfileData.nickname || '',
-				avatarUrl: userProfileData.avatarUrl || '',
-				profile_id: userProfileData.id || '',
-			});
-
 			router.push('/');
 			router.refresh();
 		}
