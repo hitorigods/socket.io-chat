@@ -253,6 +253,10 @@ https://katblog.manadream.net/index.php/2022/07/07/supabase-local/
 
 ### ■ OAuth系
 
+#### ○ supabaseの認証機能
+
+https://qiita.com/kaho_eng/items/cb8d735b5b6ca1b3a6c5
+
 #### ○ OAuth & OIDC 入門解説
 
 https://www.youtube.com/watch?v=PKPj_MmLq5E

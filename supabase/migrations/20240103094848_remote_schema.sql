@@ -28,7 +28,7 @@ SET default_tablespace = '';
 
 SET default_table_access_method = "heap";
 
-CREATE TABLE IF NOT EXISTS "public"."Chat" (
+CREATE TABLE IF NOT EXISTS "public"."Chats" (
     "id" uuid DEFAULT gen_random_uuid() NOT NULL,
     "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
     "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
@@ -38,9 +38,9 @@ CREATE TABLE IF NOT EXISTS "public"."Chat" (
     "User_id" uuid NOT NULL
 );
 
-ALTER TABLE "public"."Chat" OWNER TO "postgres";
+ALTER TABLE "public"."Chats" OWNER TO "postgres";
 
-CREATE TABLE IF NOT EXISTS "public"."User" (
+CREATE TABLE IF NOT EXISTS "public"."Users" (
     "id" uuid DEFAULT gen_random_uuid() NOT NULL,
     "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
     "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
@@ -48,32 +48,32 @@ CREATE TABLE IF NOT EXISTS "public"."User" (
     "password" text NOT NULL
 );
 
-ALTER TABLE "public"."User" OWNER TO "postgres";
+ALTER TABLE "public"."Users" OWNER TO "postgres";
 
-ALTER TABLE ONLY "public"."Chat"
-    ADD CONSTRAINT "Chat_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "public"."Chats"
+    ADD CONSTRAINT "Chats_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "public"."User"
-    ADD CONSTRAINT "User_email_key" UNIQUE ("email");
+ALTER TABLE ONLY "public"."Users"
+    ADD CONSTRAINT "Users_email_key" UNIQUE ("email");
 
-ALTER TABLE ONLY "public"."User"
-    ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
+ALTER TABLE ONLY "public"."Users"
+    ADD CONSTRAINT "Users_pkey" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY "public"."Chat"
-    ADD CONSTRAINT "Chat_user_id_fkey" FOREIGN KEY ("User_id") REFERENCES "User"(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY "public"."Chats"
+    ADD CONSTRAINT "Chats_user_id_fkey" FOREIGN KEY ("User_id") REFERENCES "Users"(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 GRANT USAGE ON SCHEMA "public" TO "postgres";
 GRANT USAGE ON SCHEMA "public" TO "anon";
 GRANT USAGE ON SCHEMA "public" TO "authenticated";
 GRANT USAGE ON SCHEMA "public" TO "service_role";
 
-GRANT ALL ON TABLE "public"."Chat" TO "anon";
-GRANT ALL ON TABLE "public"."Chat" TO "authenticated";
-GRANT ALL ON TABLE "public"."Chat" TO "service_role";
+GRANT ALL ON TABLE "public"."Chats" TO "anon";
+GRANT ALL ON TABLE "public"."Chats" TO "authenticated";
+GRANT ALL ON TABLE "public"."Chats" TO "service_role";
 
-GRANT ALL ON TABLE "public"."User" TO "anon";
-GRANT ALL ON TABLE "public"."User" TO "authenticated";
-GRANT ALL ON TABLE "public"."User" TO "service_role";
+GRANT ALL ON TABLE "public"."Users" TO "anon";
+GRANT ALL ON TABLE "public"."Users" TO "authenticated";
+GRANT ALL ON TABLE "public"."Users" TO "service_role";
 
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
