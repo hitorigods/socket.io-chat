@@ -40,7 +40,6 @@ https://hitorigods-socket-io-next.onrender.com/
    7. ⭕ルームに直アクセスでTOPにリダイレクト
    8. ⭕TOPに戻ったときにソケットを切断する
    9. ⭕チャットの編集・削除機能
-      1. 編集・削除するときにアラート表示（dialogモーダル？）
    10. ログインフォーム作る
    11. チャット内容にバリデーション（Zod）
    12. ログインフォームにバリデーション（Zod）
@@ -71,6 +70,10 @@ https://hitorigods-socket-io-next.onrender.com/
    1. TOPへ戻るボタン
    2. チャット更新の度に最新にスクロール移動
    3. 投稿が自分か他人か判定してレイアウト変える
+   4. 編集・削除するときにアラート表示（dialogモーダル？）
+   5. キーボードタブでのフォーカスの可視化（アクセシビリティ）
+      1. チャットアイテムの編集・削除ボタンのラインが見えない
+      2. チャットの入力フォームが最初にフォーカスするように
 5. 拡張機能
    1. ルームIDで複数チャットできるように
    2. アバター画像をSupabseのStorageで運用
@@ -126,7 +129,7 @@ https://github.com/prisma/prisma/issues/7053
 
 ### ■ supabase CLIで型ファイルを生成
 
-npm scriptsを用意してコマンドを叩くが、SupabaseプロジェクトIDをgitに残したくないので、 `.env.local`の環境変数`SUPABASE_PROJECT_ID`を用意して、`tsx`で `supabase-types.ts`を実行
+npm scriptsをで叩くようにしたいが、SupabaseプロジェクトIDをgitに残したくないので、 `.env.local`の環境変数`DATABASE_URL`を用意して、`tsx`で `supabase-types.ts`を実行
 
 ```
 $ pnpm run supabase:types
@@ -135,20 +138,24 @@ $ pnpm run supabase:types
 $ dotenv -e .env.local -- tsx supabase-types.ts
 
 ↓内部処理
-$ supabase gen types typescript --project-id ${process.env.SUPABASE_PROJECT_ID} > src/libs/supabase.types.ts
+$ supabase gen types typescript --db-url ${process.env.DATABASE_URL} > src/libs/supabase.types.ts
 ```
 
 https://hassakulab.com/posts/npm-script-with-dotenv/
 
 ※ts-nodeだとCommonJSモジュール扱いになりエラーがでたのでtsxを利用
 
-クラウド版なら以下から作成できる
+※ローカル版ではDB URLの指定で取得できたので、以前のクラウド版前提だったプロジェクトID指定はやめた
+
+クラウド版GUIなら以下から作成できる
 
 https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
 
-### ■ PrismaでseedファイルをプッシュするとSupabaseのパーミッションがおかしくなることが多発
+### ■ 【クラウド版？】PrismaでseedファイルをプッシュするとSupabaseのパーミッションがおかしくなることが多発
 
 今のところプロジェクト作り直すしかどうしようもないので、GUIからCSVファイルをエクスポート/インポートで凌ぐ…
+
+※ローカル版ではまだ試してないがSupabase CLIでプッシュできそう
 
 https://github.com/supabase/supabase/issues/4883
 

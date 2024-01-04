@@ -9,45 +9,45 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      chat: {
+      Chat: {
         Row: {
           createdAt: string
           id: string
           published: boolean
-          room_id: string
+          Room_id: string
           title: string
           updatedAt: string
-          user_id: string
+          User_id: string
         }
         Insert: {
           createdAt?: string
           id?: string
           published?: boolean
-          room_id?: string
+          Room_id?: string
           title: string
           updatedAt?: string
-          user_id: string
+          User_id: string
         }
         Update: {
           createdAt?: string
           id?: string
           published?: boolean
-          room_id?: string
+          Room_id?: string
           title?: string
           updatedAt?: string
-          user_id?: string
+          User_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "chat_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "Chat_user_id_fkey"
+            columns: ["User_id"]
             isOneToOne: false
-            referencedRelation: "user"
+            referencedRelation: "User"
             referencedColumns: ["id"]
           }
         ]
       }
-      user: {
+      User: {
         Row: {
           createdAt: string
           email: string
@@ -166,3 +166,4 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
   : never
+
