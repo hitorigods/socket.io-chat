@@ -45,7 +45,7 @@ export default function ConnectForm() {
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
 		const SocketHandler = await fetch(
-			`${process.env.NEXT_PUBLIC_SERVER_URL}/api/sockets`,
+			`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`,
 			{ method: 'POST' }
 		);
 

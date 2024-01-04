@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-	title: 'Socket.io Chat App',
+	title: process.env.NEXT_PUBLIC_SITE_NAME || '',
 	description: '',
 };
 

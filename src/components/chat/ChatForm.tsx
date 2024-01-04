@@ -27,8 +27,6 @@ export default function ChatForm({ stateUserName }: Props) {
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault();
-		console.log('stateInputChat: ', stateInputChat);
-		console.log('stateEditedChat: ', stateEditedChat);
 		if (!stateInputChat) return;
 
 		if (stateIsEditedChat) {
@@ -47,8 +45,6 @@ export default function ChatForm({ stateUserName }: Props) {
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: crypto.randomUUID(),
 			};
-			console.log('newChat: ', newChat);
-
 			createMutationChat.mutate(newChat);
 
 			stateSocket.emit('socket:chat', newChat);

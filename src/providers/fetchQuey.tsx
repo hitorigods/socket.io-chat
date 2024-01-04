@@ -8,7 +8,14 @@ type Props = {
 };
 
 export function FetchQueryProvider(props: Props) {
-	const queryClient = new QueryClient();
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				retry: false,
+				refetchOnWindowFocus: false,
+			},
+		},
+	});
 
 	return (
 		<QueryClientProvider client={queryClient}>

@@ -21,7 +21,7 @@ export default function Header() {
 
 	const backHandle = async (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		stateSocket.disconnect();
+		stateSocket?.disconnect();
 		setStateUserName('');
 		setStateEditedChat(null);
 		setStateIsEditedChat(false);

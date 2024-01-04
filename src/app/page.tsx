@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Suspense, useEffect } from 'react';
 
 import Heading from '@/components/Heading';
@@ -9,6 +10,7 @@ export default function Home() {
 			<div className="grid gap-[50px]">
 				<Heading title="Top" />
 				<ConnectForm />
+				<Link href="/auth">ログイン画面へリンク</Link>
 			</div>
 		</Suspense>
 	);
