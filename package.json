@@ -13,6 +13,7 @@
 		"prisma:migrate": "dotenv -e .env.local -- prisma migrate dev --name init",
 		"prisma:pull": "dotenv -e .env.local -- prisma db pull dev",
 		"prisma:reset": "dotenv -e .env.local -- prisma migrate reset",
+		"prisma:introspect": "dotenv -e .env.local -- prisma introspect",
 		"prisma:generate": "dotenv -e .env.local -- prisma generate",
 		"prisma:seed": "dotenv -e .env.local -- prisma db seed",
 		"supabase:types": "dotenv -e .env.local -- tsx supabase-types.ts"

@@ -9,7 +9,7 @@ import {
 	atomEditedChat,
 	atomIsEditedChat,
 } from '@/stores/atoms';
-import { useMutateChat } from '@/hooks/useQueryChats';
+import { useChatMutate } from '@/hooks/useChatMutate';
 import { useDateLocale } from '@/hooks/useDateLocale';
 import { FetchChat } from '@/schemas/chat';
 
@@ -18,10 +18,10 @@ interface Props {
 }
 
 export default function ChatItem({ chat }: Props) {
-	const { deleteMutationChat } = useMutateChat();
-	const [stateInputChat, setStateInputChat] = useAtom(atomInputChat);
-	const [stateEditedChat, setStateEditedChat] = useAtom(atomEditedChat);
-	const [stateIsEditedChat, setStateIsEditedChat] = useAtom(atomIsEditedChat);
+	const { deleteChatMutation } = useChatMutate();
+	const [, setStateInputChat] = useAtom(atomInputChat);
+	const [, setStateEditedChat] = useAtom(atomEditedChat);
+	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 
 	const editedHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
@@ -33,7 +33,7 @@ export default function ChatItem({ chat }: Props) {
 
 	const deleteHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
-		deleteMutationChat.mutate(chat.id);
+		deleteChatMutation.mutate(chat.id);
 	};
 
 	const localDate = useDateLocale(chat.updatedAt);

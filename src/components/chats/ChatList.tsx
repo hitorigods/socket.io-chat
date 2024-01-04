@@ -1,11 +1,11 @@
 'use client';
 
 import { FetchChat } from '@/schemas/chat';
-import ChatItem from '@/components/chat/ChatItem';
-import { useQueryChat } from '@/hooks/useQueryChats';
+import ChatItem from '@/components/chats/ChatItem';
+import { useChatQuery } from '@/hooks/useChatQuery';
 
 export default function ChatList() {
-	const { getAllChats } = useQueryChat();
+	const { getAllChats } = useChatQuery();
 	const { isLoading, isError, data: chats, error } = getAllChats;
 
 	if (isLoading) {

@@ -4,21 +4,24 @@ import { useMutation } from '@tanstack/react-query';
 import supabase from '@/libs/supabase';
 
 export const useMutateAuth = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [authEmail, setAuthEmail] = useState('');
+	const [authPassword, setAuthPassword] = useState('');
 
 	const reset = () => {
-		setEmail('');
-		setPassword('');
+		setAuthEmail('');
+		setAuthPassword('');
 	};
 
-	const loginMutaion = useMutation({
+	const loginAuthMutaion = useMutation({
 		mutationFn: async () => {
 			const { error } = await supabase.auth.signInWithPassword({
-				email,
-				password,
+				email: authEmail,
+				password: authPassword,
 			});
 			if (error) throw new Error(error.message);
+		},
+		onSuccess: () => {
+			reset();
 		},
 		onError: (error: any) => {
 			alert(error.message);
@@ -26,11 +29,11 @@ export const useMutateAuth = () => {
 		},
 	});
 
-	const registerMutaion = useMutation({
+	const registerAuthMutaion = useMutation({
 		mutationFn: async () => {
 			const { error } = await supabase.auth.signUp({
-				email,
-				password,
+				email: authEmail,
+				password: authPassword,
 			});
 			if (error) throw new Error(error.message);
 		},
@@ -45,11 +48,11 @@ export const useMutateAuth = () => {
 	});
 
 	return {
-		email,
-		setEmail,
-		password,
-		setPassword,
-		loginMutaion,
-		registerMutaion,
+		authEmail,
+		setAuthEmail,
+		authPassword,
+		setAuthPassword,
+		loginAuthMutaion,
+		registerAuthMutaion,
 	};
 };

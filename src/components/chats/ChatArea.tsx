@@ -6,8 +6,8 @@ import { useAtom } from 'jotai';
 
 import { atomUserName } from '@/stores/atoms';
 
-import ChatList from '@/components/chat/ChatList';
-import ChatForm from '@/components/chat/ChatForm';
+import ChatList from '@/components/chats/ChatList';
+import ChatForm from '@/components/chats/ChatForm';
 
 export default function ChatArea() {
 	const [stateUserName] = useAtom(atomUserName);

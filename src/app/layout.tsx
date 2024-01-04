@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { JotaiProvider } from '@/providers/jotai';
-import { FetchQueryProvider } from '@/providers/fetchQuey';
+import { JotaiProvider } from '@/providers/Jotai';
+import { FetchQueryProvider } from '@/providers/FetchQuey';
+import { AuthProvider } from '@/providers/Auth';
 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -24,13 +25,15 @@ export default function RootLayout({
 			>
 				<FetchQueryProvider>
 					<JotaiProvider>
-						<div className="grid min-h-screen grid-rows-[50px_1fr_50px]">
-							<Header />
-							<main className="grid place-items-center gap-[40px] px-[20px] py-[50px]">
-								{children}
-							</main>
-							<Footer />
-						</div>
+						<AuthProvider>
+							<div className="grid min-h-screen grid-rows-[50px_1fr_50px]">
+								<Header />
+								<main className="grid place-items-center gap-[40px] px-[20px] py-[50px]">
+									{children}
+								</main>
+								<Footer />
+							</div>
+						</AuthProvider>
 					</JotaiProvider>
 				</FetchQueryProvider>
 			</body>

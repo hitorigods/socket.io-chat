@@ -1,40 +1,18 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
 import { FetchChat } from '@/schemas/chat';
 import { atomEditedChat } from '@/stores/atoms';
 
-export const useQueryChat = () => {
-	const selectorQuery = async () => {
-		const { data, error } = await supabase
-			.from('Chats')
-			.select('*')
-			.order('createdAt', { ascending: false });
-		if (error) {
-			throw new Error(error.message);
-		}
-		return data;
-	};
-
-	const getAllChats = useQuery<FetchChat[], Error>({
-		queryKey: ['query:chats'],
-		queryFn: selectorQuery,
-		staleTime: Infinity,
-		refetchInterval: 250,
-	});
-
-	return { getAllChats };
-};
-
-export const useMutateChat = () => {
+export const useChatMutate = () => {
 	const queryClient = useQueryClient();
 	const [, setEditedChat] = useAtom(atomEditedChat);
 
 	/**
 	 * チャットデータを作成する
 	 */
-	const createMutationChat = useMutation({
+	const createChatMutation = useMutation({
 		mutationFn: async (
 			chat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>
 		) => {
@@ -64,7 +42,7 @@ export const useMutateChat = () => {
 	/**
 	 * チャットデータを更新する
 	 */
-	const updateMutationChat = useMutation({
+	const updateChatMutation = useMutation({
 		mutationFn: async (chat: FetchChat) => {
 			const { data, error } = await supabase
 				.from('Chats')
@@ -96,7 +74,7 @@ export const useMutateChat = () => {
 	/**
 	 * チャットデータを削除する
 	 */
-	const deleteMutationChat = useMutation({
+	const deleteChatMutation = useMutation({
 		mutationFn: async (id: string) => {
 			const { data, error } = await supabase
 				.from('Chats')
@@ -124,8 +102,8 @@ export const useMutateChat = () => {
 	});
 
 	return {
-		createMutationChat,
-		updateMutationChat,
-		deleteMutationChat,
+		createChatMutation,
+		updateChatMutation,
+		deleteChatMutation,
 	};
 };

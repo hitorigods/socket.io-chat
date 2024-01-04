@@ -89,6 +89,54 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ 備忘録
 
+ローカルにマイグレーションファイルを新規作成
+
+```
+supabase migration new [create\_[ファイル名]]
+```
+
+作成したマイグレーションファイルにサーバーの差分を取得
+
+```
+supabase db diff --linked > supabase\migrations\[タイムスタンプ]_create_[ファイル名].sql
+```
+
+マイグレーションファイルをローカルに反映
+
+```
+supabase db reset
+```
+
+リモートのデータのみをローカルのシードファイルに残す
+
+```
+supabase db dump -f supabase/seed.sql --data-only
+```
+
+### ■ supabase CLIで型ファイルを生成
+
+npm scriptsをで叩くようにしたいが、SupabaseプロジェクトIDをgitに残したくないので、 `.env.local`の環境変数`DATABASE_URL`を用意して、`tsx`で `supabase-types.ts`を実行
+
+```
+$ pnpm run supabase:types
+
+↓実行
+$ dotenv -e .env.local -- tsx supabase-types.ts
+
+↓内部処理
+$ supabase gen types typescript --db-url ${process.env.DATABASE_URL} > src/libs/supabase.types.ts
+```
+
+https://hassakulab.com/posts/npm-script-with-dotenv/
+
+※ts-nodeだとCommonJSモジュール扱いになりエラーがでたのでtsxを利用
+
+※ローカル版ではDB URLの指定で取得できたので、以前のクラウド版前提だったプロジェクトID指定はやめた
+
+クラウド版GUIなら以下から作成できる
+
+https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
+
 ### ■ Prisma Migrateをdotenvを使い.env.localで実行
 
 ```
@@ -125,30 +173,6 @@ https://github.com/privatenumber/tsx
 ```
 
 https://github.com/prisma/prisma/issues/7053
-
-### ■ supabase CLIで型ファイルを生成
-
-npm scriptsをで叩くようにしたいが、SupabaseプロジェクトIDをgitに残したくないので、 `.env.local`の環境変数`DATABASE_URL`を用意して、`tsx`で `supabase-types.ts`を実行
-
-```
-$ pnpm run supabase:types
-
-↓実行
-$ dotenv -e .env.local -- tsx supabase-types.ts
-
-↓内部処理
-$ supabase gen types typescript --db-url ${process.env.DATABASE_URL} > src/libs/supabase.types.ts
-```
-
-https://hassakulab.com/posts/npm-script-with-dotenv/
-
-※ts-nodeだとCommonJSモジュール扱いになりエラーがでたのでtsxを利用
-
-※ローカル版ではDB URLの指定で取得できたので、以前のクラウド版前提だったプロジェクトID指定はやめた
-
-クラウド版GUIなら以下から作成できる
-
-https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
 
 ### ■ 【クラウド版？】PrismaでseedファイルをプッシュするとSupabaseのパーミッションがおかしくなることが多発
 
@@ -233,6 +257,10 @@ https://laboradian.com/uptime-robot/
 https://zenn.dev/chot/articles/ddd2844ad3ae61
 
 https://zenn.dev/yu_undefined/scraps/ee259f6dd080a5
+
+#### ○ Supabase Tips サーバーのスキーマとそのテーブルのデータをローカルのSupabaseに反映させる。
+
+https://qiita.com/masakinihirota/items/e8e83cb10b56047d4bae
 
 #### ○ Supabase + useQuery
 
