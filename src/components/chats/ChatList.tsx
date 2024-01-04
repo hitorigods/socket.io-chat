@@ -1,6 +1,6 @@
 'use client';
 
-import { FetchChat } from '@/schemas/chat';
+import { FetchChat } from '@/schemas/chats';
 import ChatItem from '@/components/chats/ChatItem';
 import { useChatQuery } from '@/hooks/useChatQuery';
 

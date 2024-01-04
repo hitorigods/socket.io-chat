@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { Socket } from 'socket.io-client';
-import { UserSchema } from '@/schemas/user';
-import { FetchChat } from '@/schemas/chat';
+import { UserSchema } from '@/schemas/users';
+import { FetchChat } from '@/schemas/chats';
 
 // 状態：WebSocketコネクション
 export const atomSocket = atom(null as unknown as Socket);

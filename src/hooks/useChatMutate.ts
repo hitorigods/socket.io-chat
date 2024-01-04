@@ -2,40 +2,41 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
-import { FetchChat } from '@/schemas/chat';
+import { FetchChat } from '@/schemas/chats';
 import { atomEditedChat } from '@/stores/atoms';
 
 export const useChatMutate = () => {
 	const queryClient = useQueryClient();
 	const [, setEditedChat] = useAtom(atomEditedChat);
 
+	const reset = () => {
+		setEditedChat(null);
+	};
+
 	/**
 	 * チャットデータを作成する
 	 */
 	const createChatMutation = useMutation({
 		mutationFn: async (
-			chat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>
+			row: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>
 		) => {
-			const { data, error } = await supabase
-				.from('Chats')
-				.insert(chat)
-				.select();
+			const { data, error } = await supabase.from('Chats').insert(row).select();
 			if (error) throw new Error(error.message);
 			return data;
 		},
 		onSuccess: (result: FetchChat[]) => {
-			const previousChats = queryClient.getQueryData<FetchChat[]>([
+			const previousRows = queryClient.getQueryData<FetchChat[]>([
 				'query:chats',
 			]);
-			if (previousChats && result != null) {
-				queryClient.setQueryData(
-					['query:chats'],
-					[...previousChats, result[0]]
-				);
+			if (previousRows && result != null) {
+				queryClient.setQueryData(['query:chats'], [...previousRows, result[0]]);
 			}
+			alert('チャットを投稿しました');
+			reset();
 		},
 		onError(error: any) {
-			console.error(error.message);
+			alert(error.message);
+			reset();
 		},
 	});
 
@@ -43,31 +44,32 @@ export const useChatMutate = () => {
 	 * チャットデータを更新する
 	 */
 	const updateChatMutation = useMutation({
-		mutationFn: async (chat: FetchChat) => {
+		mutationFn: async (row: FetchChat) => {
 			const { data, error } = await supabase
 				.from('Chats')
-				.update({ title: chat.title })
-				.eq('id', chat.id)
+				.update({ title: row.title })
+				.eq('id', row.id)
 				.select();
 			if (error) throw new Error(error.message);
 			queryClient.invalidateQueries({ queryKey: ['query:chats'] });
 			return data;
 		},
 		onSuccess: (result: FetchChat[], variables: FetchChat) => {
-			const previousTodos = queryClient.getQueryData<FetchChat[]>([
+			const previousRows = queryClient.getQueryData<FetchChat[]>([
 				'query:chats',
 			]);
-			if (previousTodos && result != null) {
-				const newChats = previousTodos.map((chat) =>
-					chat.id === variables.id ? result[0] : chat
+			if (previousRows && result != null) {
+				const newRows = previousRows.map((row) =>
+					row.id === variables.id ? result[0] : row
 				);
-				queryClient.setQueryData(['query:chats'], newChats);
+				queryClient.setQueryData(['query:chats'], newRows);
 			}
-			setEditedChat(null);
+			alert('チャットを更新しました');
+			reset();
 		},
 		onError(error: any) {
-			console.error(error.message);
-			setEditedChat(null);
+			alert(error.message);
+			reset();
 		},
 	});
 
@@ -90,14 +92,15 @@ export const useChatMutate = () => {
 			if (previousTodos) {
 				queryClient.setQueryData(
 					['query:chats'],
-					previousTodos.filter((chat) => chat.id !== variables)
+					previousTodos.filter((row) => row.id !== variables)
 				);
 			}
-			setEditedChat(null);
+			alert('チャットを削除しました');
+			reset();
 		},
 		onError(error: any) {
-			console.error(error.message);
-			setEditedChat(null);
+			alert(error.message);
+			reset();
 		},
 	});
 

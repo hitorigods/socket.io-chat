@@ -12,7 +12,7 @@ import {
 } from '@/stores/atoms';
 import { useChatMutate } from '@/hooks/useChatMutate';
 import { useDateLocale } from '@/hooks/useDateLocale';
-import { FetchChat } from '@/schemas/chat';
+import { FetchChat } from '@/schemas/chats';
 import EditButton from '../buttons/EditButton';
 
 interface Props {

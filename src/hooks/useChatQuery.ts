@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import supabase from '@/libs/supabase';
-import { FetchChat } from '@/schemas/chat';
+import { FetchChat } from '@/schemas/chats';
 
 export const useChatQuery = () => {
 	const getSelectorAll = async () => {

@@ -7,7 +7,7 @@ import { useAtom } from 'jotai';
 
 import InputButton from '@/components/InputButton';
 import { atomSocket, atomUser } from '@/stores/atoms';
-import { FetchChat } from '@/schemas/chat';
+import { FetchChat } from '@/schemas/chats';
 
 const initializer = (socket: any) => {
 	socket.on('connect', () => {

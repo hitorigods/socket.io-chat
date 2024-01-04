@@ -10,8 +10,8 @@ import {
 	atomIsEditedChat,
 } from '@/stores/atoms';
 import { useChatMutate } from '@/hooks/useChatMutate';
-import { FetchChat } from '@/schemas/chat';
-import { UserSchema } from '@/schemas/user';
+import { FetchChat } from '@/schemas/chats';
+import { UserSchema } from '@/schemas/users';
 import InputButton from '@/components/InputButton';
 
 type Props = {

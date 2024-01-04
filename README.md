@@ -40,7 +40,7 @@ https://hitorigods-socket-io-next.onrender.com/
    7. ⭕ルームに直アクセスでTOPにリダイレクト
    8. ⭕TOPに戻ったときにソケットを切断する
    9. ⭕チャットの編集・削除機能
-   10. ログインフォーム作る
+   10. ログインフォーム作成
    11. チャット内容にバリデーション（Zod）
    12. ログインフォームにバリデーション（Zod）
    13. Socket機能を一つにまとめて分離
@@ -60,10 +60,9 @@ https://hitorigods-socket-io-next.onrender.com/
    13. プロフィールID用のデータベースを作る
    14. supabase CLIでseedデータ作る（Snaplet）
 3. 認証機能
-   1. メールアドレス認証
+   1. ⭕メールアドレス認証
    2. OAuth実装
       1. Google
-      2. Github
    3. ログインエラー通知
    4. 投稿者名をニックネーム編集可能に
 4. レイアウト調整
@@ -191,6 +190,10 @@ https://supabase.com/docs/guides/cli/managing-environments
 ---
 
 ## ▼ チートシート
+
+### ■ Zod
+
+https://zenn.dev/uttk/articles/bd264fa884e026
 
 ### ■ Tailwind CSS
 

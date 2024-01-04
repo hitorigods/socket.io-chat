@@ -47,6 +47,41 @@ export interface Database {
           }
         ]
       }
+      Profiles: {
+        Row: {
+          avatarUrl: string | null
+          createdAt: string
+          id: string
+          nickname: string
+          updatedAt: string
+          User_id: string
+        }
+        Insert: {
+          avatarUrl?: string | null
+          createdAt?: string
+          id?: string
+          nickname: string
+          updatedAt?: string
+          User_id: string
+        }
+        Update: {
+          avatarUrl?: string | null
+          createdAt?: string
+          id?: string
+          nickname?: string
+          updatedAt?: string
+          User_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Profiles_User_id_fkey"
+            columns: ["User_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
