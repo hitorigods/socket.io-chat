@@ -2,12 +2,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
-import { InsertChat, UpdateChat } from '@/schemas/chats';
-import { atomEditedChat } from '@/stores/atoms';
+import { RowChat, InsertChat, UpdateChat, ChatSchema } from '@/schemas/chats';
+import {
+	atomUser,
+	atomEditedChat,
+	atomSocketChat,
+	atomChatItems,
+} from '@/stores/atoms';
 
 export const useChatMutate = () => {
 	const queryClient = useQueryClient();
+	const [stateUser] = useAtom(atomUser);
 	const [, setEditedChat] = useAtom(atomEditedChat);
+	const [, setStateSocketChat] = useAtom(atomSocketChat);
+	const [stateChatItems, setStateChatItems] = useAtom(atomChatItems);
 
 	const reset = () => {
 		setEditedChat(null);
@@ -22,13 +30,33 @@ export const useChatMutate = () => {
 			if (error) throw new Error(error.message);
 			return data;
 		},
-		onSuccess: (result: InsertChat[]) => {
-			const previousRows = queryClient.getQueryData<InsertChat[]>([
+		onSuccess: (result: RowChat[]) => {
+			// ステートの更新
+			const { id, title, published, createdAt, updatedAt } = result[0];
+			const { nickname, avatarUrl } = stateUser;
+			const socketData = {
+				id,
+				title,
+				published,
+				createdAt,
+				updatedAt,
+				Profiles: {
+					nickname,
+					avatarUrl,
+				},
+			};
+			setStateSocketChat({ type: 'create', data: socketData });
+			setStateChatItems((state) => [socketData, ...state]);
+
+			// クエリの更新
+			const previousData = queryClient.getQueryData<ChatSchema[]>([
 				'query:chats',
 			]);
-			if (previousRows && result != null) {
-				queryClient.setQueryData(['query:chats'], [...previousRows, result[0]]);
+			if (previousData && result != null) {
+				const newData = [...previousData, result[0]];
+				queryClient.setQueryData(['query:chats'], newData);
 			}
+
 			alert('チャットを投稿しました');
 			reset();
 		},
@@ -52,16 +80,33 @@ export const useChatMutate = () => {
 			queryClient.invalidateQueries({ queryKey: ['query:chats'] });
 			return data;
 		},
-		onSuccess: (result: UpdateChat[], variables: UpdateChat) => {
-			const previousRows = queryClient.getQueryData<UpdateChat[]>([
+		onSuccess: (result: RowChat[], variables: UpdateChat) => {
+			// ステートの更新
+			const socketData = {
+				...variables,
+			};
+			setStateSocketChat({ type: 'update', data: socketData });
+			setStateChatItems((state) =>
+				state.map((item) => {
+					if (variables.id === item.id) {
+						return { ...item, ...socketData };
+					} else {
+						return item;
+					}
+				})
+			);
+
+			// クエリの更新
+			const previousData = queryClient.getQueryData<UpdateChat[]>([
 				'query:chats',
 			]);
-			if (previousRows && result != null) {
-				const newRows = previousRows.map((row) =>
-					row.id === variables.id ? result[0] : row
+			if (previousData && result != null) {
+				const newData = previousData.map((row) =>
+					row.id === variables?.id ? result[0] : row
 				);
-				queryClient.setQueryData(['query:chats'], newRows);
+				queryClient.setQueryData(['query:chats'], newData);
 			}
+
 			alert('チャットを更新しました');
 			reset();
 		},
@@ -84,15 +129,26 @@ export const useChatMutate = () => {
 			return data;
 		},
 		onSuccess: (_, variables) => {
-			const previousTodos = queryClient.getQueryData<UpdateChat[]>([
+			// ステートの更新
+			const socketData = {
+				id: variables,
+			};
+			setStateSocketChat({ type: 'delete', data: socketData });
+			setStateChatItems((state) =>
+				state.filter((item) => variables !== item.id)
+			);
+
+			// クエリの更新
+			const previousData = queryClient.getQueryData<UpdateChat[]>([
 				'query:chats',
 			]);
-			if (previousTodos) {
+			if (previousData) {
 				queryClient.setQueryData(
 					['query:chats'],
-					previousTodos.filter((row) => row.id !== variables)
+					previousData.filter((row) => row.id !== variables)
 				);
 			}
+
 			alert('チャットを削除しました');
 			reset();
 		},

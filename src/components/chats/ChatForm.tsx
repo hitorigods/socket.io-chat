@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FormEventHandler } from 'react';
+import { useLayoutEffect, FormEventHandler } from 'react';
 import { useAtom } from 'jotai';
 
 import {
@@ -8,6 +8,7 @@ import {
 	atomInputChat,
 	atomEditedChat,
 	atomIsEditedChat,
+	atomSocketChat,
 } from '@/stores/atoms';
 import { useChatMutate } from '@/hooks/useChatMutate';
 import { UpdateChat } from '@/schemas/chats';
@@ -16,15 +17,15 @@ import InputButton from '@/components/InputButton';
 
 type Props = {
 	stateUser: UserSchema;
-	chatsRefetch: () => void;
 };
 
-export default function ChatForm({ stateUser, chatsRefetch }: Props) {
+export default function ChatForm({ stateUser }: Props) {
 	const { createChatMutation, updateChatMutation } = useChatMutate();
 	const [stateSocket] = useAtom(atomSocket);
 	const [stateInputChat, setStateInputChat] = useAtom(atomInputChat);
 	const [stateEditedChat] = useAtom(atomEditedChat);
 	const [stateIsEditedChat, setStateIsEditedChat] = useAtom(atomIsEditedChat);
+	const [stateSocketChat, setStateSocketChat] = useAtom(atomSocketChat);
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
@@ -33,22 +34,17 @@ export default function ChatForm({ stateUser, chatsRefetch }: Props) {
 		if (stateIsEditedChat) {
 			if (!stateEditedChat) return;
 			// 編集中のチャットを取得しtitleを入力内容に置き換えデータベースを更新する
-			const { id, title, published, Profile_id, Room_id, User_id } =
-				stateEditedChat;
+			const { id, published } = stateEditedChat;
 			const updateChat: UpdateChat = {
 				id,
 				title: stateInputChat,
 				published,
-				Profile_id,
-				Room_id,
-				User_id,
 			};
 			await updateChatMutation.mutate(updateChat);
 		} else {
 			const updateChat = {
 				title: stateInputChat,
 				published: true,
-				// ログイン中のユーザーIDを設定する
 				User_id: stateUser.id,
 				Profile_id: stateUser.Profile_id,
 				// TODO: チャットにルームIDを格納し設定する
@@ -57,16 +53,17 @@ export default function ChatForm({ stateUser, chatsRefetch }: Props) {
 			await createChatMutation.mutate(updateChat);
 		}
 
-		stateSocket.emit('socket:chat', stateInputChat);
-		console.log(`send client: chat: ${stateInputChat}`);
-
-		//  チャット投稿後にリフェッチする
-		const log = chatsRefetch();
-		console.log('ChatForm log', log);
+		// stateSocket.emit('socket:chat', stateSocketChat);
+		// console.log('send client::chat:', stateSocketChat);
 
 		setStateInputChat('');
 		setStateIsEditedChat(false);
 	};
+
+	useLayoutEffect(() => {
+		stateSocket?.emit('socket:chat', stateSocketChat);
+		console.log('send client chat:', stateSocketChat);
+	}, [stateSocketChat]);
 
 	return (
 		<section className="">

@@ -2,9 +2,10 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
-import { atomSocket, atomUser } from '@/stores/atoms';
+import { atomSocket, atomUser, atomChatItems } from '@/stores/atoms';
 import { useChatQuery } from '@/hooks/useChatQuery';
 import { ChatSchema } from '@/schemas/chats';
 import ChatList from '@/components/chats/ChatList';
@@ -21,9 +22,10 @@ type QueryProps = {
 export default function ChatArea() {
 	const [stateSocket] = useAtom(atomSocket);
 	const [stateUser] = useAtom(atomUser);
+	const [stateChatItems, setStateChatItems] = useAtom(atomChatItems);
 	const { getQueryChats } = useChatQuery();
 	const {
-		data: chatsData,
+		data: queryChats,
 		error: chatsError,
 		refetch: chatsRefetch,
 		isLoading: isChatsLoading,
@@ -43,15 +45,12 @@ export default function ChatArea() {
 		<>
 			<div className="grid content-between gap-[40px]">
 				<ChatList
-					chatsData={chatsData}
+					chatItems={stateChatItems}
 					chatsError={chatsError}
 					isChatsLoading={isChatsLoading}
 					isChatsError={isChatsError}
 				/>
-				<ChatForm
-					chatsRefetch={chatsRefetch}
-					stateUser={stateUser}
-				/>
+				<ChatForm stateUser={stateUser} />
 			</div>
 		</>
 	);

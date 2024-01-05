@@ -6,13 +6,15 @@ import { io } from 'socket.io-client';
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
-import { atomSocket } from '@/stores/atoms';
+import { atomSocket, atomChatItems } from '@/stores/atoms';
+import { SocketChat, ChatSchema } from '@/schemas/chats';
 import InputButton from '@/components/InputButton';
 
 export default function ConnectForm() {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [, setStateSocket] = useAtom(atomSocket);
+	const [stateChatItems, setStateChatItems] = useAtom(atomChatItems);
 	const [roomName, setRoomName] = useState('');
 
 	const initializer = async (socket: any) => {
@@ -24,18 +26,41 @@ export default function ConnectForm() {
 			console.log('Disconnected from the server');
 		});
 
-		socket.on('socket:chat', (data: String) => {
-			console.log(`received: ${data}`);
+		socket.on('socket:chat', (payload: SocketChat) => {
+			console.log('received client chat:', payload);
 
-			setTimeout(async () => {
-				// TODO: ここでrefetchする
-				const log = await queryClient.refetchQueries({
-					queryKey: ['query:chats'],
-					type: 'active',
-					exact: true,
-				});
-				console.log('ConnectForm log', log);
-			}, 100);
+			const { type, data } = payload;
+			switch (type) {
+				case 'create':
+					setStateChatItems((state) => {
+						// 念のため重複を削除
+						const newItems = Array.from(
+							new Map(state.map((item) => [item.id, item])).values()
+						);
+						// 既に存在する場合は追加しない
+						return newItems.map((item) => item.id).find((id) => id === data.id)
+							? newItems
+							: [data as ChatSchema, ...newItems];
+					});
+					break;
+				case 'update':
+					setStateChatItems((state) =>
+						state.map((item) => {
+							if (item.id === data.id) {
+								return { ...item, ...data };
+							}
+							return item;
+						})
+					);
+					break;
+				case 'delete':
+					setStateChatItems((state) =>
+						state.filter((item) => item.id !== data.id)
+					);
+					break;
+				default:
+					break;
+			}
 		});
 	};
 

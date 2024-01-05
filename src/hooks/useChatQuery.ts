@@ -1,13 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
+import { atomChatItems } from '@/stores/atoms';
+import { ChatSchema } from '@/schemas/chats';
 
 export const useChatQuery = () => {
+	const [, setStateChatItems] = useAtom(atomChatItems);
+
 	const query = async () => {
 		const { data, error } = await supabase
 			.from('Chats')
 			.select(
-				`id, title, published, createdAt, updatedAt, Profile_id,
+				`id, title, published, createdAt, updatedAt,
 					Profiles!inner (
 						nickname, avatarUrl
 					)
@@ -17,13 +22,20 @@ export const useChatQuery = () => {
 		if (error) {
 			throw new Error(error.message);
 		}
-		return data;
+
+		const processedData = data.map((item) => ({
+			...item,
+			Profiles: item.Profiles || { nickname: '', avatarUrl: null },
+		}));
+		setStateChatItems(processedData);
+
+		return processedData;
 	};
 
 	const getQueryChats = useQuery({
 		queryKey: ['query:chats'],
 		queryFn: query,
-		staleTime: 0,
+		staleTime: Infinity,
 		// staleTime: Infinity,
 		// refetchInterval: 10000,
 	});

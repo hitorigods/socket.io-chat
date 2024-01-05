@@ -4,13 +4,13 @@ import { ChatSchema } from '@/schemas/chats';
 import ChatItem from '@/components/chats/ChatItem';
 
 type Props = {
-	chatsData: ChatSchema[];
+	chatItems: ChatSchema[];
 	chatsError: Error;
 	isChatsLoading: boolean;
 	isChatsError: boolean;
 };
 export default function ChatList({
-	chatsData,
+	chatItems,
 	chatsError,
 	isChatsLoading,
 	isChatsError,
@@ -23,14 +23,14 @@ export default function ChatList({
 		return <div>Error: {chatsError.message}</div>;
 	}
 
-	return !chatsData ? null : chatsData?.length ? (
+	return !chatItems ? null : chatItems?.length ? (
 		<section>
 			<div className="scrollbar h-[calc(100vh-420px)] overflow-y-auto overscroll-y-none px-[40px]">
 				<ul className="grid gap-[10px]">
-					{chatsData.map((chat: ChatSchema) => (
+					{chatItems.map((item: ChatSchema) => (
 						<ChatItem
-							key={chat.id}
-							chat={chat}
+							key={item.id}
+							data={item}
 						/>
 					))}
 				</ul>

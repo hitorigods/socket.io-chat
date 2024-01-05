@@ -10,9 +10,9 @@ const chatSchema = z.object({
 	updatedAt: z.string().datetime(),
 	title: z.string().max(50),
 	published: z.boolean().default(false),
-	User_id: z.string().uuid(),
-	Profile_id: z.string().uuid(),
-	Room_id: z.string().uuid(),
+	// User_id: z.string().uuid(),
+	// Profile_id: z.string().uuid(),
+	// Room_id: z.string().uuid(),
 	Profiles: z.object({
 		nickname: z.string().max(20),
 		avatarUrl: z.string().url().nullable(),
@@ -24,11 +24,16 @@ export type SetChatSchema = SetAtom<[SetStateAction<ChatSchema[]>], void>;
 
 export type DatabaseChats = Database['public']['Tables']['Chats'];
 export type RowChat = DatabaseChats['Row'];
-export type InsertChat = Omit<
-	DatabaseChats['Insert'],
-	'id' | 'createdAt' | 'updatedAt'
->;
+export type InsertChat = Omit<RowChat, 'id' | 'createdAt' | 'updatedAt'>;
 export type UpdateChat = Omit<
-	DatabaseChats['Insert'],
-	'createdAt' | 'updatedAt'
+	RowChat,
+	'createdAt' | 'updatedAt' | 'User_id' | 'Profile_id' | 'Room_id'
 >;
+
+export type SocketChat = {
+	type: 'create' | 'update' | 'delete';
+	data:
+		| ChatSchema
+		| Pick<ChatSchema, 'id' | 'title' | 'published'>
+		| Pick<ChatSchema, 'id'>;
+};
