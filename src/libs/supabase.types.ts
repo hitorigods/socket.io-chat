@@ -13,6 +13,7 @@ export interface Database {
         Row: {
           createdAt: string
           id: string
+          Profile_id: string
           published: boolean
           Room_id: string
           title: string
@@ -22,8 +23,9 @@ export interface Database {
         Insert: {
           createdAt?: string
           id?: string
+          Profile_id: string
           published?: boolean
-          Room_id?: string
+          Room_id: string
           title: string
           updatedAt?: string
           User_id: string
@@ -31,6 +33,7 @@ export interface Database {
         Update: {
           createdAt?: string
           id?: string
+          Profile_id?: string
           published?: boolean
           Room_id?: string
           title?: string
@@ -38,6 +41,13 @@ export interface Database {
           User_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "Chats_Profile_id_fkey"
+            columns: ["Profile_id"]
+            isOneToOne: false
+            referencedRelation: "Profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "Chats_User_id_fkey"
             columns: ["User_id"]
@@ -74,7 +84,46 @@ export interface Database {
         }
         Relationships: [
           {
+            foreignKeyName: "profiles_user_id_fkey"
+            columns: ["User_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "Profiles_User_id_fkey"
+            columns: ["User_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      Rooms: {
+        Row: {
+          createdAt: string
+          id: string
+          name: string
+          updatedAt: string
+          User_id: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: string
+          name: string
+          updatedAt?: string
+          User_id: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          name?: string
+          updatedAt?: string
+          User_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rooms_user_id_fkey"
             columns: ["User_id"]
             isOneToOne: false
             referencedRelation: "users"

@@ -1,26 +1,33 @@
 import { useQuery } from '@tanstack/react-query';
 
 import supabase from '@/libs/supabase';
-import { FetchChat } from '@/schemas/chats';
 
 export const useChatQuery = () => {
-	const getSelectorAll = async () => {
+	const query = async () => {
 		const { data, error } = await supabase
 			.from('Chats')
-			.select('*')
+			.select(
+				`id, title, published, createdAt, updatedAt, Profile_id,
+					Profiles!inner (
+						nickname, avatarUrl
+					)
+				`
+			)
 			.order('createdAt', { ascending: false });
 		if (error) {
 			throw new Error(error.message);
 		}
+		console.log('data', data);
+
 		return data;
 	};
 
-	const getAllChats = useQuery<FetchChat[], Error>({
+	const getQueryChats = useQuery({
 		queryKey: ['query:chats'],
-		queryFn: getSelectorAll,
+		queryFn: query,
 		staleTime: Infinity,
-		refetchInterval: 250,
+		refetchInterval: 10000,
 	});
 
-	return { getAllChats };
+	return { getQueryChats };
 };

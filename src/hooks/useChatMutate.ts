@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
-import { FetchChat } from '@/schemas/chats';
+import { InsertChat, UpdateChat } from '@/schemas/chats';
 import { atomEditedChat } from '@/stores/atoms';
 
 export const useChatMutate = () => {
@@ -17,15 +17,13 @@ export const useChatMutate = () => {
 	 * チャットデータを作成する
 	 */
 	const createChatMutation = useMutation({
-		mutationFn: async (
-			row: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>
-		) => {
+		mutationFn: async (row: InsertChat) => {
 			const { data, error } = await supabase.from('Chats').insert(row).select();
 			if (error) throw new Error(error.message);
 			return data;
 		},
-		onSuccess: (result: FetchChat[]) => {
-			const previousRows = queryClient.getQueryData<FetchChat[]>([
+		onSuccess: (result: InsertChat[]) => {
+			const previousRows = queryClient.getQueryData<InsertChat[]>([
 				'query:chats',
 			]);
 			if (previousRows && result != null) {
@@ -44,18 +42,18 @@ export const useChatMutate = () => {
 	 * チャットデータを更新する
 	 */
 	const updateChatMutation = useMutation({
-		mutationFn: async (row: FetchChat) => {
+		mutationFn: async (row: UpdateChat) => {
 			const { data, error } = await supabase
 				.from('Chats')
 				.update({ title: row.title })
-				.eq('id', row.id)
+				.eq('id', row.id || '')
 				.select();
 			if (error) throw new Error(error.message);
 			queryClient.invalidateQueries({ queryKey: ['query:chats'] });
 			return data;
 		},
-		onSuccess: (result: FetchChat[], variables: FetchChat) => {
-			const previousRows = queryClient.getQueryData<FetchChat[]>([
+		onSuccess: (result: UpdateChat[], variables: UpdateChat) => {
+			const previousRows = queryClient.getQueryData<UpdateChat[]>([
 				'query:chats',
 			]);
 			if (previousRows && result != null) {
@@ -86,7 +84,7 @@ export const useChatMutate = () => {
 			return data;
 		},
 		onSuccess: (_, variables) => {
-			const previousTodos = queryClient.getQueryData<FetchChat[]>([
+			const previousTodos = queryClient.getQueryData<UpdateChat[]>([
 				'query:chats',
 			]);
 			if (previousTodos) {

@@ -6,7 +6,7 @@ import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
 import { atomSocket, atomUser } from '@/stores/atoms';
-import { FetchChat } from '@/schemas/chats';
+import { InsertChat } from '@/schemas/chats';
 import InputButton from '@/components/InputButton';
 
 const initializer = (socket: any) => {
@@ -18,12 +18,9 @@ const initializer = (socket: any) => {
 		console.log('Disconnected from the server');
 	});
 
-	socket.on(
-		'socket:chat',
-		(newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'>) => {
-			console.log(`ConnectForm received: ${newChat.title}`);
-		}
-	);
+	socket.on('socket:chat', (newChat: InsertChat) => {
+		console.log(`ConnectForm received: ${newChat.title}`);
+	});
 };
 
 export default function ConnectForm() {

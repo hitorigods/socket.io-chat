@@ -10,22 +10,23 @@ import {
 	atomIsEditedChat,
 } from '@/stores/atoms';
 import { useChatMutate } from '@/hooks/useChatMutate';
-import { FetchChat } from '@/schemas/chats';
+import { InsertChat } from '@/schemas/chats';
 import { UserSchema } from '@/schemas/users';
 import InputButton from '@/components/InputButton';
 
 type Props = {
 	stateUser: UserSchema;
+	chatsRefetch: () => void;
 };
 
-export default function ChatForm({ stateUser }: Props) {
+export default function ChatForm({ stateUser, chatsRefetch }: Props) {
 	const { createChatMutation, updateChatMutation } = useChatMutate();
 	const [stateSocket] = useAtom(atomSocket);
 	const [stateInputChat, setStateInputChat] = useAtom(atomInputChat);
 	const [stateEditedChat] = useAtom(atomEditedChat);
 	const [stateIsEditedChat, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
 		if (!stateInputChat) return;
 
@@ -33,24 +34,26 @@ export default function ChatForm({ stateUser }: Props) {
 			if (!stateEditedChat) return;
 			// 編集中のチャットを取得しtitleを入力内容に置き換えデータベースを更新する
 			const newChat = { ...stateEditedChat, title: stateInputChat };
-			updateChatMutation.mutate(newChat);
-			setStateInputChat('');
-			setStateIsEditedChat(false);
+			await updateChatMutation.mutate(newChat);
 		} else {
-			const newChat: Omit<FetchChat, 'id' | 'createdAt' | 'updatedAt'> = {
+			const newChat: InsertChat = {
 				title: stateInputChat,
 				published: true,
 				// ログイン中のユーザーIDを設定する
 				User_id: stateUser.id,
+				Profile_id: stateUser.Profile_id,
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: '00000000-0000-0000-0000-000000000000',
 			};
-			createChatMutation.mutate(newChat);
+			await createChatMutation.mutate(newChat);
 
-			stateSocket.emit('socket:chat', newChat);
+			stateSocket?.emit('socket:chat', newChat);
 			console.log(`send client: chat: ${newChat}`);
 		}
+
+		await chatsRefetch();
 		setStateInputChat('');
+		setStateIsEditedChat(false);
 	};
 
 	return (
