@@ -1,24 +1,24 @@
 import { atom } from 'jotai';
 import { Socket } from 'socket.io-client';
 import { UserSchema } from '@/schemas/users';
-import { FetchChat } from '@/schemas/chats';
+import { ChatSchema } from '@/schemas/chats';
 
-// 状態：WebSocketコネクション
+// WebSocketコネクション
 export const atomSocket = atom(null as unknown as Socket);
 atomSocket.debugLabel = 'atomSocket';
 
-// 状態：ログインユーザー情報
+// ログインユーザー情報
 export const atomUser = atom({} as UserSchema);
 atomUser.debugLabel = 'atomUser';
 
-// 状態：チャットの入力内容
+// チャットの入力内容
 export const atomInputChat = atom('');
 atomInputChat.debugLabel = 'atomInputChat';
 
-// 状態：編集チャットの内容
-export const atomEditedChat = atom({} as FetchChat | FetchChat | null);
+// 編集チャットの内容
+export const atomEditedChat = atom({} as ChatSchema | null);
 atomEditedChat.debugLabel = 'atomEditedChat';
 
-// 状態：チャットが編集中か判定
+// チャットが編集中か判定
 export const atomIsEditedChat = atom(false);
 atomIsEditedChat.debugLabel = 'atomIsEditedChat';

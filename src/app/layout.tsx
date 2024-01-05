@@ -8,7 +8,6 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 import '@/styles/globals.css';
-import RedirectProvider from '@/providers/__Redirect';
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_SITE_NAME || '',
@@ -28,7 +27,6 @@ export default function RootLayout({
 				<FetchQueryProvider>
 					<JotaiProvider>
 						<AuthProvider>
-							{/* <RedirectProvider> */}
 							<div className="grid min-h-screen grid-rows-[50px_1fr_50px]">
 								<Header />
 								<main className="grid place-items-center gap-[40px] px-[20px] py-[50px]">
@@ -36,7 +34,6 @@ export default function RootLayout({
 								</main>
 								<Footer />
 							</div>
-							{/* </RedirectProvider> */}
 						</AuthProvider>
 					</JotaiProvider>
 				</FetchQueryProvider>

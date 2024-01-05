@@ -3,31 +3,41 @@
 import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
+import { useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
-import { atomSocket, atomUser } from '@/stores/atoms';
-import { InsertChat } from '@/schemas/chats';
+import { atomSocket } from '@/stores/atoms';
 import InputButton from '@/components/InputButton';
-
-const initializer = (socket: any) => {
-	socket.on('connect', () => {
-		console.log('Connected to the server');
-	});
-
-	socket.on('disconnect', () => {
-		console.log('Disconnected from the server');
-	});
-
-	socket.on('socket:chat', (newChat: InsertChat) => {
-		console.log(`ConnectForm received: ${newChat.title}`);
-	});
-};
 
 export default function ConnectForm() {
 	const router = useRouter();
-	const [stateUser, setStateUser] = useAtom(atomUser);
+	const queryClient = useQueryClient();
 	const [, setStateSocket] = useAtom(atomSocket);
 	const [roomName, setRoomName] = useState('');
+
+	const initializer = async (socket: any) => {
+		socket.on('connect', () => {
+			console.log('Connected to the server');
+		});
+
+		socket.on('disconnect', () => {
+			console.log('Disconnected from the server');
+		});
+
+		socket.on('socket:chat', (data: String) => {
+			console.log(`received: ${data}`);
+
+			setTimeout(async () => {
+				// TODO: ここでrefetchする
+				const log = await queryClient.refetchQueries({
+					queryKey: ['query:chats'],
+					type: 'active',
+					exact: true,
+				});
+				console.log('ConnectForm log', log);
+			}, 100);
+		});
+	};
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
@@ -38,6 +48,7 @@ export default function ConnectForm() {
 
 		const socket = io({ autoConnect: false });
 		socket.connect();
+
 		initializer(socket);
 		setStateSocket(socket);
 

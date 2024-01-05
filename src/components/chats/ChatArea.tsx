@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { atomUser } from '@/stores/atoms';
+import { atomSocket, atomUser } from '@/stores/atoms';
 import { useChatQuery } from '@/hooks/useChatQuery';
 import { ChatSchema } from '@/schemas/chats';
 import ChatList from '@/components/chats/ChatList';
@@ -19,6 +19,7 @@ type QueryProps = {
 };
 
 export default function ChatArea() {
+	const [stateSocket] = useAtom(atomSocket);
 	const [stateUser] = useAtom(atomUser);
 	const { getQueryChats } = useChatQuery();
 	const {
@@ -28,6 +29,15 @@ export default function ChatArea() {
 		isLoading: isChatsLoading,
 		isError: isChatsError,
 	}: QueryProps = getQueryChats as unknown as QueryProps;
+	const router = useRouter();
+
+	useEffect(() => {
+		if (!stateSocket) {
+			router.push('/');
+			router.refresh();
+			return;
+		}
+	}, []);
 
 	return (
 		<>
@@ -39,8 +49,8 @@ export default function ChatArea() {
 					isChatsError={isChatsError}
 				/>
 				<ChatForm
-					stateUser={stateUser}
 					chatsRefetch={chatsRefetch}
+					stateUser={stateUser}
 				/>
 			</div>
 		</>

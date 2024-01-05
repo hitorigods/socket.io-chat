@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useAtom } from 'jotai';
 
 import {
-	atomUser,
+	atomSocket,
 	atomInputChat,
 	atomEditedChat,
 	atomIsEditedChat,
@@ -21,7 +21,7 @@ interface Props {
 
 export default function ChatItem({ chat }: Props) {
 	const { deleteChatMutation } = useChatMutate();
-	const [stateUser] = useAtom(atomUser);
+	const [stateSocket] = useAtom(atomSocket);
 	const [, setStateInputChat] = useAtom(atomInputChat);
 	const [, setStateEditedChat] = useAtom(atomEditedChat);
 	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
@@ -34,9 +34,13 @@ export default function ChatItem({ chat }: Props) {
 		setStateInputChat(chat.title);
 	};
 
-	const deleteHandler: MouseEventHandler<HTMLButtonElement> = (event) => {
+	const deleteHandler: MouseEventHandler<HTMLButtonElement> = async (event) => {
 		event.preventDefault();
-		deleteChatMutation.mutate(chat.id);
+		await deleteChatMutation.mutate(chat.id);
+		stateSocket.emit('socket:chat', 'delete');
+		console.log(`send client: chat: delete`);
+		setStateInputChat('');
+		setStateIsEditedChat(false);
 	};
 
 	const localDate = useDateLocale(chat.updatedAt);
@@ -47,7 +51,7 @@ export default function ChatItem({ chat }: Props) {
 				<div className="">
 					<Image
 						src={chat.Profiles?.avatarUrl || '/favicon.ico'}
-						alt={chat.Profiles?.nickname}
+						alt={chat.Profiles?.nickname || 'no name'}
 						width={64}
 						height={64}
 						className="h-16 w-16 rounded-full"

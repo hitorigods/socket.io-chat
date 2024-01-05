@@ -10,7 +10,9 @@ const chatSchema = z.object({
 	updatedAt: z.string().datetime(),
 	title: z.string().max(50),
 	published: z.boolean().default(false),
+	User_id: z.string().uuid(),
 	Profile_id: z.string().uuid(),
+	Room_id: z.string().uuid(),
 	Profiles: z.object({
 		nickname: z.string().max(20),
 		avatarUrl: z.string().url().nullable(),
@@ -30,22 +32,3 @@ export type UpdateChat = Omit<
 	DatabaseChats['Insert'],
 	'createdAt' | 'updatedAt'
 >;
-
-// export type FetchChat = {
-// 	id: string;
-// 	createdAt: string;
-// 	updatedAt: string;
-// 	title: string;
-// 	published?: boolean;
-// 	User_id: string;
-// 	Profile_id: string;
-// 	Room_id: string;
-// };
-
-export type EditedChat = {
-	id: string;
-	title: string;
-	published?: boolean;
-	User_id?: string;
-	Room_id?: string;
-};

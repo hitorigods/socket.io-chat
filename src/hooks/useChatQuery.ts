@@ -17,16 +17,15 @@ export const useChatQuery = () => {
 		if (error) {
 			throw new Error(error.message);
 		}
-		console.log('data', data);
-
 		return data;
 	};
 
 	const getQueryChats = useQuery({
 		queryKey: ['query:chats'],
 		queryFn: query,
-		staleTime: Infinity,
-		refetchInterval: 10000,
+		staleTime: 0,
+		// staleTime: Infinity,
+		// refetchInterval: 10000,
 	});
 
 	return { getQueryChats };

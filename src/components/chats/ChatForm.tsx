@@ -10,7 +10,7 @@ import {
 	atomIsEditedChat,
 } from '@/stores/atoms';
 import { useChatMutate } from '@/hooks/useChatMutate';
-import { InsertChat } from '@/schemas/chats';
+import { UpdateChat } from '@/schemas/chats';
 import { UserSchema } from '@/schemas/users';
 import InputButton from '@/components/InputButton';
 
@@ -33,10 +33,19 @@ export default function ChatForm({ stateUser, chatsRefetch }: Props) {
 		if (stateIsEditedChat) {
 			if (!stateEditedChat) return;
 			// 編集中のチャットを取得しtitleを入力内容に置き換えデータベースを更新する
-			const newChat = { ...stateEditedChat, title: stateInputChat };
-			await updateChatMutation.mutate(newChat);
+			const { id, title, published, Profile_id, Room_id, User_id } =
+				stateEditedChat;
+			const updateChat: UpdateChat = {
+				id,
+				title: stateInputChat,
+				published,
+				Profile_id,
+				Room_id,
+				User_id,
+			};
+			await updateChatMutation.mutate(updateChat);
 		} else {
-			const newChat: InsertChat = {
+			const updateChat = {
 				title: stateInputChat,
 				published: true,
 				// ログイン中のユーザーIDを設定する
@@ -45,13 +54,16 @@ export default function ChatForm({ stateUser, chatsRefetch }: Props) {
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: '00000000-0000-0000-0000-000000000000',
 			};
-			await createChatMutation.mutate(newChat);
-
-			stateSocket?.emit('socket:chat', newChat);
-			console.log(`send client: chat: ${newChat}`);
+			await createChatMutation.mutate(updateChat);
 		}
 
-		await chatsRefetch();
+		stateSocket.emit('socket:chat', stateInputChat);
+		console.log(`send client: chat: ${stateInputChat}`);
+
+		//  チャット投稿後にリフェッチする
+		const log = chatsRefetch();
+		console.log('ChatForm log', log);
+
 		setStateInputChat('');
 		setStateIsEditedChat(false);
 	};
