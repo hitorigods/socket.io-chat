@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import supabase from '@/libs/supabase';
 import { RowProfile, InsertProfile } from '@/schemas/profiles';
-import { UserSchema } from '@/schemas/users';
 
 export const useProfileMutate = () => {
 	const queryClient = useQueryClient();

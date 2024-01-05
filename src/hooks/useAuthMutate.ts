@@ -2,13 +2,10 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import supabase from '@/libs/supabase';
-import { useProfileMutate } from '@/hooks/useProfileMutate';
 
 export const useAuthMutate = () => {
 	const [authEmail, setAuthEmail] = useState('');
 	const [authPassword, setAuthPassword] = useState('');
-
-	const { createProfileMutaion } = useProfileMutate();
 
 	const reset = () => {
 		setAuthEmail('');
@@ -23,7 +20,7 @@ export const useAuthMutate = () => {
 			});
 			if (error) throw new Error(error.message);
 		},
-		onSuccess: () => {
+		onSuccess: async () => {
 			alert('ログインしました');
 			reset();
 		},

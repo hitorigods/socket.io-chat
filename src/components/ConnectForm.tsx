@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEventHandler, FormEventHandler } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
@@ -27,9 +27,10 @@ const initializer = (socket: any) => {
 };
 
 export default function ConnectForm() {
+	const router = useRouter();
 	const [stateUser, setStateUser] = useAtom(atomUser);
 	const [, setStateSocket] = useAtom(atomSocket);
-	const router = useRouter();
+	const [roomName, setRoomName] = useState('');
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault();
@@ -48,7 +49,7 @@ export default function ConnectForm() {
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
 		event.preventDefault();
-		setStateUser({ ...stateUser, nickname: event.target.value });
+		setRoomName(event.target.value);
 	};
 
 	return (
@@ -57,8 +58,8 @@ export default function ConnectForm() {
 				label="接続"
 				name="name"
 				placeholder="表示名を入力してください"
-				value={stateUser.nickname}
-				disabled={!stateUser.nickname}
+				value={roomName}
+				disabled={!roomName}
 				onChange={handleChange}
 			/>
 		</form>

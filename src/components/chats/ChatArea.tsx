@@ -11,12 +11,6 @@ import ChatForm from '@/components/chats/ChatForm';
 export default function ChatArea() {
 	const [stateUser] = useAtom(atomUser);
 
-	const router = useRouter();
-
-	useEffect(() => {
-		if (!stateUser) router.push('/');
-	}, [router, stateUser]);
-
 	return (
 		<>
 			<div className="grid content-between gap-[40px]">

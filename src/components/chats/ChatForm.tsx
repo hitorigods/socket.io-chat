@@ -43,7 +43,7 @@ export default function ChatForm({ stateUser }: Props) {
 				// ログイン中のユーザーIDを設定する
 				User_id: stateUser.id,
 				// TODO: チャットにルームIDを格納し設定する
-				Room_id: crypto.randomUUID(),
+				Room_id: '00000000-0000-0000-0000-000000000000',
 			};
 			createChatMutation.mutate(newChat);
 

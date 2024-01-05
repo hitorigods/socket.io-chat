@@ -19,15 +19,9 @@ export default function Header() {
 
 	const router = useRouter();
 
-	const backHandle = async (event: MouseEvent<HTMLButtonElement>) => {
+	const backHandler = async (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		stateSocket?.disconnect();
-		setStateUser({
-			id: '',
-			nickname: '',
-			avatarUrl: '',
-			profile_id: '',
-		});
 		setStateEditedChat(null);
 		setStateIsEditedChat(false);
 		router.push('/');
@@ -37,7 +31,7 @@ export default function Header() {
 		<>
 			<header className="sticky top-0 grid place-content-center place-items-center bg-dark/50">
 				<p className="text-base uppercase tracking-wider">
-					<button onClick={backHandle}>Socket.io Chat App</button>
+					<button onClick={backHandler}>Socket.io Chat App</button>
 				</p>
 			</header>
 		</>

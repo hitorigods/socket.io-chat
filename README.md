@@ -40,10 +40,11 @@ https://hitorigods-socket-io-next.onrender.com/
    7. ⭕ルームに直アクセスでTOPにリダイレクト
    8. ⭕TOPに戻ったときにソケットを切断する
    9. ⭕チャットの編集・削除機能
-   10. ログインフォーム作成
-   11. チャット内容にバリデーション（Zod）
-   12. ログインフォームにバリデーション（Zod）
-   13. Socket機能を一つにまとめて分離
+   10. ⭕ログインフォーム作成
+   11. アバター画像を表示
+   12. チャット内容にバリデーション（Zod）
+   13. ログインフォームにバリデーション（Zod）
+   14. Socket機能を一つにまとめて分離
 2. データベース
    1. ⭕ORM（prisma）導入
    2. ⭕Supabase用意
@@ -53,12 +54,14 @@ https://hitorigods-socket-io-next.onrender.com/
    6. ⭕データベースからチャット復元
    7. ⭕データベース操作
    8. ⭕データベース更新されたらupdateAtを更新する（SQL）
-   9. ログインユーザーを登録
-   10. RLS設定
-   11. 所有ユーザーのみチャット削除・更新
-   12. ルームID用のデータベースを作る
-   13. プロフィールID用のデータベースを作る
-   14. supabase CLIでseedデータ作る（Snaplet）
+   9. ⭕ログインユーザーを登録
+   10. ⭕プロフィールID用のデータベースを作る
+   11. RLS設定
+   12. アバター画像のストレージ登録
+   13. ストレージ画像URLをプロフィールに登録
+   14. 所有ユーザーのみチャット削除・更新
+   15. ルーム用のデータベースを作る
+   16. supabase CLIでseedデータ作る（Snaplet）
 3. 認証機能
    1. ⭕メールアドレス認証
    2. OAuth実装
@@ -72,6 +75,8 @@ https://hitorigods-socket-io-next.onrender.com/
    4. 編集・削除するときにアラート表示（dialogモーダル？）
    5. キーボードタブでのフォーカスの可視化（アクセシビリティ）
    6. チャットの入力フォームが最初にフォーカスするように
+   7. エラーアラートを日本語に
+   8. エラーをアラートではなく通知表示に
 5. 拡張機能
    1. ルームIDで複数チャットできるように
    2. アバター画像をSupabseのStorageで運用
@@ -90,10 +95,17 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ### ■ supabase CLIでデータ操作
 
+Push/Pull
+
+```
+$ supabase db push
+$ supabase db pull
+```
+
 ローカルにマイグレーションファイルを新規作成
 
 ```
-$ supabase migration new [create\_[ファイル名]]
+$ supabase migration new create\_[ファイル名]
 ```
 
 作成したマイグレーションファイルにサーバーの差分を取得
@@ -113,6 +125,8 @@ $ supabase db reset
 ```
 $ supabase db dump -f supabase/seed.sql --data-only
 ```
+
+https://qiita.com/masakinihirota/items/b84c071415eeebb4a252
 
 ### ■ supabase CLIで型ファイルを生成
 

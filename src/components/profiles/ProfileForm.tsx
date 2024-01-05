@@ -6,9 +6,7 @@ import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
 import { useProfileMutate } from '@/hooks/useProfileMutate';
-import { UserSchema } from '@/schemas/users';
 import { RowProfile, UpdateProfile } from '@/schemas/profiles';
-import { atomSocket, atomUser } from '@/stores/atoms';
 
 export default function ProfileFrom() {
 	const {
@@ -20,7 +18,6 @@ export default function ProfileFrom() {
 		updateProfileMutaion,
 		deleteProfileMutaion,
 	} = useProfileMutate();
-	const [stateUser, setStateUser] = useAtom(atomUser);
 	const [uploadImage, setUploadImage] = useState<File>();
 	const [hasProfile, setHasProfile] = useState(false);
 	const router = useRouter();
@@ -69,6 +66,8 @@ export default function ProfileFrom() {
 				avatarUrl: profileAvatarUrl,
 			};
 			await updateProfileMutaion.mutate(newRow);
+			await router.push('/');
+			router.refresh();
 		} else {
 			const row = {
 				nickname: profileNickname,
