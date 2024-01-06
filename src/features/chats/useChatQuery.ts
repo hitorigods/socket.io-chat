@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
-import { atomChatItems } from '@/stores/atoms';
+import { chatItemsAtom } from '@/features/chats/chatAtom';
 import { ChatSchema } from '@/features/chats/chatSchemas';
 
 export const useChatQuery = () => {
-	const [, setStateChatItems] = useAtom(atomChatItems);
+	const [, setChatItemsState] = useAtom(chatItemsAtom);
 
 	const query = async () => {
 		const { data, error } = await supabase
@@ -27,7 +27,7 @@ export const useChatQuery = () => {
 			...item,
 			Profiles: item.Profiles || { nickname: '', avatarUrl: null },
 		}));
-		setStateChatItems(processedData);
+		setChatItemsState(processedData);
 
 		return processedData;
 	};

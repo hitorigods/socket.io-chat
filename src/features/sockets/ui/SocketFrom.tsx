@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
-import { atomSocket, atomChatItems } from '@/stores/atoms';
+import { chatItemsAtom } from '@/features/chats/chatAtom';
+import { socketAtom } from '@/features/sockets/socketAtoms';
 import { SocketChat, ChatSchema } from '@/features/chats/chatSchemas';
 import FormInputSubmit from '@/components/buttons/InputButton';
 
 export default function SocketFrom() {
 	const router = useRouter();
-	const [, setStateSocket] = useAtom(atomSocket);
-	const [, setStateChatItems] = useAtom(atomChatItems);
+	const [, setSocketState] = useAtom(socketAtom);
+	const [, setChatItemsState] = useAtom(chatItemsAtom);
 	const [roomName, setRoomName] = useState('');
 
 	const initializer = async (socket: any) => {
@@ -30,7 +31,7 @@ export default function SocketFrom() {
 			const { type, data } = payload;
 			switch (type) {
 				case 'create':
-					setStateChatItems((state) => {
+					setChatItemsState((state) => {
 						// 念のため重複を削除
 						const newItems = Array.from(
 							new Map(state.map((item) => [item.id, item])).values()
@@ -42,7 +43,7 @@ export default function SocketFrom() {
 					});
 					break;
 				case 'update':
-					setStateChatItems((state) =>
+					setChatItemsState((state) =>
 						state.map((item) => {
 							if (item.id === data.id) {
 								return { ...item, ...data };
@@ -52,7 +53,7 @@ export default function SocketFrom() {
 					);
 					break;
 				case 'delete':
-					setStateChatItems((state) =>
+					setChatItemsState((state) =>
 						state.filter((item) => item.id !== data.id)
 					);
 					break;
@@ -75,7 +76,7 @@ export default function SocketFrom() {
 		socket.connect();
 
 		initializer(socket);
-		setStateSocket(socket);
+		setSocketState(socket);
 
 		router.push('/rooms');
 	};

@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { atomSocket, atomUser, atomChatItems } from '@/stores/atoms';
+import { chatItemsAtom } from '@/features/chats/chatAtom';
+import { socketAtom } from '@/features/sockets/socketAtoms';
+import { userAtom } from '@/features/users/userAtom';
+
 import { useChatQuery } from '@/features/chats/useChatQuery';
 import { ChatSchema } from '@/features/chats/chatSchemas';
 import ChatList from '@/features/chats/ui/ChatList';
@@ -19,9 +22,9 @@ type QueryProps = {
 };
 
 export default function ChatArea() {
-	const [stateSocket] = useAtom(atomSocket);
-	const [stateUser] = useAtom(atomUser);
-	const [stateChatItems] = useAtom(atomChatItems);
+	const [socketState] = useAtom(socketAtom);
+	const [userState] = useAtom(userAtom);
+	const [chatItemsState] = useAtom(chatItemsAtom);
 	const { getQueryChats } = useChatQuery();
 	const {
 		data: queryChats,
@@ -33,7 +36,7 @@ export default function ChatArea() {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!stateSocket) {
+		if (!socketState) {
 			router.push('/');
 			router.refresh();
 			return;
@@ -44,12 +47,12 @@ export default function ChatArea() {
 		<>
 			<div className="grid content-between gap-[40px]">
 				<ChatList
-					chatItems={stateChatItems}
+					chatItems={chatItemsState}
 					chatsError={chatsError}
 					isChatsLoading={isChatsLoading}
 					isChatsError={isChatsError}
 				/>
-				<ChatForm stateUser={stateUser} />
+				<ChatForm userState={userState} />
 			</div>
 		</>
 	);

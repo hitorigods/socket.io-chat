@@ -5,7 +5,7 @@ import { useEffect, useCallback } from 'react';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
-import { atomUser } from '@/stores/atoms';
+import { userAtom } from '@/features/users/userAtom';
 
 type Props = {
 	children: React.ReactNode;
@@ -14,7 +14,7 @@ type Props = {
 export function AuthProvider(props: Props) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const [, setStateUser] = useAtom(atomUser);
+	const [, setUserState] = useAtom(userAtom);
 
 	const handleValidate = useCallback(async () => {
 		const {
@@ -40,7 +40,7 @@ export function AuthProvider(props: Props) {
 			return;
 		}
 
-		setStateUser({
+		setUserState({
 			id: user?.id || '',
 			nickname: profile?.nickname || '',
 			avatarUrl: profile?.avatarUrl || '',
@@ -63,7 +63,7 @@ export function AuthProvider(props: Props) {
 
 	useEffect(() => {
 		handleValidate();
-	}, [router, pathname, setStateUser]);
+	}, [router, pathname, setUserState]);
 
 	return <>{props.children}</>;
 }

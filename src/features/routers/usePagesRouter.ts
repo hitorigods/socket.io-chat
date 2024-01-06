@@ -4,19 +4,20 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { atomSocket, atomEditedChat, atomIsEditedChat } from '@/stores/atoms';
+import { chatEditedAtom, isChatEditedAtom } from '@/features/chats/chatAtom';
+import { socketAtom } from '@/features/sockets/socketAtoms';
 
 export function usePagesRouter() {
 	const router = useRouter();
 
-	const [stateSocket] = useAtom(atomSocket);
-	const [, setStateEditedChat] = useAtom(atomEditedChat);
-	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
+	const [socketState] = useAtom(socketAtom);
+	const [, setChatEditedState] = useAtom(chatEditedAtom);
+	const [, setIsChatEditedState] = useAtom(isChatEditedAtom);
 
 	const resetStatus = () => {
-		stateSocket?.disconnect();
-		setStateEditedChat(null);
-		setStateIsEditedChat(false);
+		socketState?.disconnect();
+		setChatEditedState(null);
+		setIsChatEditedState(false);
 	};
 
 	const handleRouterHome: React.MouseEventHandler<HTMLButtonElement> = (

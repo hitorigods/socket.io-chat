@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
+import { userAtom } from '@/features/users/userAtom';
 import { useProfileMutate } from '@/features/profiles/useProfileMutate';
 import { RowProfile } from '@/features/profiles/profileSchemas';
-import { atomUser } from '@/stores/atoms';
 import { useUploadImage } from '@/utils/useUploadImage';
 
 export default function ProfileFrom() {
@@ -19,18 +19,17 @@ export default function ProfileFrom() {
 		createProfileMutaion,
 		updateProfileMutaion,
 	} = useProfileMutate();
-	const [stateUser, setStateUser] = useAtom(atomUser);
-	const [uploadImage, setUploadImage] = useState<File>();
-	const [hasProfile, setHasProfile] = useState(false);
+	const [userState] = useAtom(userAtom);
+	const [uploadImage] = useState<File>();
+	const [hasProfile] = useState(false);
 	const { handleUploadImage, uplpadImageRef } = useUploadImage();
 
 	const router = useRouter();
 
 	useLayoutEffect(() => {
-		console.log('stateUser', stateUser);
-		if (!stateUser) return;
-		setProfileNickname(stateUser.nickname);
-	}, [stateUser]);
+		if (!userState) return;
+		setProfileNickname(userState.nickname);
+	}, [userState]);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

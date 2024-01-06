@@ -9,21 +9,21 @@ import {
 	ChatSchema,
 } from '@/features/chats/chatSchemas';
 import {
-	atomUser,
-	atomEditedChat,
-	atomSocketChat,
-	atomChatItems,
-} from '@/stores/atoms';
+	chatEditedAtom,
+	chatSocketAtom,
+	chatItemsAtom,
+} from '@/features/chats/chatAtom';
+import { userAtom } from '@/features/users/userAtom';
 
 export const useChatMutate = () => {
 	const queryClient = useQueryClient();
-	const [stateUser] = useAtom(atomUser);
-	const [, setEditedChat] = useAtom(atomEditedChat);
-	const [, setStateSocketChat] = useAtom(atomSocketChat);
-	const [, setStateChatItems] = useAtom(atomChatItems);
+	const [userState] = useAtom(userAtom);
+	const [, setChatEditedState] = useAtom(chatEditedAtom);
+	const [, setChatSocketState] = useAtom(chatSocketAtom);
+	const [, setChatItemsState] = useAtom(chatItemsAtom);
 
 	const reset = () => {
-		setEditedChat(null);
+		setChatEditedState(null);
 	};
 
 	/**
@@ -36,10 +36,10 @@ export const useChatMutate = () => {
 			return data;
 		},
 		onSuccess: (result: RowChat[]) => {
-			if (!stateUser) throw new Error('ログインが確認できませんでした');
+			if (!userState) throw new Error('ログインが確認できませんでした');
 			// ステートの更新
 			const { id, title, published, createdAt, updatedAt, User_id } = result[0];
-			const { nickname, avatarUrl } = stateUser;
+			const { nickname, avatarUrl } = userState;
 			const socketData = {
 				id,
 				title,
@@ -52,8 +52,8 @@ export const useChatMutate = () => {
 					avatarUrl,
 				},
 			};
-			setStateSocketChat({ type: 'create', data: socketData });
-			setStateChatItems((state) => [socketData, ...state]);
+			setChatSocketState({ type: 'create', data: socketData });
+			setChatItemsState((state) => [socketData, ...state]);
 
 			// クエリの更新
 			const previousData = queryClient.getQueryData<ChatSchema[]>([
@@ -92,8 +92,8 @@ export const useChatMutate = () => {
 			const socketData = {
 				...variables,
 			};
-			setStateSocketChat({ type: 'update', data: socketData });
-			setStateChatItems((state) =>
+			setChatSocketState({ type: 'update', data: socketData });
+			setChatItemsState((state) =>
 				state.map((item) => {
 					if (variables.id === item.id) {
 						return { ...item, ...socketData };
@@ -140,8 +140,8 @@ export const useChatMutate = () => {
 			const socketData = {
 				id: variables,
 			};
-			setStateSocketChat({ type: 'delete', data: socketData });
-			setStateChatItems((state) =>
+			setChatSocketState({ type: 'delete', data: socketData });
+			setChatItemsState((state) =>
 				state.filter((item) => variables !== item.id)
 			);
 

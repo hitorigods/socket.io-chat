@@ -5,12 +5,12 @@ import Image from 'next/image';
 import { useAtom } from 'jotai';
 
 import {
-	atomUser,
-	atomSocket,
-	atomInputChat,
-	atomEditedChat,
-	atomIsEditedChat,
-} from '@/stores/atoms';
+	chatInputAtom,
+	chatEditedAtom,
+	isChatEditedAtom,
+} from '@/features/chats/chatAtom';
+import { socketAtom } from '@/features/sockets/socketAtoms';
+import { userAtom } from '@/features/users/userAtom';
 import { useChatMutate } from '@/features/chats/useChatMutate';
 import { ChatSchema } from '@/features/chats/chatSchemas';
 import EditButton from '@/components/buttons/EditButton';
@@ -24,18 +24,18 @@ interface Props {
 
 export default function ChatItem({ item }: Props) {
 	const { deleteChatMutation } = useChatMutate();
-	const [stateUser] = useAtom(atomUser);
-	const [stateSocket] = useAtom(atomSocket);
-	const [, setStateInputChat] = useAtom(atomInputChat);
-	const [, setStateEditedChat] = useAtom(atomEditedChat);
-	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
+	const [userState] = useAtom(userAtom);
+	const [socketState] = useAtom(socketAtom);
+	const [, setChatInputState] = useAtom(chatInputAtom);
+	const [, setChatEditedState] = useAtom(chatEditedAtom);
+	const [, setIsChatEditedState] = useAtom(isChatEditedAtom);
 
 	const handleEdited: React.MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
 
-		setStateInputChat(item.title);
-		setStateEditedChat(item);
-		setStateIsEditedChat(true);
+		setChatInputState(item.title);
+		setChatEditedState(item);
+		setIsChatEditedState(true);
 	};
 
 	const handleDelete: React.MouseEventHandler<HTMLButtonElement> = async (
@@ -43,10 +43,10 @@ export default function ChatItem({ item }: Props) {
 	) => {
 		event.preventDefault();
 		await deleteChatMutation.mutate(item.id);
-		stateSocket.emit('socket:chat', 'delete');
+		socketState.emit('socket:chat', 'delete');
 		console.log(`send client: chat: delete`);
-		setStateInputChat('');
-		setStateIsEditedChat(false);
+		setChatInputState('');
+		setIsChatEditedState(false);
 	};
 
 	const { localDate } = useDateLocale(item.updatedAt);
@@ -70,7 +70,7 @@ export default function ChatItem({ item }: Props) {
 						<p className="text-xs">{localDate}</p>
 					</div>
 				</div>
-				{item.User_id === stateUser?.id && (
+				{item.User_id === userState?.id && (
 					<div
 						className="grid w-[60px] gap-[1px] rounded-md
 					[&>*:first-child]:rounded-t-md

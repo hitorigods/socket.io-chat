@@ -3,14 +3,14 @@
 import Image from 'next/image';
 import { useAtom } from 'jotai';
 
-import { atomUser } from '@/stores/atoms';
+import { userAtom } from '@/features/users/userAtom';
 import { usePagesRouter } from '@/features/routers/usePagesRouter';
 
 import imgLogo from '@/assets/icons/logo.svg';
 import Navbar from './Navbar';
 
 export default function Header() {
-	const [stateUser] = useAtom(atomUser);
+	const [userState] = useAtom(userAtom);
 	const { handleRouterHome } = usePagesRouter();
 
 	return (
@@ -36,7 +36,7 @@ export default function Header() {
 							</span>
 						</button>
 					</div>
-					{stateUser && <Navbar />}
+					{userState && <Navbar />}
 				</div>
 			</header>
 		</>

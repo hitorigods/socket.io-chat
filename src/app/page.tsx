@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import { Suspense } from 'react';
 
-import Heading from '@/components/layout/Heading';
-import SocketFrom from '@/features/sockets/SocketFrom';
+import SocketFrom from '@/features/sockets/ui/SocketFrom';
 import AuthSignOut from '@/features/auths/ui/AuthSignOut';
+import Heading from '@/components/layout/Heading';
 
 export default function Home() {
 	return (
