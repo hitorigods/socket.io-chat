@@ -33,7 +33,7 @@ export const useProfileMutate = () => {
 					[...previousRows, result[0]]
 				);
 			}
-			alert('プロフィールを作成しました');
+			alert('プロフィールを登録しました');
 			reset();
 		},
 		onError: (error: any) => {
@@ -47,7 +47,7 @@ export const useProfileMutate = () => {
 			const { data, error } = await supabase
 				.from('Profiles')
 				.update({ nickname: row.nickname, avatarUrl: row.avatarUrl })
-				.eq('Profile_id', row.id)
+				.eq('User_id', row.User_id)
 				.select();
 			if (error) throw new Error(error.message);
 			return data;

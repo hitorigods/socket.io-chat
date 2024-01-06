@@ -50,6 +50,9 @@ export function AuthProvider(props: Props) {
 
 	useEffect(() => {
 		supabase.auth.onAuthStateChange(async (event, _) => {
+			console.log('event', event);
+			console.log('pathname', pathname);
+
 			if (event === 'SIGNED_IN' && pathname === '/auth') {
 				router.push('/');
 				router.refresh();

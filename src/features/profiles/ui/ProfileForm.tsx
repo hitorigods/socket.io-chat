@@ -10,6 +10,8 @@ import { useProfileMutate } from '@/features/profiles/useProfileMutate';
 import { RowProfile } from '@/features/profiles/profileSchemas';
 import { useUploadImage } from '@/utils/useUploadImage';
 
+import imgAvaterDefault from '@/assets/icons/avater.svg';
+
 export default function ProfileFrom() {
 	const {
 		profileNickname,
@@ -20,8 +22,6 @@ export default function ProfileFrom() {
 		updateProfileMutaion,
 	} = useProfileMutate();
 	const [userState] = useAtom(userAtom);
-	const [uploadImage] = useState<File>();
-	const [hasProfile] = useState(false);
 	const { handleUploadImage, uplpadImageRef } = useUploadImage();
 
 	const router = useRouter();
@@ -41,22 +41,16 @@ export default function ProfileFrom() {
 			throw new Error('サインインしてください');
 		}
 
-		const userID = session.user.id;
-		if (!userID) {
-			throw new Error('ユーザーIDがありません');
-		}
-
 		//TODO: アップロードした画像ファイルをSupabaseにアップロードしてURLを取得する
-		if (uploadImage) {
-			setProfileAvatarUrl('https://avatars.github/xxxxx.png');
-		}
+
+		console.log('userState', userState);
 
 		// プロフィール作成済みの場合
-		if (hasProfile) {
+		if (userState && userState.nickname) {
 			const { data: profileData, error } = await supabase
 				.from('Profiles')
 				.select()
-				.eq('User_id', userID)
+				.eq('User_id', userState.id)
 				.limit(1)
 				.single();
 
@@ -77,6 +71,10 @@ export default function ProfileFrom() {
 
 			// プロフィール新規作成の場合
 		} else {
+			const userID = session.user.id;
+			if (!userID) {
+				throw new Error('ユーザーIDがありません');
+			}
 			const row = {
 				nickname: profileNickname,
 				avatarUrl: profileAvatarUrl,
@@ -126,7 +124,7 @@ export default function ProfileFrom() {
 							type="submit"
 						>
 							<span className="block indent-[.75em] text-3xl font-bold tracking-[.75em]">
-								更新
+								{userState && userState.nickname ? '更新' : '登録'}
 							</span>
 						</button>
 					</div>
