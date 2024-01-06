@@ -12,7 +12,7 @@ export const useChatQuery = () => {
 		const { data, error } = await supabase
 			.from('Chats')
 			.select(
-				`id, title, published, createdAt, updatedAt,
+				`id, title, published, createdAt, updatedAt, User_id,
 					Profiles!inner (
 						nickname, avatarUrl
 					)

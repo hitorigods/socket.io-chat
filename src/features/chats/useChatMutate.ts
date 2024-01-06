@@ -38,7 +38,7 @@ export const useChatMutate = () => {
 		onSuccess: (result: RowChat[]) => {
 			if (!stateUser) throw new Error('ログインが確認できませんでした');
 			// ステートの更新
-			const { id, title, published, createdAt, updatedAt } = result[0];
+			const { id, title, published, createdAt, updatedAt, User_id } = result[0];
 			const { nickname, avatarUrl } = stateUser;
 			const socketData = {
 				id,
@@ -46,6 +46,7 @@ export const useChatMutate = () => {
 				published,
 				createdAt,
 				updatedAt,
+				User_id,
 				Profiles: {
 					nickname,
 					avatarUrl,

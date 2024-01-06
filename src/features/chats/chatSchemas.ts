@@ -10,7 +10,7 @@ const chatSchema = z.object({
 	updatedAt: z.string().datetime(),
 	title: z.string().max(50),
 	published: z.boolean().default(false),
-	// User_id: z.string().uuid(),
+	User_id: z.string().uuid(),
 	// Profile_id: z.string().uuid(),
 	// Room_id: z.string().uuid(),
 	Profiles: z.object({
@@ -34,6 +34,6 @@ export type SocketChat = {
 	type: 'create' | 'update' | 'delete';
 	data:
 		| ChatSchema
-		| Pick<ChatSchema, 'id' | 'title' | 'published'>
+		| Pick<ChatSchema, 'id' | 'title' | 'published' | 'User_id'>
 		| Pick<ChatSchema, 'id'>;
 };

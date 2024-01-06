@@ -45,8 +45,8 @@ export default function ChatForm({ stateUser }: Props) {
 			const updateChat = {
 				title: stateInputChat,
 				published: true,
-				User_id: stateUser.id,
-				Profile_id: stateUser.Profile_id,
+				User_id: stateUser?.id || '',
+				Profile_id: stateUser?.Profile_id || '',
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: '00000000-0000-0000-0000-000000000000',
 			};

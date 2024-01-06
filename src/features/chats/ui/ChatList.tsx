@@ -30,7 +30,7 @@ export default function ChatList({
 					{chatItems.map((item: ChatSchema) => (
 						<ChatItem
 							key={item.id}
-							data={item}
+							item={item}
 						/>
 					))}
 				</ul>
