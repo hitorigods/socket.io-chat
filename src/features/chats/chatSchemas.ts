@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { SetStateAction } from 'jotai';
 
 import { Database } from '@/libs/supabase.types';
-import { SetAtom } from '@/stores/atomTypes';
 
 const chatSchema = z.object({
 	id: z.string().uuid(),
@@ -20,7 +19,6 @@ const chatSchema = z.object({
 });
 
 export type ChatSchema = z.infer<typeof chatSchema>;
-export type SetChatSchema = SetAtom<[SetStateAction<ChatSchema[]>], void>;
 
 export type DatabaseChats = Database['public']['Tables']['Chats'];
 export type RowChat = DatabaseChats['Row'];

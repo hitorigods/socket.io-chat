@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAtom } from 'jotai';
 
 import supabase from '@/libs/supabase';
 import { useProfileMutate } from '@/features/profiles/useProfileMutate';
 import { RowProfile } from '@/features/profiles/profileSchemas';
+import { atomUser } from '@/stores/atoms';
+import { useUploadImage } from '@/utils/useUploadImage';
 
 export default function ProfileFrom() {
 	const {
@@ -16,11 +19,20 @@ export default function ProfileFrom() {
 		createProfileMutaion,
 		updateProfileMutaion,
 	} = useProfileMutate();
+	const [stateUser, setStateUser] = useAtom(atomUser);
 	const [uploadImage, setUploadImage] = useState<File>();
 	const [hasProfile, setHasProfile] = useState(false);
+	const { handleUploadImage, uplpadImageRef } = useUploadImage();
+
 	const router = useRouter();
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+	useLayoutEffect(() => {
+		console.log('stateUser', stateUser);
+		if (!stateUser) return;
+		setProfileNickname(stateUser.nickname);
+	}, [stateUser]);
+
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		const {
@@ -40,19 +52,16 @@ export default function ProfileFrom() {
 			setProfileAvatarUrl('https://avatars.github/xxxxx.png');
 		}
 
+		// プロフィール作成済みの場合
 		if (hasProfile) {
-			let profileData;
-			try {
-				const { data, error } = await supabase
-					.from('Profiles')
-					.select()
-					.eq('User_id', userID)
-					.limit(1)
-					.single();
-				profileData = data;
-			} catch (error) {}
+			const { data: profileData, error } = await supabase
+				.from('Profiles')
+				.select()
+				.eq('User_id', userID)
+				.limit(1)
+				.single();
 
-			if (!profileData) {
+			if (error) {
 				await router.push('/auth');
 				router.refresh();
 				return;
@@ -66,6 +75,8 @@ export default function ProfileFrom() {
 			await updateProfileMutaion.mutate(newRow);
 			await router.push('/');
 			router.refresh();
+
+			// プロフィール新規作成の場合
 		} else {
 			const row = {
 				nickname: profileNickname,
@@ -81,36 +92,46 @@ export default function ProfileFrom() {
 	return (
 		<div className="">
 			<form onSubmit={handleSubmit}>
-				<div>
-					<input
-						className="text-dark"
-						type="text"
-						value={profileNickname}
-						placeholder="ニックネームを入力してください"
-						required
-						onChange={(event) => setProfileNickname(event.target.value)}
-					/>
+				<div className="">
+					<div className="">
+						<input
+							className="text-dark"
+							name="nickname"
+							type="text"
+							value={profileNickname}
+							placeholder="ニックネームを入力してください"
+							required
+							onChange={(event) => setProfileNickname(event.target.value)}
+						/>
+					</div>
+					<div className="">
+						<label>
+							<input
+								className="text-white"
+								name="avatarUrl"
+								type="file"
+								accept="image/*"
+								onChange={handleUploadImage}
+							/>
+							<span ref={uplpadImageRef} />
+						</label>
+					</div>
 				</div>
 
-				<div>
-					<input
-						className="text-dark"
-						type="file"
-						accept="image/*"
-						onChange={(event) => {
-							if (!event.target.files) return;
-							const img: File = event.target.files[0];
-							setUploadImage(img);
-						}}
-					/>
+				<div className="grid justify-center">
+					<div className="w-[400px] max-w-full">
+						<button
+							className="grid h-[80px] w-full place-items-center rounded-md bg-primary py-[10px] text-dark transition-all duration-300 ease-in-out
+							hover:bg-dark hover:text-white
+						"
+							type="submit"
+						>
+							<span className="block indent-[.75em] text-3xl font-bold tracking-[.75em]">
+								更新
+							</span>
+						</button>
+					</div>
 				</div>
-
-				<button
-					type="submit"
-					className=""
-				>
-					<span className="">更新</span>
-				</button>
 			</form>
 		</div>
 	);

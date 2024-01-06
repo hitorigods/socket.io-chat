@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, FormEventHandler } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import {
@@ -27,7 +27,9 @@ export default function ChatForm({ stateUser }: Props) {
 	const [stateIsEditedChat, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 	const [stateSocketChat, setStateSocketChat] = useAtom(atomSocketChat);
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+		event
+	) => {
 		event.preventDefault();
 		if (!stateInputChat) return;
 

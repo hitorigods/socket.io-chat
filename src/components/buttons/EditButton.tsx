@@ -1,9 +1,9 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 
 type Props = {
 	label: string;
 	type?: 'default' | 'danger';
-	onClick: MouseEventHandler<HTMLButtonElement>;
+	onClick: React.MouseEventHandler<HTMLButtonElement>;
 };
 export default function EditButton({
 	label,

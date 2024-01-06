@@ -1,6 +1,6 @@
 'use client';
 
-import { MouseEventHandler } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
@@ -19,13 +19,17 @@ export function usePagesRouter() {
 		setStateIsEditedChat(false);
 	};
 
-	const handleRouterHome: MouseEventHandler<HTMLButtonElement> = (event) => {
+	const handleRouterHome: React.MouseEventHandler<HTMLButtonElement> = (
+		event
+	) => {
 		event.preventDefault();
 		resetStatus();
 		router.push('/');
 	};
 
-	const handleRouterProfile: MouseEventHandler<HTMLButtonElement> = (event) => {
+	const handleRouterProfile: React.MouseEventHandler<HTMLButtonElement> = (
+		event
+	) => {
 		event.preventDefault();
 		resetStatus();
 		router.push('/profile');

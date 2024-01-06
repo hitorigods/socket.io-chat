@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
@@ -62,7 +62,9 @@ export default function SocketFrom() {
 		});
 	};
 
-	const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
+		event
+	) => {
 		event.preventDefault();
 		const handleSocket = await fetch(
 			`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`,
@@ -78,7 +80,7 @@ export default function SocketFrom() {
 		router.push('/rooms');
 	};
 
-	const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
 		event.preventDefault();
 		setRoomName(event.target.value);
 	};

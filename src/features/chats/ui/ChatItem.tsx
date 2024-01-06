@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { useAtom } from 'jotai';
 
@@ -14,7 +14,7 @@ import {
 import { useChatMutate } from '@/features/chats/useChatMutate';
 import { ChatSchema } from '@/features/chats/chatSchemas';
 import EditButton from '@/components/buttons/EditButton';
-import { useDateLocale } from '@/utils/validates/useDateLocale';
+import { useDateLocale } from '@/utils/useDateLocale';
 
 import imgAvaterDefault from '@/assets/icons/avater.svg';
 
@@ -30,7 +30,7 @@ export default function ChatItem({ item }: Props) {
 	const [, setStateEditedChat] = useAtom(atomEditedChat);
 	const [, setStateIsEditedChat] = useAtom(atomIsEditedChat);
 
-	const handleEdited: MouseEventHandler<HTMLButtonElement> = (event) => {
+	const handleEdited: React.MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
 
 		setStateInputChat(item.title);
@@ -38,7 +38,9 @@ export default function ChatItem({ item }: Props) {
 		setStateIsEditedChat(true);
 	};
 
-	const handleDelete: MouseEventHandler<HTMLButtonElement> = async (event) => {
+	const handleDelete: React.MouseEventHandler<HTMLButtonElement> = async (
+		event
+	) => {
 		event.preventDefault();
 		await deleteChatMutation.mutate(item.id);
 		stateSocket.emit('socket:chat', 'delete');
@@ -47,7 +49,7 @@ export default function ChatItem({ item }: Props) {
 		setStateIsEditedChat(false);
 	};
 
-	const localDate = useDateLocale(item.updatedAt);
+	const { localDate } = useDateLocale(item.updatedAt);
 
 	return (
 		<>

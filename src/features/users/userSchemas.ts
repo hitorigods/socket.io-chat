@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { SetStateAction } from 'jotai';
 
-import { SetAtom } from '@/stores/atomTypes';
-
 const userSchema = z
 	.object({
 		id: z.string().uuid(),
@@ -13,4 +11,3 @@ const userSchema = z
 	.nullable();
 
 export type UserSchema = z.infer<typeof userSchema>;
-export type SetUserSchema = SetAtom<[SetStateAction<UserSchema[]>], void>;

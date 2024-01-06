@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent } from 'react';
+import React from 'react';
 
 import { useAuthMutate } from '@/features/auths/useAuthMutate';
 
@@ -19,7 +19,7 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 		registerAuthMutaion,
 	} = useAuthMutate();
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		if (isLoginMode) {

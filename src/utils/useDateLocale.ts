@@ -1,4 +1,4 @@
-export const useDateLocale = (date: string) => {
+export function useDateLocale(date: string) {
 	const utcDate = new Date(date);
 	const localDate = utcDate.toLocaleString('ja-JP', {
 		year: 'numeric',
@@ -9,5 +9,5 @@ export const useDateLocale = (date: string) => {
 		second: '2-digit',
 		hour12: false,
 	});
-	return localDate;
-};
+	return { localDate };
+}
