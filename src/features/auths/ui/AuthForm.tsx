@@ -57,14 +57,14 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 						onClick={() => setIsLoginMode(!isLoginMode)}
 						className="cursor-pointer"
 					>
-						{isLoginMode ? '新規登録はこちら' : 'ログインはこちら'}
+						{isLoginMode ? '新規登録はこちら' : 'サインインはこちら'}
 					</button>
 				</div>
 				<button
 					type="submit"
 					className=""
 				>
-					<span className=""> {isLoginMode ? 'ログイン' : '登録'}</span>
+					<span className=""> {isLoginMode ? 'サインイン' : '登録'}</span>
 				</button>
 			</form>
 		</div>

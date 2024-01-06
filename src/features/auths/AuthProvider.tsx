@@ -14,7 +14,7 @@ type Props = {
 export function AuthProvider(props: Props) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const [stateUser, setStateUser] = useAtom(atomUser);
+	const [, setStateUser] = useAtom(atomUser);
 
 	const handleValidate = useCallback(async () => {
 		const {

@@ -21,7 +21,7 @@ export const useAuthMutate = () => {
 			if (error) throw new Error(error.message);
 		},
 		onSuccess: async () => {
-			alert('ログインしました');
+			alert('サインインしました');
 			reset();
 		},
 		onError: (error: any) => {

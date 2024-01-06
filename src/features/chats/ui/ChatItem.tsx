@@ -59,14 +59,19 @@ export default function ChatItem({ data }: Props) {
 						className="h-16 w-16 rounded-full"
 					/>
 				</div>
-				<div className="grid w-[650px] max-w-full gap-[10px] overflow-hidden rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-300 ease-in-out">
+				<div className="grid w-[650px] max-w-full gap-[10px] rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-300 ease-in-out">
 					<p className="text-xl leading-normal">{data.title}</p>
 					<div className="flex justify-between gap-[20px]">
 						<p className="text-xs">{data.Profiles?.nickname}</p>
 						<p className="text-xs">{localDate}</p>
 					</div>
 				</div>
-				<div className="grid w-[60px] gap-[1px] overflow-hidden rounded-md">
+				<div
+					className="grid w-[60px] gap-[1px] rounded-md
+					[&>*:first-child]:rounded-t-md
+					[&>*:last-child]:rounded-b-md
+				"
+				>
 					<EditButton
 						label="編集"
 						onClick={handleEdited}

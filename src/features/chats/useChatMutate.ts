@@ -20,7 +20,7 @@ export const useChatMutate = () => {
 	const [stateUser] = useAtom(atomUser);
 	const [, setEditedChat] = useAtom(atomEditedChat);
 	const [, setStateSocketChat] = useAtom(atomSocketChat);
-	const [stateChatItems, setStateChatItems] = useAtom(atomChatItems);
+	const [, setStateChatItems] = useAtom(atomChatItems);
 
 	const reset = () => {
 		setEditedChat(null);
@@ -36,6 +36,7 @@ export const useChatMutate = () => {
 			return data;
 		},
 		onSuccess: (result: RowChat[]) => {
+			if (!stateUser) throw new Error('ログインが確認できませんでした');
 			// ステートの更新
 			const { id, title, published, createdAt, updatedAt } = result[0];
 			const { nickname, avatarUrl } = stateUser;

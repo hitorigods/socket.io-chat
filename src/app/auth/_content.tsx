@@ -11,7 +11,10 @@ export default function PageContent() {
 
 	return (
 		<div className="">
-			<Heading title={isLoginMode ? 'ログイン' : '新規登録'} />
+			<Heading
+				label={isLoginMode ? 'Sign in' : 'Sign up'}
+				caption={isLoginMode ? 'サインイン' : '新規登録'}
+			/>
 			<AuthForm
 				isLoginMode={isLoginMode}
 				setIsLoginMode={setIsLoginMode}

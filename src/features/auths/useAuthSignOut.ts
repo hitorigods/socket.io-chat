@@ -12,12 +12,8 @@ export function useAuthSignOut() {
 	const handleSignOut: MouseEventHandler<HTMLButtonElement> = async (event) => {
 		event.preventDefault();
 		await supabase.auth.signOut();
-		setStateUser({
-			id: '',
-			nickname: '',
-			avatarUrl: '',
-			Profile_id: '',
-		});
+		setStateUser(null);
+		alert('サインアウトしました');
 	};
 	return { handleSignOut };
 }

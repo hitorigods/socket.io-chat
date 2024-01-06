@@ -11,7 +11,10 @@ export default function Profile() {
 	return (
 		<>
 			<div className="">
-				<Heading title="プロフィール" />
+				<Heading
+					label="Profile"
+					caption="プロフィール"
+				/>
 				<ProfileFrom />
 			</div>
 		</>

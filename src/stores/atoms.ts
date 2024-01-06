@@ -7,8 +7,8 @@ import { ChatSchema, SocketChat } from '@/features/chats/chatSchemas';
 export const atomSocket = atom(null as unknown as Socket);
 atomSocket.debugLabel = 'atomSocket';
 
-// ログインユーザー情報
-export const atomUser = atom({} as UserSchema);
+// サインインユーザー情報
+export const atomUser = atom(null as UserSchema);
 atomUser.debugLabel = 'atomUser';
 
 // チャットの一覧データ

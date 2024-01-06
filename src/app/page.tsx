@@ -9,7 +9,10 @@ export default function Home() {
 	return (
 		<Suspense fallback="loading...">
 			<div className="grid gap-[50px]">
-				<Heading title="Top" />
+				<Heading
+					label="Top"
+					caption="トップ"
+				/>
 				<SocketFrom />
 				<AuthSignOut />
 			</div>

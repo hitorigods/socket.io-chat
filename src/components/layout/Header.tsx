@@ -1,22 +1,23 @@
 'use client';
 
 import Image from 'next/image';
+import { useAtom } from 'jotai';
 
-import NavButton from '@/components/buttons/NavButton';
-import { useAuthSignOut } from '@/features/auths/useAuthSignOut';
+import { atomUser } from '@/stores/atoms';
 import { usePagesRouter } from '@/features/routers/usePagesRouter';
 
 import imgLogo from '@/assets/icons/logo.svg';
+import Navbar from './Navbar';
 
 export default function Header() {
-	const { handleRouterHome, handleRouterProfile } = usePagesRouter();
-	const { handleSignOut } = useAuthSignOut();
+	const [stateUser] = useAtom(atomUser);
+	const { handleRouterHome } = usePagesRouter();
 
 	return (
 		<>
 			<header className="sticky top-0 h-[theme(sizeing.header)] bg-dark/50">
 				<div className="flex h-full items-center justify-between px-[theme(spacing.default)]">
-					<div>
+					<div className="mr-auto">
 						<button
 							className="flex items-center gap-[theme(spacing.sm)]"
 							onClick={handleRouterHome}
@@ -35,22 +36,7 @@ export default function Header() {
 							</span>
 						</button>
 					</div>
-					<nav>
-						<ul className="flex items-center gap-[theme(spacing.sm)] [&>li]:min-w-[100px]">
-							<li className="">
-								<NavButton
-									label="アカウント"
-									onClick={handleRouterProfile}
-								/>
-							</li>
-							<li>
-								<NavButton
-									label="サインアウト"
-									onClick={handleSignOut}
-								/>
-							</li>
-						</ul>
-					</nav>
+					{stateUser && <Navbar />}
 				</div>
 			</header>
 		</>

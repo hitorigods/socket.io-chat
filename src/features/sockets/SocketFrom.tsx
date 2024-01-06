@@ -7,7 +7,7 @@ import { useAtom } from 'jotai';
 
 import { atomSocket, atomChatItems } from '@/stores/atoms';
 import { SocketChat, ChatSchema } from '@/features/chats/chatSchemas';
-import FormInputSubmit from '@/components/forms/FormInputSubmit';
+import FormInputSubmit from '@/components/buttons/InputButton';
 
 export default function SocketFrom() {
 	const router = useRouter();

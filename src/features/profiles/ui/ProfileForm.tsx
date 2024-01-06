@@ -27,7 +27,7 @@ export default function ProfileFrom() {
 			data: { session },
 		} = await supabase.auth.getSession();
 		if (!session) {
-			throw new Error('ログインしてください');
+			throw new Error('サインインしてください');
 		}
 
 		const userID = session.user.id;

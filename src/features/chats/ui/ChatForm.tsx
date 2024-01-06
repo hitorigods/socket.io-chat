@@ -13,7 +13,7 @@ import {
 import { useChatMutate } from '@/features/chats/useChatMutate';
 import { UpdateChat } from '@/features/chats/chatSchemas';
 import { UserSchema } from '@/features/users/userSchemas';
-import FormInputSubmit from '@/components/forms/FormInputSubmit';
+import FormInputSubmit from '@/components/buttons/InputButton';
 
 type Props = {
 	stateUser: UserSchema;
@@ -77,7 +77,7 @@ export default function ChatForm({ stateUser }: Props) {
 					placeholder="メッセージを入力してください"
 					value={stateInputChat}
 					disabled={!stateInputChat}
-					isEdited={stateIsEditedChat}
+					isReverse={stateIsEditedChat}
 					onChange={(event) => setStateInputChat(event.target.value)}
 				/>
 			</form>

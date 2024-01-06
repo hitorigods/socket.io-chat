@@ -12,8 +12,11 @@ export default function EditButton({
 }: Props) {
 	return (
 		<button
-			className="grid bg-dark py-[10px] text-white
-			data-[type=danger]:bg-danger"
+			className="grid bg-dark py-[10px] text-white transition-all duration-300 ease-in-out
+				hover:bg-primary
+				hover:text-dark data-[type=danger]:bg-danger
+				data-[type=danger]:hover:bg-primary data-[type=danger]:hover:text-dark
+			"
 			data-type={type}
 			onClick={onClick}
 		>
