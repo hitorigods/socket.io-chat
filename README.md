@@ -27,13 +27,14 @@ https://hitorigods-socket-io-next.onrender.com/
   - DB更新と一緒にステート更新だけでなくソケットに更新内容を受信して再度ステート更新させてる（結局useQueryのクエリ更新もさせてるけど使ってない…。）
   - WebSocketを使わなくてもSupabaseのリアルタイム機能や`useQuery`のオプション`refetchInterval`だけでも普通に作れそうだった
     - が、Supabaseクラウド版で開発していたが3日目で無料枠制限に到達…。ローカル版で開発必須
+    - `useQuery`の再フェッチが`run dev`状態と`run build&&start`で挙動が違うのはなぜ？（`useEffect`が二回実行されるから？）
     - Supabaseの通信コスト考えるとチャット操作のときだけデータベース触るならWebSocketの方がいいかも？
     - ログイン中のユーザーとか活動中のルームとかのリアルタイム判定とかするならWebSocketの方がいい？
 - データの取得をフロントエンドで絞り混んでいるがバックエンド側で取得できるようにすべき
   - Supabaseのカスタムフック？
 - フォルダ構成の手探り感が…。
-  - util/hooks/libs/stores/shemasなど細かく分けているがもっとまとめたりコンポーネント依存を元にfutureフォルダにごそっとまとめたほうが運用しやすい？
-- 次回Next.jsでバックエンド使うならT3スタックで始めたい
+  - `util/hooks/libs/stores/shemas`など細かく分けているがもっとまとめたりコンポーネント依存を元に`future`フォルダにごそっとまとめたほうが運用しやすい？
+- 次回Next.jsでデータベース使うならT3スタックで始めたい
   - Prismaをうまく活用できてないのとtRPCも試したい
 
 ---
@@ -87,8 +88,6 @@ https://hitorigods-socket-io-next.onrender.com/
    1. ⭕メールアドレス認証
    2. OAuth実装
       1. Google
-   3. ログインエラー通知
-   4. 投稿者名をニックネーム編集可能に
 4. レイアウト調整
    1. ログイン/プロフィールフォームの体裁
    2. ナビゲーション（TOP/プロフィール/ログアウト/チャット一覧）
@@ -106,12 +105,8 @@ https://hitorigods-socket-io-next.onrender.com/
    3. サーバー監視サービスでRendar/Supabaseを落ちなくする
    4. supabase CLIでseedデータ作る（Snaplet）
 7. 💀**BugFix**💀
-   1. ⭕ビルドデータでリアルタイム更新できない（ウィンドウの再フォーカスでは更新される）
-      1. ⇒ `useQuery`のオプション`refetchInterval`で対処
-         1. ⇒ run dev状態では問題なかったのになぜ？
-         2. ⇒ `refetchInterval`の通信コストも本来は望ましくない？
-   2. SupabaseのスキーマSQLをCIから復元しようとするとエンコードエラー
-   3. リモートSupabaseにPush/Pullでエラー
+   1. SupabaseのスキーマSQLをCIから復元しようとするとエンコードエラー
+   2. リモートSupabaseにPush/Pullでエラー
 
 ---
 
@@ -129,22 +124,22 @@ $ supabase db pull
 ローカルにマイグレーションファイルを新規作成
 
 ```
-$ supabase migration new create\_[ファイル名]
+$ supabase migration new [ファイル名]
 ```
 
 作成したマイグレーションファイルにサーバーの差分を取得
 
 ```
-$ supabase db diff --linked > supabase\migrations\[タイムスタンプ]_create_[ファイル名].sql
+$ supabase db diff --linked > supabase\migrations\[タイムスタンプ]_[ファイル名].sql
 ```
 
-マイグレーションファイルをローカルに反映
+マイグレーションファイルをデータベースに反映
 
 ```
 $ supabase db reset
 ```
 
-リモートのデータのみをローカルのシードファイルに残す
+リモートのデータのみをローカルのseedに残す
 
 ```
 $ supabase db dump -f supabase/seed.sql --data-only

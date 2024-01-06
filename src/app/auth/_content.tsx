@@ -3,8 +3,8 @@
 import React from 'react';
 import { useState } from 'react';
 
-import Heading from '@/components/Heading';
-import AuthForm from '@/components/auths/AuthForm';
+import Heading from '@/components/layout/Heading';
+import AuthForm from '@/features/auths/ui/AuthForm';
 
 export default function PageContent() {
 	const [isLoginMode, setIsLoginMode] = useState(true);

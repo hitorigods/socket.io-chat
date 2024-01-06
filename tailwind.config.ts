@@ -1,10 +1,12 @@
 import type { Config } from 'tailwindcss';
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 const config: Config = {
 	content: [
-		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/features/**/*.{js,ts,jsx,tsx,mdx}',
+		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 	],
 	theme: {
 		extend: {
@@ -21,7 +23,36 @@ const config: Config = {
 				danger: '#970009',
 			},
 			fontFamily: {
-				default: ['SF Mono', 'Noto Sans JP Variable', 'sans-serif'],
+				display: ['SF Mono', 'var(--font-noto-sans-jp)', 'sans-serif'],
+				sans: ['SF Mono', 'var(--font-noto-sans-jp)', 'sans-serif'],
+				logo: ['Deorme', 'sans-serif'],
+				heading: ['Deorme', 'sans-serif'],
+				Deorme: ['Deorme', 'sans-serif'],
+				goblin: ['var(--font-goblin-one)', 'sans-serif'],
+			},
+			spacing: {
+				default: '20px',
+				xs: '10px',
+				sm: '15px',
+				md: '20px',
+				lg: '30px',
+			},
+			sizeing: {
+				header: '70px',
+				footer: '50px',
+			},
+			fontFace: {
+				Noto_Sans_JP: [
+					{
+						filename: 'meta-ot-bold-italic',
+						style: 'italic',
+						weight: 700,
+						display: 'auto',
+					},
+					{
+						filename: 'meta-ot-regular',
+					},
+				],
 			},
 		},
 	},

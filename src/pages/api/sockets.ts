@@ -10,7 +10,7 @@ type ResponseWebSocket = NextApiResponse & {
 
 const corsMiddleware = cors();
 
-export default function SocketHandler(
+export default function SocketResponse(
 	req: NextApiRequest,
 	res: ResponseWebSocket
 ) {

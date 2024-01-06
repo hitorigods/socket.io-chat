@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import Heading from '@/components/Heading';
-import ChatArea from '@/components/chats/ChatArea';
+import ChatArea from '@/features/chats/ui/ChatArea';
+import Heading from '@/components/layout/Heading';
 
 export default function Rooms() {
 	return (
