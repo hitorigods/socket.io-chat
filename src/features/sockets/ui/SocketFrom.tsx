@@ -12,11 +12,10 @@ import InputButton from '@/components/buttons/InputButton';
 
 export default function SocketFrom() {
 	const router = useRouter();
+	const [roomName, setRoomName] = useState('');
 	const [, setSocketState] = useAtom(socketAtom);
 	const [, setChatItemsState] = useAtom(chatItemsAtom);
-	const [isChatUpdatedState, setIsChatUpdatedState] =
-		useAtom(isChatUpdatedAtom);
-	const [roomName, setRoomName] = useState('');
+	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 
 	const initializer = async (socket: any) => {
 		socket.on('connect', () => {
@@ -43,6 +42,7 @@ export default function SocketFrom() {
 							? newItems
 							: [data as ChatSchema, ...newItems];
 					});
+					setIsChatUpdatedState((prev) => prev === false);
 					break;
 				case 'update':
 					setChatItemsState((state) =>
@@ -53,7 +53,6 @@ export default function SocketFrom() {
 							return item;
 						})
 					);
-					setIsChatUpdatedState(true);
 					break;
 				case 'delete':
 					setChatItemsState((state) =>

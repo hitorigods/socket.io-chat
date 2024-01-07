@@ -6,7 +6,7 @@ import { useAtom } from 'jotai';
 
 import { socketAtom } from '@/features/sockets/socketAtoms';
 import { userAtom } from '@/features/users/userAtom';
-import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
+import { chatItemsAtom } from '@/features/chats/chatAtom';
 
 import { useChatQuery } from '@/features/chats/useChatQuery';
 import { ChatSchema } from '@/features/chats/chatSchemas';
@@ -26,8 +26,6 @@ export default function ChatArea() {
 	const [socketState] = useAtom(socketAtom);
 	const [userState] = useAtom(userAtom);
 	const [chatItemsState] = useAtom(chatItemsAtom);
-	const [isChatUpdatedState, setIsChatUpdatedState] =
-		useAtom(isChatUpdatedAtom);
 	const { getQueryChats } = useChatQuery();
 	const {
 		data: queryChats,

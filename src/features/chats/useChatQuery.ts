@@ -5,7 +5,7 @@ import supabase from '@/utils/libs/supabase';
 import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
 
 export const useChatQuery = () => {
-	const [, setChatItemsState] = useAtom(chatItemsAtom);
+	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
 	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 
 	const queryFn = async () => {
@@ -28,7 +28,6 @@ export const useChatQuery = () => {
 			Profiles: item.Profiles || { nickname: '', avatarUrl: null },
 		}));
 		setChatItemsState(processedData);
-		// setIsChatUpdatedState(true);
 
 		return processedData;
 	};

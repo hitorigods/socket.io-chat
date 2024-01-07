@@ -26,11 +26,11 @@ export default function ChatList({
 	isChatsError,
 }: Props) {
 	const scrollRef = useRef<HTMLElement>(null);
-	const [, setChatItemsState] = useAtom(chatItemsAtom);
+	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
 	const [isChatUpdatedState, setIsChatUpdatedState] =
 		useAtom(isChatUpdatedAtom);
 
-	const scrollToBottom = useCallback(() => {
+	const scrollToBottom = () => {
 		console.log('isChatUpdatedState', isChatUpdatedState);
 		if (!isChatUpdatedState) return;
 		scrollRef.current?.scrollTo({
@@ -38,15 +38,14 @@ export default function ChatList({
 			behavior: 'smooth',
 		});
 		setIsChatUpdatedState(false);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [scrollRef]);
+	};
 
 	useEffect(() => {
-		console.log('useEffect', useEffect);
-
 		scrollToBottom();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isChatUpdatedState]);
+
+	console.log('isChatsLoading', isChatsLoading);
 
 	if (isChatsLoading) {
 		return <div>Loading...</div>;

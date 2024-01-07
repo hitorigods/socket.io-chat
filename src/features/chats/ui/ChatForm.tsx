@@ -8,6 +8,7 @@ import {
 	chatEditedAtom,
 	isChatEditedAtom,
 	chatSocketAtom,
+	isChatUpdatedAtom,
 } from '@/features/chats/chatAtom';
 import { socketAtom } from '@/features/sockets/socketAtoms';
 import { useChatMutate } from '@/features/chats/useChatMutate';
@@ -26,6 +27,7 @@ export default function ChatForm({ userState }: Props) {
 	const [chatEditedState] = useAtom(chatEditedAtom);
 	const [isChatEditedState, setIsChatEditedState] = useAtom(isChatEditedAtom);
 	const [chatSocketState] = useAtom(chatSocketAtom);
+	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event

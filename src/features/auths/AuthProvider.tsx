@@ -5,7 +5,13 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAtom } from 'jotai';
 
 import supabase from '@/utils/libs/supabase';
+import { socketAtom } from '@/features/sockets/socketAtoms';
 import { userAtom } from '@/features/users/userAtom';
+import {
+	chatEditedAtom,
+	isChatEditedAtom,
+	chatItemsAtom,
+} from '@/features/chats/chatAtom';
 
 type Props = {
 	children: React.ReactNode;
@@ -14,7 +20,20 @@ type Props = {
 export function AuthProvider(props: Props) {
 	const router = useRouter();
 	const pathname = usePathname();
+	const [socketState, setSocketState] = useAtom(socketAtom);
 	const [, setUserState] = useAtom(userAtom);
+	const [, setChatEditedState] = useAtom(chatEditedAtom);
+	const [, setIsChatEditedState] = useAtom(isChatEditedAtom);
+	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
+
+	const resetStatus = () => {
+		if (/^\/rooms/.test(String(pathname)) || !socketState) return;
+		socketState?.disconnect();
+		setSocketState(null as any);
+		setChatItemsState([]);
+		setChatEditedState(null);
+		setIsChatEditedState(false);
+	};
 
 	const sessionValidate = useCallback(async () => {
 		const {
@@ -63,6 +82,8 @@ export function AuthProvider(props: Props) {
 	}, []);
 
 	useEffect(() => {
+		resetStatus();
+
 		sessionValidate();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router, pathname, setUserState]);
