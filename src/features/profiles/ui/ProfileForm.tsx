@@ -56,7 +56,6 @@ export default function ProfileFrom() {
 
 			if (error) {
 				await router.push('/auth');
-				router.refresh();
 				return;
 			}
 
@@ -66,8 +65,6 @@ export default function ProfileFrom() {
 				avatarUrl: profileAvatarUrl,
 			};
 			await updateProfileMutaion.mutate(newRow);
-			await router.push('/');
-			router.refresh();
 
 			// プロフィール新規作成の場合
 		} else {
@@ -82,7 +79,6 @@ export default function ProfileFrom() {
 			};
 			await createProfileMutaion.mutate(row);
 			await router.push('/');
-			router.refresh();
 		}
 	};
 

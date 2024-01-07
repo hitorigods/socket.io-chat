@@ -8,7 +8,7 @@ import { ChatSchema } from '@/features/chats/chatSchemas';
 export const useChatQuery = () => {
 	const [, setChatItemsState] = useAtom(chatItemsAtom);
 
-	const query = async () => {
+	const queryFn = async () => {
 		const { data, error } = await supabase
 			.from('Chats')
 			.select(
@@ -34,8 +34,7 @@ export const useChatQuery = () => {
 
 	const getQueryChats = useQuery({
 		queryKey: ['query:chats'],
-		queryFn: query,
-		staleTime: Infinity,
+		queryFn,
 		// staleTime: Infinity,
 		// refetchInterval: 10000,
 	});

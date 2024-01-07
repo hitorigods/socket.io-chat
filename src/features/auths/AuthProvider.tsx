@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useCallback } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAtom } from 'jotai';
 
 import supabase from '@/utils/libs/supabase';
@@ -16,14 +16,13 @@ export function AuthProvider(props: Props) {
 	const pathname = usePathname();
 	const [, setUserState] = useAtom(userAtom);
 
-	const handleValidate = useCallback(async () => {
+	const sessionValidate = useCallback(async () => {
 		const {
 			data: { user },
 		} = await supabase.auth.getUser();
 
 		if (!user) {
 			await router.push('/auth');
-			router.refresh();
 			return;
 		}
 
@@ -36,7 +35,6 @@ export function AuthProvider(props: Props) {
 
 		if (!profile) {
 			await router.push('/profile');
-			router.refresh();
 			return;
 		}
 
@@ -54,18 +52,16 @@ export function AuthProvider(props: Props) {
 			console.log('pathname', pathname);
 
 			if (event === 'SIGNED_IN' && pathname === '/auth') {
-				router.push('/');
-				router.refresh();
+				await router.push('/');
 			}
 			if (event === 'SIGNED_OUT') {
-				router.push('/auth');
-				router.refresh();
+				await router.push('/auth');
 			}
 		});
 	}, []);
 
 	useEffect(() => {
-		handleValidate();
+		sessionValidate();
 	}, [router, pathname, setUserState]);
 
 	return <>{props.children}</>;

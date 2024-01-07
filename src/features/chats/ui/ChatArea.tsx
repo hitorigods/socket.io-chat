@@ -38,7 +38,6 @@ export default function ChatArea() {
 	useEffect(() => {
 		if (!socketState) {
 			router.push('/');
-			router.refresh();
 			return;
 		}
 	}, []);
