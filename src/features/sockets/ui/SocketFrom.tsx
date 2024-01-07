@@ -40,7 +40,7 @@ export default function SocketFrom() {
 						// 既に存在する場合は追加しない
 						return newItems.map((item) => item.id).find((id) => id === data.id)
 							? newItems
-							: [data as ChatSchema, ...newItems];
+							: [...newItems, data as ChatSchema];
 					});
 					setIsChatUpdatedState((prev) => prev === false);
 					break;

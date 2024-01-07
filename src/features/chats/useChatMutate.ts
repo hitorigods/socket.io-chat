@@ -27,6 +27,86 @@ export const useChatMutate = () => {
 	};
 
 	/**
+	 * チャットデータを取得する（useQuery使わない）
+	 */
+	const createChatPost = async (row: InsertChat) => {
+		const { data, error } = await supabase.from('Chats').insert(row).select();
+		if (error) throw new Error(error.message);
+
+		if (!userState) throw new Error('ログインが確認できませんでした');
+		// ステートの更新
+		const { id, title, published, createdAt, updatedAt, User_id } = data[0];
+		const { nickname, avatarUrl } = userState;
+		const newData = {
+			id,
+			title,
+			published,
+			createdAt,
+			updatedAt,
+			User_id,
+			Profiles: {
+				nickname,
+				avatarUrl,
+			},
+		};
+		setChatSocketState({ type: 'create', data: newData });
+		setChatItemsState((state) => [...state, newData]);
+
+		alert('チャットを投稿しました');
+		return { data: newData, error };
+	};
+
+	/**
+	 * チャットデータを更新する（useQuery使わない）
+	 */
+	const updateChatPost = async (row: UpdateChat) => {
+		const { data, error } = await supabase
+			.from('Chats')
+			.update({ title: row.title })
+			.eq('id', row.id || '')
+			.select();
+		if (error) throw new Error(error.message);
+
+		// ステートの更新
+		const newData = {
+			...row,
+		};
+		setChatSocketState({ type: 'update', data: newData });
+		setChatItemsState((state) =>
+			state.map((item) => {
+				if (row.id === item.id) {
+					return { ...item, ...newData };
+				} else {
+					return item;
+				}
+			})
+		);
+
+		alert('チャットを更新しました');
+		reset();
+
+		return { data: newData, error };
+	};
+	/**
+	 * チャットデータを削除する（useQuery使わない）
+	 */
+	const deleteChatPost = async (id: string) => {
+		const { data, error } = await supabase.from('Chats').delete().eq('id', id);
+		if (error) throw new Error(error.message);
+
+		const newData = {
+			id,
+		};
+		setChatSocketState({ type: 'delete', data: newData });
+		setChatItemsState((state) => state.filter((item) => id !== item.id));
+
+		alert('チャットを削除しました');
+		reset();
+
+		return { data: newData, error };
+	};
+
+	/**
 	 * チャットデータを作成する
 	 */
 	const createChatMutation = useMutation({
@@ -165,6 +245,9 @@ export const useChatMutate = () => {
 	});
 
 	return {
+		createChatPost,
+		updateChatPost,
+		deleteChatPost,
 		createChatMutation,
 		updateChatMutation,
 		deleteChatMutation,

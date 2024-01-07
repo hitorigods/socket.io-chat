@@ -15,15 +15,15 @@ import ChatItem from '@/features/chats/ui/ChatItem';
 
 type Props = {
 	chatItems: ChatSchema[];
-	chatsError: Error;
-	isChatsLoading: boolean;
-	isChatsError: boolean;
+	// chatsError: Error;
+	// isChatsLoading: boolean;
+	// isChatsError: boolean;
 };
 export default function ChatList({
 	chatItems,
-	chatsError,
-	isChatsLoading,
-	isChatsError,
+	// chatsError,
+	// isChatsLoading,
+	// isChatsError,
 }: Props) {
 	const scrollRef = useRef<HTMLElement>(null);
 	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
@@ -45,15 +45,15 @@ export default function ChatList({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isChatUpdatedState]);
 
-	console.log('isChatsLoading', isChatsLoading);
+	// console.log('isChatsLoading', isChatsLoading);
 
-	if (isChatsLoading) {
-		return <div>Loading...</div>;
-	}
+	// if (isChatsLoading) {
+	// 	return <div>Loading...</div>;
+	// }
 
-	if (isChatsError) {
-		return <div>Error: {chatsError.message}</div>;
-	}
+	// if (isChatsError) {
+	// 	return <div>Error: {chatsError.message}</div>;
+	// }
 
 	return !chatItems ? null : chatItems?.length ? (
 		<section

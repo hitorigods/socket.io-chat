@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function ChatItem({ item }: Props) {
-	const { deleteChatMutation } = useChatMutate();
+	const { deleteChatPost, deleteChatMutation } = useChatMutate();
 	const [userState] = useAtom(userAtom);
 	const [socketState] = useAtom(socketAtom);
 	const [, setChatInputState] = useAtom(chatInputAtom);
@@ -42,7 +42,8 @@ export default function ChatItem({ item }: Props) {
 		event
 	) => {
 		event.preventDefault();
-		await deleteChatMutation.mutate(item.id);
+		await deleteChatPost(item.id);
+		// await deleteChatMutation.mutate(item.id);
 		socketState.emit('socket:chat', 'delete');
 		console.log(`send client: chat: delete`);
 		setChatInputState('');

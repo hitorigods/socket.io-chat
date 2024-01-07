@@ -21,7 +21,12 @@ type Props = {
 };
 
 export default function ChatForm({ userState }: Props) {
-	const { createChatMutation, updateChatMutation } = useChatMutate();
+	const {
+		createChatPost,
+		updateChatPost,
+		createChatMutation,
+		updateChatMutation,
+	} = useChatMutate();
 	const [socketState] = useAtom(socketAtom);
 	const [chatInputState, setChatInputState] = useAtom(chatInputAtom);
 	const [chatEditedState] = useAtom(chatEditedAtom);
@@ -44,7 +49,8 @@ export default function ChatForm({ userState }: Props) {
 				title: chatInputState,
 				published,
 			};
-			await updateChatMutation.mutate(updateChat);
+			await updateChatPost(updateChat);
+			// await updateChatMutation.mutate(updateChat);
 		} else {
 			const updateChat = {
 				title: chatInputState,
@@ -54,7 +60,8 @@ export default function ChatForm({ userState }: Props) {
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: '00000000-0000-0000-0000-000000000000',
 			};
-			await createChatMutation.mutate(updateChat);
+			await createChatPost(updateChat);
+			// await createChatMutation.mutate(updateChat);
 		}
 
 		setChatInputState('');
