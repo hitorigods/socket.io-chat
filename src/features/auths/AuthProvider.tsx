@@ -4,7 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useCallback } from 'react';
 import { useAtom } from 'jotai';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 import { userAtom } from '@/features/users/userAtom';
 
 type Props = {

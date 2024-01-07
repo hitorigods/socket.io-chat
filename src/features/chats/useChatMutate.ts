@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 import {
 	RowChat,
 	InsertChat,

@@ -1,4 +1,4 @@
-import { Database } from '@/libs/supabase.types';
+import { Database } from '@/utils/libs/supabase.types';
 
 export type DatabaseProfiles = Database['public']['Tables']['Profiles'];
 export type RowProfile = DatabaseProfiles['Row'];

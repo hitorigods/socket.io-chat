@@ -4,11 +4,11 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 import { userAtom } from '@/features/users/userAtom';
 import { useProfileMutate } from '@/features/profiles/useProfileMutate';
 import { RowProfile } from '@/features/profiles/profileSchemas';
-import { useUploadImage } from '@/utils/useUploadImage';
+import { useUploadImage } from '@/utils/hooks/useUploadImage';
 
 import imgAvaterDefault from '@/assets/icons/avater.svg';
 

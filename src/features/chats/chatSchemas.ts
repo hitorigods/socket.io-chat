@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { SetStateAction } from 'jotai';
 
-import { Database } from '@/libs/supabase.types';
+import { Database } from '@/utils/libs/supabase.types';
 
 const chatSchema = z.object({
 	id: z.string().uuid(),

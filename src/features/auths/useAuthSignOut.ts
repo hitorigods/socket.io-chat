@@ -3,7 +3,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 import { userAtom } from '@/features/users/userAtom';
 
 export function useAuthSignOut() {

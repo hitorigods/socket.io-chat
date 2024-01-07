@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import { JotaiProvider } from '@/libs/JotaiProvider';
-import { FetchQueryProvider } from '@/libs/FetchQueryProvider';
+import { JotaiProvider } from '@/utils/libs/JotaiProvider';
+import { FetchQueryProvider } from '@/utils/libs/FetchQueryProvider';
 
 import { AuthProvider } from '@/features/auths/AuthProvider';
 import Header from '@/components/layout/Header';

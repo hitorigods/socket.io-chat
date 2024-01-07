@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 import { RowProfile, InsertProfile } from '@/features/profiles/profileSchemas';
 
 export const useProfileMutate = () => {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 import { chatItemsAtom } from '@/features/chats/chatAtom';
 import { ChatSchema } from '@/features/chats/chatSchemas';
 

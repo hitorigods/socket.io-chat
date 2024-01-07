@@ -14,7 +14,7 @@ import { userAtom } from '@/features/users/userAtom';
 import { useChatMutate } from '@/features/chats/useChatMutate';
 import { ChatSchema } from '@/features/chats/chatSchemas';
 import EditButton from '@/components/buttons/EditButton';
-import { useDateLocale } from '@/utils/useDateLocale';
+import { useDateLocale } from '@/utils/hooks/useDateLocale';
 
 import imgAvaterDefault from '@/assets/icons/avater.svg';
 

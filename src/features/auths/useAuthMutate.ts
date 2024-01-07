@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
-import supabase from '@/libs/supabase';
+import supabase from '@/utils/libs/supabase';
 
 export const useAuthMutate = () => {
 	const [authEmail, setAuthEmail] = useState('');
