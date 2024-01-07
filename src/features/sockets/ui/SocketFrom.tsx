@@ -5,15 +5,17 @@ import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
-import { chatItemsAtom } from '@/features/chats/chatAtom';
 import { socketAtom } from '@/features/sockets/socketAtoms';
+import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
 import { SocketChat, ChatSchema } from '@/features/chats/chatSchemas';
-import FormInputSubmit from '@/components/buttons/InputButton';
+import InputButton from '@/components/buttons/InputButton';
 
 export default function SocketFrom() {
 	const router = useRouter();
 	const [, setSocketState] = useAtom(socketAtom);
 	const [, setChatItemsState] = useAtom(chatItemsAtom);
+	const [isChatUpdatedState, setIsChatUpdatedState] =
+		useAtom(isChatUpdatedAtom);
 	const [roomName, setRoomName] = useState('');
 
 	const initializer = async (socket: any) => {
@@ -51,6 +53,7 @@ export default function SocketFrom() {
 							return item;
 						})
 					);
+					setIsChatUpdatedState(true);
 					break;
 				case 'delete':
 					setChatItemsState((state) =>
@@ -66,6 +69,7 @@ export default function SocketFrom() {
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event
 	) => {
+		console.log('handleSubmit');
 		event.preventDefault();
 		const handleSocket = await fetch(
 			`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`,
@@ -73,6 +77,8 @@ export default function SocketFrom() {
 		);
 
 		const socket = io({ autoConnect: false });
+		console.log('socket', socket);
+
 		socket.connect();
 
 		initializer(socket);
@@ -88,7 +94,7 @@ export default function SocketFrom() {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<FormInputSubmit
+			<InputButton
 				label="接続"
 				name="name"
 				placeholder="表示名を入力してください"

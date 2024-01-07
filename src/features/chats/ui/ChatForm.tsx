@@ -13,7 +13,7 @@ import { socketAtom } from '@/features/sockets/socketAtoms';
 import { useChatMutate } from '@/features/chats/useChatMutate';
 import { UpdateChat } from '@/features/chats/chatSchemas';
 import { UserSchema } from '@/features/users/userSchemas';
-import FormInputSubmit from '@/components/buttons/InputButton';
+import InputButton from '@/components/buttons/InputButton';
 
 type Props = {
 	userState: UserSchema;
@@ -62,6 +62,7 @@ export default function ChatForm({ userState }: Props) {
 	useLayoutEffect(() => {
 		socketState?.emit('socket:chat', chatSocketState);
 		console.log('send client chat:', chatSocketState);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chatSocketState]);
 
 	return (
@@ -70,7 +71,7 @@ export default function ChatForm({ userState }: Props) {
 				onSubmit={handleSubmit}
 				className="grid place-items-center"
 			>
-				<FormInputSubmit
+				<InputButton
 					label={isChatEditedState ? '更新' : '投稿'}
 					name="name"
 					placeholder="メッセージを入力してください"

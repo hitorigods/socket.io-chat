@@ -29,6 +29,7 @@ export default function ProfileFrom() {
 	useLayoutEffect(() => {
 		if (!userState) return;
 		setProfileNickname(userState.nickname);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userState]);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

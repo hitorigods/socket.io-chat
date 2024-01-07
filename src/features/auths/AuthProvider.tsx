@@ -44,6 +44,7 @@ export function AuthProvider(props: Props) {
 			avatarUrl: profile?.avatarUrl || '',
 			Profile_id: profile?.id || '',
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -58,10 +59,12 @@ export function AuthProvider(props: Props) {
 				await router.push('/auth');
 			}
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		sessionValidate();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router, pathname, setUserState]);
 
 	return <>{props.children}</>;

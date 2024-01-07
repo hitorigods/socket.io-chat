@@ -12,6 +12,7 @@ import {
 	chatEditedAtom,
 	chatSocketAtom,
 	chatItemsAtom,
+	isChatUpdatedAtom,
 } from '@/features/chats/chatAtom';
 import { userAtom } from '@/features/users/userAtom';
 
@@ -21,6 +22,7 @@ export const useChatMutate = () => {
 	const [, setChatEditedState] = useAtom(chatEditedAtom);
 	const [, setChatSocketState] = useAtom(chatSocketAtom);
 	const [, setChatItemsState] = useAtom(chatItemsAtom);
+	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 
 	const reset = () => {
 		setChatEditedState(null);
@@ -54,6 +56,7 @@ export const useChatMutate = () => {
 			};
 			setChatSocketState({ type: 'create', data: socketData });
 			setChatItemsState((state) => [socketData, ...state]);
+			// setIsChatUpdatedState(true);
 
 			// クエリの更新
 			const previousData = queryClient.getQueryData<ChatSchema[]>([

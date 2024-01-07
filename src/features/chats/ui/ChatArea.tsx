@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 
-import { chatItemsAtom } from '@/features/chats/chatAtom';
 import { socketAtom } from '@/features/sockets/socketAtoms';
 import { userAtom } from '@/features/users/userAtom';
+import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
 
 import { useChatQuery } from '@/features/chats/useChatQuery';
 import { ChatSchema } from '@/features/chats/chatSchemas';
@@ -22,9 +22,12 @@ type QueryProps = {
 };
 
 export default function ChatArea() {
+	const router = useRouter();
 	const [socketState] = useAtom(socketAtom);
 	const [userState] = useAtom(userAtom);
 	const [chatItemsState] = useAtom(chatItemsAtom);
+	const [isChatUpdatedState, setIsChatUpdatedState] =
+		useAtom(isChatUpdatedAtom);
 	const { getQueryChats } = useChatQuery();
 	const {
 		data: queryChats,
@@ -33,13 +36,13 @@ export default function ChatArea() {
 		isLoading: isChatsLoading,
 		isError: isChatsError,
 	}: QueryProps = getQueryChats as unknown as QueryProps;
-	const router = useRouter();
 
 	useEffect(() => {
 		if (!socketState) {
 			router.push('/');
 			return;
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

@@ -48,7 +48,7 @@ export default function RootLayout({
 							<div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
 								<Header />
 								<main className="grid grid-rows-[auto_1fr] items-start justify-center gap-[theme(spacing.content)] px-[theme(spacing.default)] py-[theme(spacing.content)]">
-									<Suspense fallback="loading...">{children}</Suspense>
+									{children}
 								</main>
 								<Footer />
 							</div>

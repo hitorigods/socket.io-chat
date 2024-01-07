@@ -20,3 +20,7 @@ chatEditedAtom.debugLabel = 'chatEditedAtom';
 // チャットが編集中か判定
 export const isChatEditedAtom = atom(false);
 isChatEditedAtom.debugLabel = 'isChatEditedAtom';
+
+// チャットが更新されたか判定
+export const isChatUpdatedAtom = atom(false);
+isChatUpdatedAtom.debugLabel = 'isChatUpdatedAtom';
