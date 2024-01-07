@@ -36,6 +36,7 @@ const config: Config = {
 				sm: '15px',
 				md: '20px',
 				lg: '30px',
+				content: '50px',
 			},
 			sizeing: {
 				header: '70px',

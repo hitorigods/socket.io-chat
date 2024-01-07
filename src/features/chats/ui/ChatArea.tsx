@@ -44,7 +44,7 @@ export default function ChatArea() {
 
 	return (
 		<>
-			<div className="grid content-between gap-[40px]">
+			<div className="grid grid-rows-[1fr_auto] content-between gap-[theme(spacing.content)]">
 				<ChatList
 					chatItems={chatItemsState}
 					chatsError={chatsError}

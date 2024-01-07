@@ -7,11 +7,11 @@ import Heading from '@/components/layout/Heading';
 export default function Home() {
 	return (
 		<Suspense fallback="loading...">
-			<div className="grid gap-[50px]">
-				<Heading
-					label="Top"
-					caption="トップ"
-				/>
+			<Heading
+				label="Top"
+				caption="トップ"
+			/>
+			<div className="grid justify-center gap-[40px] px-[20px] ">
 				<SocketFrom />
 				<AuthSignOut />
 			</div>

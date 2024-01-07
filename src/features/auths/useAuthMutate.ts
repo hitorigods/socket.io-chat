@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 
 import supabase from '@/utils/libs/supabase';
 
 export const useAuthMutate = () => {
+	const router = useRouter();
 	const [authEmail, setAuthEmail] = useState('');
 	const [authPassword, setAuthPassword] = useState('');
 
@@ -22,6 +24,7 @@ export const useAuthMutate = () => {
 		},
 		onSuccess: async () => {
 			alert('サインインしました');
+			await router.push('/');
 			reset();
 		},
 		onError: (error: any) => {

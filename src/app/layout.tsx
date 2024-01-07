@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 import { JotaiProvider } from '@/utils/libs/JotaiProvider';
 import { FetchQueryProvider } from '@/utils/libs/FetchQueryProvider';
@@ -46,8 +47,8 @@ export default function RootLayout({
 						<AuthProvider>
 							<div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
 								<Header />
-								<main className="grid place-items-center gap-[40px] px-[20px] py-[50px]">
-									{children}
+								<main className="grid grid-rows-[auto_1fr] items-start justify-center gap-[theme(spacing.content)] px-[theme(spacing.default)] py-[theme(spacing.content)]">
+									<Suspense fallback="loading...">{children}</Suspense>
 								</main>
 								<Footer />
 							</div>

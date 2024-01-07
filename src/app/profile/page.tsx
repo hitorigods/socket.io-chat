@@ -10,13 +10,11 @@ export const metadata: Metadata = {
 export default function Profile() {
 	return (
 		<>
-			<div className="">
-				<Heading
-					label="Profile"
-					caption="プロフィール"
-				/>
-				<ProfileArea />
-			</div>
+			<Heading
+				label="Profile"
+				caption="プロフィール"
+			/>
+			<ProfileArea />
 		</>
 	);
 }

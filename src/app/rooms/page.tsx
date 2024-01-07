@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
 import ChatArea from '@/features/chats/ui/ChatArea';
@@ -10,14 +9,12 @@ export const metadata: Metadata = {
 
 export default function Rooms() {
 	return (
-		<Suspense fallback="loading...">
-			<div className="grid h-full content-between">
-				<Heading
-					label="Room"
-					caption="チャットルーム"
-				/>
-				<ChatArea />
-			</div>
-		</Suspense>
+		<>
+			<Heading
+				label="Room"
+				caption="チャットルーム"
+			/>
+			<ChatArea />
+		</>
 	);
 }

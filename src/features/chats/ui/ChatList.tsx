@@ -24,17 +24,15 @@ export default function ChatList({
 	}
 
 	return !chatItems ? null : chatItems?.length ? (
-		<section>
-			<div className="scrollbar h-[calc(100vh-420px)] overflow-y-auto overscroll-y-none px-[40px]">
-				<ul className="grid gap-[10px]">
-					{chatItems.map((item: ChatSchema) => (
-						<ChatItem
-							key={item.id}
-							item={item}
-						/>
-					))}
-				</ul>
-			</div>
+		<section className="scrollbar h-[calc(theme(height.screen)_-480px)] overflow-y-auto overscroll-y-none px-[40px]">
+			<ul className="grid gap-[10px]">
+				{chatItems.map((item: ChatSchema) => (
+					<ChatItem
+						key={item.id}
+						item={item}
+					/>
+				))}
+			</ul>
 		</section>
 	) : null;
 }
