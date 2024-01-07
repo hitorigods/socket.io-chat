@@ -48,10 +48,10 @@ export default function InputButton({
 				className="w-[100px] bg-primary py-3 indent-[.5em] text-lg font-bold tracking-[.5em] text-dark outline-transparent transition-colors duration-300 ease-in-out
 					hover:bg-dark hover:text-white
 					focus-visible:border-0
-					disabled:cursor-not-allowed disabled:bg-disabled disabled:text-white
+					disabled:cursor-not-allowed disabled:bg-disabled disabled:text-disabled_dark
 					data-[is-reverse=true]:bg-dark data-[is-reverse=true]:text-white
 					data-[is-reverse=true]:hover:bg-primary data-[is-reverse=true]:hover:text-dark
-					data-[is-reverse=true]:disabled:bg-disabled data-[is-reverse=true]:disabled:text-white
+					data-[is-reverse=true]:disabled:bg-disabled data-[is-reverse=true]:disabled:text-disabled_dark
 				"
 				disabled={disabled}
 				data-is-reverse={isReverse}

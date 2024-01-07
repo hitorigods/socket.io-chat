@@ -17,9 +17,11 @@ const config: Config = {
 				primary: '#ffb900',
 				secondary: '#f05',
 				text: '#fff',
+				gray: '#2f3d4b',
 				dark: '#121218',
 				line: '#801336',
 				disabled: '#787c8b',
+				disabled_dark: '#2f3d4b',
 				danger: '#970009',
 			},
 			fontFamily: {

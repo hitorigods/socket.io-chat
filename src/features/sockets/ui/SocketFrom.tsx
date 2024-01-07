@@ -96,7 +96,7 @@ export default function SocketFrom() {
 			<InputButton
 				label="接続"
 				name="name"
-				placeholder="表示名を入力してください"
+				placeholder="チャットルーム名を入力してください"
 				value={roomName}
 				disabled={!roomName}
 				onChange={handleChange}

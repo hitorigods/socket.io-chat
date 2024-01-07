@@ -1,18 +1,21 @@
 'use client';
 
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useAtom } from 'jotai';
 
 import supabase from '@/utils/libs/supabase';
 import { userAtom } from '@/features/users/userAtom';
 import { useProfileMutate } from '@/features/profiles/useProfileMutate';
 import { RowProfile } from '@/features/profiles/profileSchemas';
-import { useUploadImage } from '@/utils/hooks/useUploadImage';
+import { useClientUploadImage } from '@/utils/hooks/useUploadImage';
 
 import imgAvaterDefault from '@/assets/icons/avater.svg';
+import SubmitButton from '@/components/buttons/SubmitButton';
 
 export default function ProfileFrom() {
+	const router = useRouter();
 	const {
 		profileNickname,
 		setProfileNickname,
@@ -22,15 +25,19 @@ export default function ProfileFrom() {
 		updateProfileMutaion,
 	} = useProfileMutate();
 	const [userState] = useAtom(userAtom);
-	const { handleUploadImage, uplpadImageRef } = useUploadImage();
+	const {
+		handleClientUpload,
+		clientUploadtRef,
+		clientUploadObjectURL,
+		clientUploadFile,
+		clientUploadFileName,
+	} = useClientUploadImage();
 
-	const router = useRouter();
+	const handleReset = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
 
-	useLayoutEffect(() => {
-		if (!userState) return;
-		setProfileNickname(userState.nickname);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userState]);
+		setProfileNickname(userState?.nickname || '');
+	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -83,47 +90,109 @@ export default function ProfileFrom() {
 		}
 	};
 
+	useLayoutEffect(() => {
+		setProfileNickname(userState?.nickname || '');
+		setProfileAvatarUrl(userState?.avatarUrl || imgAvaterDefault);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		console.log('clientUploadObjectURL', clientUploadObjectURL);
+		console.log('clientUploadFile', clientUploadFile);
+
+		if (clientUploadObjectURL) {
+			setProfileAvatarUrl(clientUploadObjectURL);
+		} else {
+			setProfileAvatarUrl(userState?.avatarUrl || imgAvaterDefault);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [clientUploadObjectURL]);
+
 	return (
-		<div className="">
-			<form onSubmit={handleSubmit}>
-				<div className="">
-					<div className="">
+		<div className="rounded-3xl bg-dark/50 p-[theme(spacing.content)]">
+			<form
+				className="grid gap-[theme(spacing.content)] "
+				onSubmit={handleSubmit}
+			>
+				<div
+					className="mx-auto flex w-[800px] max-w-full
+					[&>*:first-child]:border-0 [&>*]:border-l-[1px]
+					[&>*]:border-white/75"
+				>
+					<div className="grid flex-1 content-between justify-items-center gap-[theme(spacing.md)] px-[theme(spacing.default)]">
+						<p className="text-xl tracking-wide">ニックネーム</p>
 						<input
-							className="text-dark"
+							className="h-[50px] w-[300px] max-w-full rounded-md px-[theme(spacing.xs)] text-dark transition-colors duration-300 ease-in-out"
 							name="nickname"
 							type="text"
 							value={profileNickname}
-							placeholder="ニックネームを入力してください"
+							placeholder="ニックネームを入力"
+							autoComplete={'off'}
 							required
 							onChange={(event) => setProfileNickname(event.target.value)}
 						/>
+						<button
+							className=""
+							onClick={handleReset}
+						>
+							<span className="text-sm">キャンセル</span>
+						</button>
 					</div>
-					<div className="">
-						<label>
+					<div className="grid flex-1 content-between justify-items-center gap-[theme(spacing.md)] px-[theme(spacing.default)]">
+						<p className="text-xl tracking-wide">アイコン画像</p>
+						<label
+							className="group grid cursor-pointer gap-[theme(spacing.sm)]"
+							tabIndex={0}
+						>
+							{profileAvatarUrl && (
+								<span
+									className="flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out
+								[&>img]:h-full [&>img]:w-full [&>img]:object-contain"
+								>
+									<Image
+										src={profileAvatarUrl}
+										alt={clientUploadFileName}
+										width={100}
+										height={100}
+									/>
+								</span>
+							)}
+							<span
+								className="hidden"
+								ref={clientUploadtRef}
+							/>
 							<input
-								className="text-white"
+								className="hidden text-white"
 								name="avatarUrl"
 								type="file"
 								accept="image/*"
-								onChange={handleUploadImage}
+								onChange={handleClientUpload}
 							/>
-							<span ref={uplpadImageRef} />
+							<span
+								role="button"
+								className="grid h-[30px] w-full place-content-center place-items-center rounded-md bg-primary py-[10px] text-dark transition-all duration-300 ease-in-out
+								hover:bg-dark hover:text-white
+								group-hover:bg-dark group-hover:text-white
+							"
+							>
+								<span className="block text-xs tracking-wide">
+									ファイルを選択
+								</span>
+							</span>
 						</label>
+						<p className="text-sm">
+							{clientUploadFileName || '選択されてません'}
+						</p>
 					</div>
 				</div>
 
 				<div className="grid justify-center">
-					<div className="w-[400px] max-w-full">
-						<button
-							className="grid h-[80px] w-full place-items-center rounded-md bg-primary py-[10px] text-dark transition-all duration-300 ease-in-out
-							hover:bg-dark hover:text-white
-						"
-							type="submit"
-						>
-							<span className="block indent-[.75em] text-3xl font-bold tracking-[.75em]">
-								{userState && userState.nickname ? '更新' : '登録'}
-							</span>
-						</button>
+					<div className="w-[350px] max-w-full">
+						<SubmitButton
+							label={userState && userState.nickname ? '更新' : '登録'}
+							isSubmit={false}
+							isDisabled={!profileNickname}
+						/>
 					</div>
 				</div>
 			</form>

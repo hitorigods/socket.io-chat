@@ -2,31 +2,36 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 
-export const useUploadImage = () => {
-	const uplpadImageRef = useRef<HTMLElement>(null);
-	const [objectURL, setObjectURL] = useState('');
-	const [fileImage, setFileImage] = useState<HTMLImageElement | null>(null);
+export const useClientUploadImage = () => {
+	const clientUploadtRef = useRef<HTMLElement>(null);
+	const [clientUploadObjectURL, setObjectURL] = useState('');
+	const [clientFileImage, setClientFileImage] =
+		useState<HTMLImageElement | null>(null);
+	const [clientUploadFile, setClientUploadFile] = useState<File | null>(null);
+	const [clientUploadFileName, setClientUploadFileName] = useState('');
 
 	useEffect(() => {
 		const img = new Image();
-		setFileImage(img);
+		setClientFileImage(img);
 	}, []);
 
 	const resetSelection = () => {
-		if (fileImage) fileImage.src = '';
+		if (clientFileImage) clientFileImage.src = '';
 
-		const imageContainer = uplpadImageRef.current;
-		if (imageContainer && fileImage?.parentNode === imageContainer) {
-			imageContainer.removeChild(fileImage);
+		const imageContainer = clientUploadtRef.current;
+		if (imageContainer && clientFileImage?.parentNode === imageContainer) {
+			imageContainer.removeChild(clientFileImage);
 		}
 
-		if (objectURL) {
-			window.URL.revokeObjectURL(objectURL);
+		if (clientUploadObjectURL) {
+			window.URL.revokeObjectURL(clientUploadObjectURL);
 			setObjectURL('');
+			setClientUploadFile(null);
+			setClientUploadFileName('');
 		}
 	};
 
-	const handleUploadImage: React.ChangeEventHandler<HTMLInputElement> = (
+	const handleClientUpload: React.ChangeEventHandler<HTMLInputElement> = (
 		event
 	) => {
 		resetSelection();
@@ -40,16 +45,24 @@ export const useUploadImage = () => {
 			return;
 		}
 
-		const imageContainer = uplpadImageRef.current;
+		const imageContainer = clientUploadtRef.current;
 		if (!imageContainer) return;
 
-		const objectURL = window.URL.createObjectURL(file);
-		if (fileImage) {
-			fileImage.src = objectURL;
-			imageContainer.appendChild(fileImage);
-			setObjectURL(objectURL);
+		const objectUrl = window.URL.createObjectURL(file);
+		if (clientFileImage) {
+			clientFileImage.src = objectUrl;
+			imageContainer.appendChild(clientFileImage);
+			setObjectURL(objectUrl);
+			setClientUploadFile(file);
+			setClientUploadFileName(file.name);
 		}
 	};
 
-	return { handleUploadImage, uplpadImageRef };
+	return {
+		handleClientUpload,
+		clientUploadtRef,
+		clientUploadObjectURL,
+		clientUploadFile,
+		clientUploadFileName,
+	};
 };
