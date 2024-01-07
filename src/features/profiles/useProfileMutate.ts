@@ -34,11 +34,9 @@ export const useProfileMutate = () => {
 				);
 			}
 			alert('プロフィールを登録しました');
-			// reset();
 		},
 		onError: (error: any) => {
 			alert(error.message);
-			// reset();
 		},
 	});
 
@@ -63,11 +61,9 @@ export const useProfileMutate = () => {
 				queryClient.setQueryData(['query:profiles'], newRows);
 			}
 			alert('プロフィールを更新しました');
-			// reset();
 		},
 		onError: (error: any) => {
 			alert(error.message);
-			// reset();
 		},
 	});
 

@@ -59,16 +59,16 @@ export default function ChatItem({ item }: Props) {
 					<Image
 						src={item.Profiles?.avatarUrl || imgAvaterDefault}
 						alt={item.Profiles?.nickname || 'No Name'}
-						width={64}
-						height={64}
-						className="h-16 w-16 rounded-full"
+						width={60}
+						height={60}
+						className="h-[60px] w-[60px] rounded-full object-cover"
 					/>
 				</div>
 				<div className="grid w-[650px] max-w-full gap-[10px] rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-300 ease-in-out">
 					<p className="text-xl leading-normal">{item.title}</p>
 					<div className="flex justify-between gap-[20px]">
-						<p className="text-xs">{item.Profiles?.nickname}</p>
-						<p className="text-xs">{localDate}</p>
+						<p className="text-xs text-white/75">{item.Profiles?.nickname}</p>
+						<p className="text-xs text-white/75">{localDate}</p>
 					</div>
 				</div>
 				{item.User_id === userState?.id && (

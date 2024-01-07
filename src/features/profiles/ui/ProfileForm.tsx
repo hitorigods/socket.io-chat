@@ -10,12 +10,16 @@ import { userAtom } from '@/features/users/userAtom';
 import { useProfileMutate } from '@/features/profiles/useProfileMutate';
 import { RowProfile } from '@/features/profiles/profileSchemas';
 import { useClientUploadImage } from '@/utils/hooks/useUploadImage';
+import { fileSizeUnit } from '@/utils/helpers/fileSizeUnit';
 
 import imgAvaterDefault from '@/assets/icons/avater.svg';
 import SubmitButton from '@/components/buttons/SubmitButton';
 
 export default function ProfileFrom() {
 	const router = useRouter();
+	const [previewFileStatus, setPreviewFileStatus] = useState('');
+	const [isPreviewFileError, setIsPreviewFileError] = useState(false);
+	const [userState, setUserState] = useAtom(userAtom);
 	const {
 		profileNickname,
 		setProfileNickname,
@@ -24,7 +28,6 @@ export default function ProfileFrom() {
 		createProfileMutaion,
 		updateProfileMutaion,
 	} = useProfileMutate();
-	const [userState] = useAtom(userAtom);
 	const {
 		handleClientUpload,
 		clientUploadtRef,
@@ -33,9 +36,57 @@ export default function ProfileFrom() {
 		clientUploadFileName,
 	} = useClientUploadImage();
 
-	const handleReset = (event: React.MouseEvent<HTMLButtonElement>) => {
-		event.preventDefault();
+	const serverImageUpload = async () => {
+		if (
+			!clientUploadFile ||
+			!clientUploadFile.name ||
+			!userState?.id ||
+			isPreviewFileError
+		)
+			return;
+		const [ext, ...fileName] = clientUploadFile.name.split('.').reverse();
+		const filePath = `${
+			userState.id
+		}/${Date.now()}_${crypto.randomUUID()}.${ext}`;
+		console.log('filePath', filePath);
 
+		const { error } = await supabase.storage
+			.from('avaters')
+			.upload(filePath, clientUploadFile);
+		if (error) {
+			alert('画像がアップロードできませんでした');
+			console.error('error', error);
+			throw new Error('画像がアップロードできませんでした');
+		}
+		const { data } = await supabase.storage
+			.from('avaters')
+			.getPublicUrl(filePath);
+		const avatarUrl = data.publicUrl;
+		console.log('avatarUrl', avatarUrl);
+
+		return avatarUrl;
+	};
+
+	const serverBeforeImageDelete = async (avatarUrl: string) => {
+		const beforeAvatarUrl = userState?.avatarUrl || '';
+		if (!beforeAvatarUrl || !avatarUrl) return;
+
+		const beforeAvaterPath = beforeAvatarUrl
+			.split('/public/avaters/')
+			.reverse()[0];
+		const { error: databaseError } = await supabase.storage
+			.from('avaters')
+			.remove([beforeAvaterPath]);
+
+		if (databaseError) {
+			alert('更新前の画像が削除できませんでした');
+			console.error('databaseError', databaseError);
+			throw new Error('更新前の画像が削除できませんでした');
+		}
+	};
+
+	const handleNicknameReset = (event: React.MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
 		setProfileNickname(userState?.nickname || '');
 	};
 
@@ -49,9 +100,12 @@ export default function ProfileFrom() {
 			throw new Error('サインインしてください');
 		}
 
-		//TODO: アップロードした画像ファイルをSupabaseにアップロードしてURLを取得する
-
+		//アップロードした画像ファイルをSupabaseにアップロードしてURLを取得する
+		const avatarUrl = (await serverImageUpload()) || '';
+		console.log('avatarUrl', avatarUrl);
 		console.log('userState', userState);
+
+		await serverBeforeImageDelete(avatarUrl);
 
 		// プロフィール作成済みの場合
 		if (userState && userState.nickname) {
@@ -70,9 +124,19 @@ export default function ProfileFrom() {
 			const newRow: RowProfile = {
 				...profileData,
 				nickname: profileNickname,
-				avatarUrl: profileAvatarUrl,
+				avatarUrl: avatarUrl || '',
 			};
 			await updateProfileMutaion.mutate(newRow);
+
+			if (avatarUrl) {
+				setUserState((state) => ({
+					...state,
+					id: state?.id || '',
+					avatarUrl: avatarUrl || state?.avatarUrl || '',
+					nickname: profileNickname || state?.nickname || '',
+					Profile_id: state?.Profile_id || '',
+				}));
+			}
 
 			// プロフィール新規作成の場合
 		} else {
@@ -82,7 +146,7 @@ export default function ProfileFrom() {
 			}
 			const row = {
 				nickname: profileNickname,
-				avatarUrl: profileAvatarUrl,
+				avatarUrl: avatarUrl || '',
 				User_id: userID,
 			};
 			await createProfileMutaion.mutate(row);
@@ -94,16 +158,32 @@ export default function ProfileFrom() {
 		setProfileNickname(userState?.nickname || '');
 		setProfileAvatarUrl(userState?.avatarUrl || imgAvaterDefault);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [userState]);
 
 	useEffect(() => {
 		console.log('clientUploadObjectURL', clientUploadObjectURL);
 		console.log('clientUploadFile', clientUploadFile);
 
-		if (clientUploadObjectURL) {
-			setProfileAvatarUrl(clientUploadObjectURL);
+		if (clientUploadObjectURL && clientUploadFile) {
+			const size = clientUploadFile?.size || 0;
+			const unitSize = fileSizeUnit(size);
+			const maxSize = Number(process?.env?.NEXT_PUBLIC_UPLOAD_SIZE_LIMIT) || 0;
+
+			if (size >= maxSize) {
+				setPreviewFileStatus(
+					`ファイルサイズ容量オーバー（${fileSizeUnit(maxSize)}上限）`
+				);
+				setProfileAvatarUrl(userState?.avatarUrl || imgAvaterDefault);
+				setIsPreviewFileError(true);
+			} else {
+				setPreviewFileStatus(`${clientUploadFile.name} [${unitSize}]`);
+				setProfileAvatarUrl(clientUploadObjectURL);
+				setIsPreviewFileError(false);
+			}
 		} else {
 			setProfileAvatarUrl(userState?.avatarUrl || imgAvaterDefault);
+			setPreviewFileStatus('選択されてません');
+			setIsPreviewFileError(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [clientUploadObjectURL]);
@@ -133,7 +213,8 @@ export default function ProfileFrom() {
 						/>
 						<button
 							className=""
-							onClick={handleReset}
+							type="button"
+							onClick={handleNicknameReset}
 						>
 							<span className="text-sm">キャンセル</span>
 						</button>
@@ -141,19 +222,19 @@ export default function ProfileFrom() {
 					<div className="grid flex-1 content-between justify-items-center gap-[theme(spacing.md)] px-[theme(spacing.default)]">
 						<p className="text-xl tracking-wide">アイコン画像</p>
 						<label
-							className="group grid cursor-pointer gap-[theme(spacing.sm)]"
+							className="group grid cursor-pointer gap-[theme(spacing.default)]"
 							tabIndex={0}
 						>
 							{profileAvatarUrl && (
 								<span
-									className="flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out
-								[&>img]:h-full [&>img]:w-full [&>img]:object-contain"
+									className="flex h-[120px] w-[120px] cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out
+									[&>img]:h-full [&>img]:w-full [&>img]:rounded-full [&>img]:object-cover"
 								>
 									<Image
 										src={profileAvatarUrl}
 										alt={clientUploadFileName}
-										width={100}
-										height={100}
+										width={360}
+										height={360}
 									/>
 								</span>
 							)}
@@ -162,7 +243,7 @@ export default function ProfileFrom() {
 								ref={clientUploadtRef}
 							/>
 							<input
-								className="hidden text-white"
+								className="hidden"
 								name="avatarUrl"
 								type="file"
 								accept="image/*"
@@ -180,8 +261,12 @@ export default function ProfileFrom() {
 								</span>
 							</span>
 						</label>
-						<p className="text-sm">
-							{clientUploadFileName || '選択されてません'}
+						<p
+							className="text-sm
+						data-[isError=true]:text-danger"
+							data-isError={isPreviewFileError}
+						>
+							{previewFileStatus}
 						</p>
 					</div>
 				</div>

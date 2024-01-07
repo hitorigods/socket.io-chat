@@ -22,7 +22,9 @@ const config: Config = {
 				line: '#801336',
 				disabled: '#787c8b',
 				disabled_dark: '#2f3d4b',
-				danger: '#970009',
+				danger: '#d9122c',
+				danger_light: '#d9122c',
+				danger_dark: '#970009',
 			},
 			fontFamily: {
 				display: ['SF Mono', 'var(--font-noto-sans-jp)', 'sans-serif'],
