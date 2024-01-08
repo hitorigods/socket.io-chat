@@ -57,7 +57,7 @@ export default function ChatList({
 
 	return !chatItems ? null : chatItems?.length ? (
 		<section
-			className="scrollbar h-[calc(theme(height.screen)_-480px)] overflow-y-auto overscroll-y-none px-[40px]"
+			className="scrollbar h-[calc(theme(height.screen)_-570px)] overflow-y-auto overscroll-y-none px-[theme(spacing.content)]"
 			ref={scrollRef}
 		>
 			<ul className="grid gap-[10px]">

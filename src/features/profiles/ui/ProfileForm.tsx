@@ -189,7 +189,7 @@ export default function ProfileFrom() {
 	}, [clientUploadObjectURL]);
 
 	return (
-		<div className="rounded-3xl bg-dark/50 p-[theme(spacing.content)]">
+		<div className="rounded-3xl bg-dark/50  px-[theme(spacing.xl)] py-[theme(spacing.content)]">
 			<form
 				className="grid gap-[theme(spacing.content)] "
 				onSubmit={handleSubmit}
@@ -197,12 +197,12 @@ export default function ProfileFrom() {
 				<div
 					className="mx-auto flex w-[800px] max-w-full
 					[&>*:first-child]:border-0 [&>*]:border-l-[1px]
-					[&>*]:border-white/75"
+					[&>*]:border-white/50"
 				>
 					<div className="grid flex-1 content-between justify-items-center gap-[theme(spacing.md)] px-[theme(spacing.default)]">
 						<p className="text-xl tracking-wide">ニックネーム</p>
 						<input
-							className="h-[50px] w-[300px] max-w-full rounded-md px-[theme(spacing.xs)] text-dark transition-colors duration-300 ease-in-out"
+							className="h-[50px] w-[300px] max-w-full rounded-md border-[1px] border-solid border-white bg-white/5 px-[theme(spacing.xs)] text-white transition-colors duration-350 ease-in-out"
 							name="nickname"
 							type="text"
 							value={profileNickname}
@@ -212,11 +212,11 @@ export default function ProfileFrom() {
 							onChange={(event) => setProfileNickname(event.target.value)}
 						/>
 						<button
-							className=""
+							className="text-white transition-colors duration-350 ease-in-out hover:text-primary"
 							type="button"
 							onClick={handleNicknameReset}
 						>
-							<span className="text-sm">キャンセル</span>
+							<span className="text-sm tracking-wide">キャンセル</span>
 						</button>
 					</div>
 					<div className="grid flex-1 content-between justify-items-center gap-[theme(spacing.md)] px-[theme(spacing.default)]">
@@ -227,7 +227,7 @@ export default function ProfileFrom() {
 						>
 							{profileAvatarUrl && (
 								<span
-									className="flex h-[120px] w-[120px] cursor-pointer items-center justify-center rounded-full transition-all duration-300 ease-in-out
+									className="flex h-[120px] w-[120px] cursor-pointer items-center justify-center rounded-full duration-350
 									[&>img]:h-full [&>img]:w-full [&>img]:rounded-full [&>img]:object-cover"
 								>
 									<Image
@@ -251,9 +251,9 @@ export default function ProfileFrom() {
 							/>
 							<span
 								role="button"
-								className="grid h-[30px] w-full place-content-center place-items-center rounded-md bg-primary py-[10px] text-dark transition-all duration-300 ease-in-out
-								hover:bg-dark hover:text-white
-								group-hover:bg-dark group-hover:text-white
+								className="grid h-[30px] w-full place-content-center place-items-center rounded-md border-[1px] border-solid border-primary bg-primary py-[10px] text-dark transition-all duration-350 ease-in-out
+								hover:bg-dark hover:text-primary
+								group-hover:bg-dark group-hover:text-primary
 							"
 							>
 								<span className="block text-xs tracking-wide">
@@ -262,7 +262,7 @@ export default function ProfileFrom() {
 							</span>
 						</label>
 						<p
-							className="text-sm
+							className="text-sm tracking-wide
 						data-[isError=true]:text-danger"
 							data-isError={isPreviewFileError}
 						>

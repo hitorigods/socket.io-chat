@@ -21,8 +21,8 @@ const config: Config = {
 				dark: '#121218',
 				line: '#801336',
 				disabled: '#787c8b',
-				disabled_dark: '#2f3d4b',
-				danger: '#d9122c',
+				disabled_dark: '#4d5157',
+				danger: '#7b828d',
 				danger_light: '#d9122c',
 				danger_dark: '#970009',
 			},
@@ -40,11 +40,15 @@ const config: Config = {
 				sm: '15px',
 				md: '20px',
 				lg: '30px',
-				content: '50px',
+				xl: '50px',
+				content: '80px',
 			},
 			sizeing: {
 				header: '70px',
 				footer: '50px',
+			},
+			transitionDuration: {
+				'350': '350ms',
 			},
 			fontFace: {
 				Noto_Sans_JP: [

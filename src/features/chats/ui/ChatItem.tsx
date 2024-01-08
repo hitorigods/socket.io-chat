@@ -64,9 +64,11 @@ export default function ChatItem({ item }: Props) {
 						className="h-[60px] w-[60px] rounded-full object-cover"
 					/>
 				</div>
-				<div className="grid w-[650px] max-w-full gap-[10px] rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-300 ease-in-out">
-					<p className="text-xl leading-normal">{item.title}</p>
-					<div className="flex justify-between gap-[20px]">
+				<div className="grid w-[650px] max-w-full gap-[10px] rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-350 ease-in-out">
+					<p className="text-md break-words leading-normal [overflow-wrap:anywhere]">
+						{item.title}
+					</p>
+					<div className="flex justify-between gap-[theme(spacing.default)]">
 						<p className="text-xs text-white/75">{item.Profiles?.nickname}</p>
 						<p className="text-xs text-white/75">{localDate}</p>
 					</div>
