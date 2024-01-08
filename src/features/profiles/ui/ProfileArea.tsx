@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 
 import { userAtom } from '@/features/users/userAtom';
 import { usePreviewUploadImage } from '@/utils/hooks/usePreviewUploadImage';
-import { useFileSizeUnit } from '@/utils/helpers/fileSizeUnit';
+import { useFileSizeUnit } from '@/utils/hooks/useFileSizeUnit';
 import FormArea from '@/components/forms/FormArea';
 import FormSubmit from '@/components/forms/FormSubmit';
 import FlexColumns from '@/components/columns/FlexColumns';
