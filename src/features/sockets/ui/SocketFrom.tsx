@@ -68,7 +68,6 @@ export default function SocketFrom() {
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event
 	) => {
-		console.log('handleSubmit');
 		event.preventDefault();
 		const handleSocket = await fetch(
 			`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`,

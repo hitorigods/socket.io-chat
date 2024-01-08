@@ -62,9 +62,9 @@ https://hitorigods-socket-io-next.onrender.com/
    4. ⭕セッション判定でリダイレクト
    5. ⭕メールアドレス認証
    6. OAuth実装
-      1. Google
-      2. ❎GitHub
-      3. ❎Discord
+      1. ⭕Google
+      2. ⭕GitHub
+      3. ⭕Discord
    7. エラーのアラート内容を日本語に
 6. チャット機能
    1. ⭕テーブル用意
@@ -206,6 +206,15 @@ https://hassakulab.com/posts/npm-script-with-dotenv/
 クラウド版GUIなら以下から作成できる
 
 https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
+
+### ■ Supabase ローカル版でOAuthのリダイレクト先がlocalhostではなく127.0.0.1になってしまう問題
+
+`/supabase/config.toml`のsite_urlをlocalhostにする
+
+```diff
+-site_url = "http://127.0.0.1:3000"
++site_url = "http://localhost:3000"
+```
 
 ### ■ Prisma Migrateをdotenvを使い.env.localで実行
 

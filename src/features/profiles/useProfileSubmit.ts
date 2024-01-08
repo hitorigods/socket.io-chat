@@ -20,7 +20,7 @@ type Props = {
 	>['updateProfileMutaion'];
 };
 
-export function useHandleSubmit({
+export function useProfileSubmit({
 	isPreviewFileError,
 	clientUploadFile,
 	profileNickname,

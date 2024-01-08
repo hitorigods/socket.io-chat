@@ -13,7 +13,7 @@ import FlexColumn from '@/components/columns/FlexColumn';
 import InputWithCancel from '@/components/forms/InputWithCancel';
 import InputPreviewFile from '@/components/forms/InputPreviewFile';
 import { useProfileMutate } from '../useProfileMutate';
-import { useHandleSubmit } from '../useHandleSubmit';
+import { useProfileSubmit } from '../useProfileSubmit';
 
 import imgAvaterDefault from '@/assets/icons/avater.svg';
 
@@ -40,7 +40,7 @@ export default function ProfileArea() {
 
 	const { fileSizeUnit } = useFileSizeUnit();
 
-	const { handleSubmit } = useHandleSubmit({
+	const { handleSubmit } = useProfileSubmit({
 		isPreviewFileError,
 		clientUploadFile,
 		profileNickname,

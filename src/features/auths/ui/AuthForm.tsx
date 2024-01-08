@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import supabase from '@/utils/libs/supabase';
 import FormArea from '@/components/forms/FormArea';
 import FormSubmit from '@/components/forms/FormSubmit';
 import Input from '@/components/forms/Input';
@@ -10,6 +9,7 @@ import FlexColumns from '@/components/columns/FlexColumns';
 import FlexColumn from '@/components/columns/FlexColumn';
 import TextButton from '@/components/buttons/TextButton';
 import { useAuthMutate } from '../useAuthMutate';
+import { useAuthOauthSignIn } from '../useAuthOauthSignIn';
 
 type Props = {
 	isLoginMode: boolean;
@@ -22,7 +22,6 @@ type StateStatus = {
 }[];
 
 export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
-	const [stateStatus, setStateStatus] = useState<StateStatus>([]);
 	const {
 		authEmail,
 		setAuthEmail,
@@ -31,6 +30,8 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 		loginAuthMutaion,
 		registerAuthMutaion,
 	} = useAuthMutate();
+
+	const { handleOAuthSignIn } = useAuthOauthSignIn();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -41,49 +42,6 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 			await registerAuthMutaion.mutate();
 		}
 	};
-
-	const handleOAuthSignIn = async (
-		event: React.MouseEvent<HTMLButtonElement>,
-		{ provider }: { provider: 'google' | 'github' | 'discord' }
-	) => {
-		event.preventDefault();
-
-		const providerName = provider.charAt(0).toUpperCase() + provider.slice(1);
-
-		try {
-			const { error } = await supabase.auth.signInWithOAuth({
-				provider: provider,
-			});
-			if (error) {
-				setStateStatus((state) => [
-					...state,
-					{ type: 'error', message: error?.message },
-				]);
-			}
-		} catch (error) {
-			if (error instanceof Error) {
-				setStateStatus((state) => [
-					...state,
-					// @ts-ignore
-					{ type: 'error', message: error.message },
-				]);
-			} else {
-				setStateStatus((state) => [
-					...state,
-					{ type: 'error', message: `${providerName}との連携に失敗しました。` },
-				]);
-			}
-		}
-		setStateStatus((state) => [
-			...state,
-			{ type: 'update', message: `${providerName}との連携に成功しました！` },
-		]);
-	};
-
-	useEffect(() => {
-		console.log('stateStatus', stateStatus);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [stateStatus]);
 
 	return (
 		<FormArea onSubmit={handleSubmit}>
