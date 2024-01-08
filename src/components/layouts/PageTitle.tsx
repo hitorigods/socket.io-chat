@@ -3,7 +3,7 @@ type Props = {
 	caption?: string;
 };
 
-export default function Heading({ label, caption }: Props) {
+export default function PageTitle({ label, caption }: Props) {
 	return (
 		<div className="grid h-[100px] content-between justify-center justify-items-center gap-[theme(spacing.sm)]">
 			<div className="mt-[-.2em] font-heading text-7xl/none uppercase tracking-wider">

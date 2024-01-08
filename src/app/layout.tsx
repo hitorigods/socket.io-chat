@@ -5,8 +5,8 @@ import { JotaiProvider } from '@/utils/libs/JotaiProvider';
 import { FetchQueryProvider } from '@/utils/libs/FetchQueryProvider';
 
 import { AuthProvider } from '@/features/auths/AuthProvider';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Header from '@/components/layouts/Header';
+import Footer from '@/components/layouts/Footer';
 
 import { Noto_Sans_JP, Goblin_One } from 'next/font/google';
 const noto = Noto_Sans_JP({

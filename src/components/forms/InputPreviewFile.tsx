@@ -7,16 +7,16 @@ type Props = {
 	status: string;
 	isError: boolean;
 	fileRef: React.RefObject<HTMLElement>;
-	handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function ProfileInputAvater({
+export default function InputPreviewFile({
 	imageUrl,
 	fileName,
 	status,
 	isError,
 	fileRef,
-	handleChange,
+	onChange,
 }: Props) {
 	return (
 		<>
@@ -46,7 +46,7 @@ export default function ProfileInputAvater({
 					name="imageUrl"
 					type="file"
 					accept="image/*"
-					onChange={handleChange}
+					onChange={onChange}
 				/>
 				<span
 					role="button"

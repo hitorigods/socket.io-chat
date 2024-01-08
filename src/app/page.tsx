@@ -2,12 +2,12 @@ import { Suspense } from 'react';
 
 import SocketFrom from '@/features/sockets/ui/SocketFrom';
 import AuthSignOut from '@/features/auths/ui/AuthSignOut';
-import Heading from '@/components/layout/Heading';
+import PageTitle from '@/components/layouts/PageTitle';
 
 export default function Home() {
 	return (
 		<Suspense fallback="loading...">
-			<Heading
+			<PageTitle
 				label="Top"
 				caption="トップ"
 			/>

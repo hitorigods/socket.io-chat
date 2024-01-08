@@ -2,7 +2,13 @@
 
 import React from 'react';
 
-import { useAuthMutate } from '@/features/auths/useAuthMutate';
+import FormArea from '@/components/forms/FormArea';
+import FormSubmit from '@/components/forms/FormSubmit';
+import Input from '@/components/forms/Input';
+import FlexColumns from '@/components/columns/FlexColumns';
+import FlexColumn from '@/components/columns/FlexColumn';
+import TextButton from '@/components/buttons/TextButton';
+import { useAuthMutate } from '../useAuthMutate';
 
 type Props = {
 	isLoginMode: boolean;
@@ -28,45 +34,49 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 			await registerAuthMutaion.mutate();
 		}
 	};
+
 	return (
-		<div className="">
-			<form onSubmit={handleSubmit}>
-				<div>
-					<input
-						className="text-dark"
-						type="text"
+		<FormArea onSubmit={handleSubmit}>
+			<FlexColumns>
+				<FlexColumn title="メールアドレス">
+					<Input
+						name="email"
 						value={authEmail}
-						placeholder="メールアドレスを入力してください"
-						required
+						placeholder="example@test.com"
+						isRequired={true}
 						onChange={(event) => setAuthEmail(event.target.value)}
 					/>
-				</div>
-				<div>
-					<input
-						className="text-dark"
+				</FlexColumn>
+				<FlexColumn title="パスワード">
+					<Input
+						name="password"
 						type="password"
 						value={authPassword}
-						placeholder="パスワードを入力してください"
-						required
+						placeholder="your password"
+						isRequired={true}
 						onChange={(event) => setAuthPassword(event.target.value)}
 					/>
-				</div>
-				<div className="">
-					<button
-						type="button"
-						onClick={() => setIsLoginMode(!isLoginMode)}
-						className="cursor-pointer"
-					>
-						{isLoginMode ? '新規登録はこちら' : 'サインインはこちら'}
-					</button>
-				</div>
-				<button
-					type="submit"
-					className=""
-				>
-					<span className=""> {isLoginMode ? 'サインイン' : '登録'}</span>
-				</button>
-			</form>
-		</div>
+				</FlexColumn>
+			</FlexColumns>
+			<div className="flex justify-center">
+				<TextButton
+					label={isLoginMode ? '新規登録はこちら' : 'サインインはこちら'}
+					type="button"
+					onClick={() => setIsLoginMode(!isLoginMode)}
+				/>
+				<TextButton
+					label="パスワードを忘れた方はこちら"
+					type="button"
+					onClick={(event) => {
+						event.preventDefault();
+						alert('パスワードを忘れた方はこちら');
+					}}
+				/>
+			</div>
+			<FormSubmit
+				buttonLabel={isLoginMode ? '入室' : '登録'}
+				isDisabled={!authEmail && !authPassword}
+			/>
+		</FormArea>
 	);
 }

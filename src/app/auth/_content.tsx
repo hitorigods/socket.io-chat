@@ -3,7 +3,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-import Heading from '@/components/layout/Heading';
+import PageTitle from '@/components/layouts/PageTitle';
 import AuthForm from '@/features/auths/ui/AuthForm';
 
 export default function PageContent() {
@@ -11,7 +11,7 @@ export default function PageContent() {
 
 	return (
 		<>
-			<Heading
+			<PageTitle
 				label={isLoginMode ? 'Sign in' : 'Sign up'}
 				caption={isLoginMode ? 'サインイン' : '新規登録'}
 			/>
