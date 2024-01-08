@@ -356,6 +356,10 @@ https://qiita.com/dshukertjr/items/05437bb88bc7ae8583b8
 
 ### ■ OAuth系
 
+#### ○ Next.js + Supabase アプリでサーバーやローカル開発環境で、認証に必要な Client ID と Client secrets の取得。(Slack、Google、GitHub)
+
+https://qiita.com/masakinihirota/items/706326a64dab3ffbf55b
+
 #### ○ supabaseの認証機能
 
 https://qiita.com/kaho_eng/items/cb8d735b5b6ca1b3a6c5

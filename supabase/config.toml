@@ -147,3 +147,30 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+##################################################
+# Custom configuration for your project goes here #
+##################################################
+# [auth.external.*****]
+# enabled = true
+# client_id = "env(*****_CLIENT_ID)"
+# secret = "env(*****_SECRET)"
+# redirect_uri = "http://[URL]/auth/v1/callback"
+
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_SECRET)"
+redirect_uri = "env(GOOGLE_CALLBACK_URL)"
+
+[auth.external.github]
+enabled = true
+client_id = "env(GITHUB_CLIENT_ID)"
+secret = "env(GITHUB_SECRET)"
+redirect_uri = "env(GITHUB_CALLBACK_URL)"
+
+[auth.external.discord]
+enabled = true
+client_id = "env(DISCOED_CLIENT_ID)"
+secret = "env(DISCOED_SECRET)"
+redirect_uri = "env(DISCOED_CALLBACK_URL)"

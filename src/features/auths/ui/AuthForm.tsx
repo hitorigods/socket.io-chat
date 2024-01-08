@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import supabase from '@/utils/libs/supabase';
 import FormArea from '@/components/forms/FormArea';
 import FormSubmit from '@/components/forms/FormSubmit';
 import Input from '@/components/forms/Input';
@@ -15,7 +16,13 @@ type Props = {
 	setIsLoginMode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+type StateStatus = {
+	type: 'update' | 'error';
+	message: string | unknown;
+}[];
+
 export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
+	const [stateStatus, setStateStatus] = useState<StateStatus>([]);
 	const {
 		authEmail,
 		setAuthEmail,
@@ -34,6 +41,49 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 			await registerAuthMutaion.mutate();
 		}
 	};
+
+	const handleOAuthSignIn = async (
+		event: React.MouseEvent<HTMLButtonElement>,
+		{ provider }: { provider: 'google' | 'github' | 'discord' }
+	) => {
+		event.preventDefault();
+
+		const providerName = provider.charAt(0).toUpperCase() + provider.slice(1);
+
+		try {
+			const { error } = await supabase.auth.signInWithOAuth({
+				provider: provider,
+			});
+			if (error) {
+				setStateStatus((state) => [
+					...state,
+					{ type: 'error', message: error?.message },
+				]);
+			}
+		} catch (error) {
+			if (error instanceof Error) {
+				setStateStatus((state) => [
+					...state,
+					// @ts-ignore
+					{ type: 'error', message: error.message },
+				]);
+			} else {
+				setStateStatus((state) => [
+					...state,
+					{ type: 'error', message: `${providerName}との連携に失敗しました。` },
+				]);
+			}
+		}
+		setStateStatus((state) => [
+			...state,
+			{ type: 'update', message: `${providerName}との連携に成功しました！` },
+		]);
+	};
+
+	useEffect(() => {
+		console.log('stateStatus', stateStatus);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [stateStatus]);
 
 	return (
 		<FormArea onSubmit={handleSubmit}>
@@ -64,15 +114,42 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 					type="button"
 					onClick={() => setIsLoginMode(!isLoginMode)}
 				/>
-				<TextButton
-					label="パスワードを忘れた方はこちら"
-					type="button"
-					onClick={(event) => {
-						event.preventDefault();
-						alert('パスワードを忘れた方はこちら');
-					}}
-				/>
 			</div>
+			<FlexColumns>
+				<FlexColumn title="Google">
+					<div>
+						<button
+							onClick={(event) => {
+								handleOAuthSignIn(event, { provider: 'google' });
+							}}
+						>
+							<span>Google</span>
+						</button>
+					</div>
+				</FlexColumn>
+				<FlexColumn title="GitHub">
+					<div>
+						<button
+							onClick={(event) => {
+								handleOAuthSignIn(event, { provider: 'github' });
+							}}
+						>
+							<span>GitHub</span>
+						</button>
+					</div>
+				</FlexColumn>
+				<FlexColumn title="Discord">
+					<div>
+						<button
+							onClick={(event) => {
+								handleOAuthSignIn(event, { provider: 'discord' });
+							}}
+						>
+							<span>Discord</span>
+						</button>
+					</div>
+				</FlexColumn>
+			</FlexColumns>
 			<FormSubmit
 				buttonLabel={isLoginMode ? '入室' : '登録'}
 				isDisabled={!authEmail && !authPassword}
