@@ -22,8 +22,8 @@ const config: Config = {
 				line: '#801336',
 				disabled: '#787c8b',
 				disabled_dark: '#4d5157',
-				danger: '#7b828d',
-				danger_light: '#d9122c',
+				danger: '#f91e59',
+				danger_light: '#ff819d',
 				danger_dark: '#970009',
 			},
 			fontFamily: {

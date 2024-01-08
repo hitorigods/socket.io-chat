@@ -2,8 +2,8 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 
-export const useClientUploadImage = () => {
-	const clientUploadtRef = useRef<HTMLElement>(null);
+export const usePreviewUploadImage = () => {
+	const clientUploadRef = useRef<HTMLElement>(null);
 	const [clientUploadObjectURL, setObjectURL] = useState('');
 	const [clientFileImage, setClientFileImage] =
 		useState<HTMLImageElement | null>(null);
@@ -18,7 +18,7 @@ export const useClientUploadImage = () => {
 	const resetSelection = () => {
 		if (clientFileImage) clientFileImage.src = '';
 
-		const imageContainer = clientUploadtRef.current;
+		const imageContainer = clientUploadRef.current;
 		if (imageContainer && clientFileImage?.parentNode === imageContainer) {
 			imageContainer.removeChild(clientFileImage);
 		}
@@ -45,7 +45,7 @@ export const useClientUploadImage = () => {
 			return;
 		}
 
-		const imageContainer = clientUploadtRef.current;
+		const imageContainer = clientUploadRef.current;
 		if (!imageContainer) return;
 
 		const objectUrl = window.URL.createObjectURL(file);
@@ -60,7 +60,7 @@ export const useClientUploadImage = () => {
 
 	return {
 		handleClientUpload,
-		clientUploadtRef,
+		clientUploadRef,
 		clientUploadObjectURL,
 		clientUploadFile,
 		clientUploadFileName,

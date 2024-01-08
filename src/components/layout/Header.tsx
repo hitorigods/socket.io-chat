@@ -22,13 +22,13 @@ export default function Header() {
 							className="flex items-center gap-[theme(spacing.sm)]"
 							onClick={handleRouterHome}
 						>
-							<span>
+							<span className="h-[50px] w-[50px]">
 								<Image
 									className="aspect-square max-w-full object-contain"
 									src={imgLogo}
 									alt={process.env.NEXT_PUBLIC_SITE_NAME || ''}
-									width={50}
-									height={50}
+									width={150}
+									height={150}
 								/>
 							</span>
 							<span className="font-logo text-2xl">

@@ -59,8 +59,8 @@ export default function ChatItem({ item }: Props) {
 					<Image
 						src={item.Profiles?.avatarUrl || imgAvaterDefault}
 						alt={item.Profiles?.nickname || 'No Name'}
-						width={60}
-						height={60}
+						width={180}
+						height={180}
 						className="h-[60px] w-[60px] rounded-full object-cover"
 					/>
 				</div>

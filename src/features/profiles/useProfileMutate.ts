@@ -14,6 +14,7 @@ export const useProfileMutate = () => {
 		setProfileAvatarUrl('');
 	};
 
+	/** プロフィールデータの作成 */
 	const createProfileMutaion = useMutation({
 		mutationFn: async (row: InsertProfile) => {
 			const { data, error } = await supabase
@@ -40,6 +41,7 @@ export const useProfileMutate = () => {
 		},
 	});
 
+	/** プロフィールデータの更新 */
 	const updateProfileMutaion = useMutation({
 		mutationFn: async (row: RowProfile) => {
 			const { data, error } = await supabase
@@ -67,6 +69,7 @@ export const useProfileMutate = () => {
 		},
 	});
 
+	/** プロフィールデータの削除 */
 	const deleteProfileMutaion = useMutation({
 		mutationFn: async (id: string) => {
 			const { data, error } = await supabase
