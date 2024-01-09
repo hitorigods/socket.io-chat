@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { FaGoogle, FaGithub, FaDiscord } from 'react-icons/fa6';
 
 import FormArea from '@/components/forms/FormArea';
 import FormSubmit from '@/components/forms/FormSubmit';
@@ -8,6 +9,7 @@ import Input from '@/components/forms/Input';
 import FlexColumns from '@/components/columns/FlexColumns';
 import FlexColumn from '@/components/columns/FlexColumn';
 import TextButton from '@/components/buttons/TextButton';
+import SnsButton from '@/components/buttons/SnsButton';
 import { useAuthMutate } from '../useAuthMutate';
 import { useAuthOauthSignIn } from '../useAuthOauthSignIn';
 
@@ -75,37 +77,31 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 			</div>
 			<FlexColumns>
 				<FlexColumn title="Google">
-					<div>
-						<button
-							onClick={(event) => {
-								handleOAuthSignIn(event, { provider: 'google' });
-							}}
-						>
-							<span>Google</span>
-						</button>
-					</div>
+					<SnsButton
+						type="google"
+						label="Google"
+						onClick={(event) => {
+							handleOAuthSignIn(event, { provider: 'google' });
+						}}
+					/>
 				</FlexColumn>
 				<FlexColumn title="GitHub">
-					<div>
-						<button
-							onClick={(event) => {
-								handleOAuthSignIn(event, { provider: 'github' });
-							}}
-						>
-							<span>GitHub</span>
-						</button>
-					</div>
+					<SnsButton
+						type="github"
+						label="GitHub"
+						onClick={(event) => {
+							handleOAuthSignIn(event, { provider: 'github' });
+						}}
+					/>
 				</FlexColumn>
 				<FlexColumn title="Discord">
-					<div>
-						<button
-							onClick={(event) => {
-								handleOAuthSignIn(event, { provider: 'discord' });
-							}}
-						>
-							<span>Discord</span>
-						</button>
-					</div>
+					<SnsButton
+						type="discord"
+						label="Discord"
+						onClick={(event) => {
+							handleOAuthSignIn(event, { provider: 'discord' });
+						}}
+					/>
 				</FlexColumn>
 			</FlexColumns>
 			<FormSubmit
