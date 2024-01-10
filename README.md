@@ -33,7 +33,7 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ TODO
 
-⭕：完了、⚠：実装したが思うとこあり、❎：余裕がでたら実装するかも？
+⭕：完了　⚠：実装したが思うとこあり　❎：余裕がでたら実装するかも？
 
 1. 開発環境
    1. ⭕create-next-app
@@ -54,14 +54,14 @@ https://hitorigods-socket-io-next.onrender.com/
    1. ⭕Socket部分のサーバーサイド
    2. ⭕Socket部分のクライアントサイド
    3. ⭕ルームから出たらにソケットを切断する
-   4. Socket機能を一つにまとめて分離
+   4. ⚠Socket機能を一つにまとめて分離
 5. サインイン機能
    1. ⭕サインインフォーム作成
    2. ⭕サインインユーザーを登録
    3. ⭕サインアウト処理
    4. ⭕セッション判定でリダイレクト
    5. ⭕メールアドレス認証
-   6. OAuth実装
+   6. ⭕OAuth実装
       1. ⭕Google
       2. ⭕GitHub
       3. ⭕Discord
