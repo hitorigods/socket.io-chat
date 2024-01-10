@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
-import { io } from 'socket.io-client';
 import { useAtom } from 'jotai';
 
-import { chatSocketAtom } from '@/features/chats/chatAtom';
 import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
 import { SocketChat, ChatSchema } from '@/features/chats/chatSchemas';
 import { socketAtom } from './socketAtoms';
 
 export const useSocketClient = () => {
-	const [socketState] = useAtom(socketAtom);
 	const [, setChatItemsState] = useAtom(chatItemsAtom);
 	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 	const [, setSocketState] = useAtom(socketAtom);
-	const [chatSocketState] = useAtom(chatSocketAtom);
 
 	const socketInit = async (socket: any) => {
 		socket.on('connect', () => {
@@ -62,12 +57,7 @@ export const useSocketClient = () => {
 		});
 	};
 
-	const socketClientConnect = async () => {
-		await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`, {
-			method: 'POST',
-		});
-
-		const socket = io({ autoConnect: false });
+	const socketClientConnect = async (socket: any) => {
 		console.log('socket', socket);
 		socket.connect();
 		socketInit(socket);
