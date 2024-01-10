@@ -17,7 +17,7 @@ https://hitorigods-socket-io-next.onrender.com/
 
 ## ▼ ER図
 
-【未反映】Supabaseのキャプチャ貼る
+![Supabase ER図](docs/db/erd.png)
 
 ---
 
@@ -25,7 +25,7 @@ https://hitorigods-socket-io-next.onrender.com/
 
 【未反映】実行コマンド説明
 
-【未反映】.env.local説明
+【未反映】.env .env.local説明
 
 【未反映】Supabase CLI説明
 
@@ -105,7 +105,7 @@ https://hitorigods-socket-io-next.onrender.com/
    2. ⭕チャット一覧画面
    3. ⭕チャット作成されたら最新にスクロール移動
    4. ⭕サインインフォーム画面
-      1. ソーシャルログイン部分
+      1. ⭕ソーシャルログイン部分
    5. ⭕プロフィールフォーム画面
    6. TOPのルーム一覧
    7. フェッチローディング中のスピナー表示
@@ -116,7 +116,7 @@ https://hitorigods-socket-io-next.onrender.com/
    12. エラーのアラートをやめてステータス通知表示（エラー表示と合わせて）
 10. README
     1. 関連ファイルをフォルダにまとめる
-    2. ER図のキャプチャ画像を貼る
+    2. ⭕ER図のキャプチャ画像を貼る
     3. ❎参考URLをタブ分け
 11. 💀💀💀 **BugFix** 💀💀💀
     1. SupabaseのスキーマSQLをCIから復元しようとするとエンコードエラー
