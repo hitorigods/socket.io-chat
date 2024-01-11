@@ -23,7 +23,7 @@ export default function SnsButton({ type, label, onClick }: Props) {
 					${type === 'github' && 'bg-transparent text-white'}
 					${
 						type === 'discord' &&
-						'h-[30px] w-[30px] bg-[#5865F2] text-white [&>svg]:w-[20px]'
+						'h-[30px] w-[30px] bg-[#5865F2] text-white [&>svg]:!w-[20px]'
 					}
 				`}
 				>
