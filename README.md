@@ -11,7 +11,7 @@
 
 ## ▼ デプロイ
 
-https://hitorigods-socket-io-next.onrender.com/
+https://socket-io-chat-p8av.onrender.com/
 
 ---
 
@@ -27,13 +27,15 @@ https://hitorigods-socket-io-next.onrender.com/
 
 【未反映】.env .env.local説明
 
+※Supabaseローカル版のソーシャルログイン設定が.envが利用されるため.env.localが使えなくなる
+
 【未反映】Supabase CLI説明
 
 ---
 
 ## ▼ TODO
 
-⭕：完了　⚠：実装したが思うとこあり　❎：余裕がでたら実装するかも？
+⭕：完了 ⚠：実装したが思うとこあり ❎：余裕がでたら実装するかも？
 
 1. 開発環境
    1. ⭕create-next-app
@@ -130,17 +132,21 @@ https://hitorigods-socket-io-next.onrender.com/
   - DB更新と一緒にステート更新だけでなくソケットに更新内容を受信して再度ステート更新させてる
   - WebSocketを使わなくてもSupabaseのリアルタイム機能やreactQueryの`useQuery`オプションで定期フェッチさせる`refetchInterval`だけでも普通に作れそうだった
     - が、Supabaseクラウド版で開発していたが3日目で無料枠制限に到達…。ローカル版で開発必須
+    - サインイン中のユーザーとか活動中のルームとかのリアルタイム判定とかするならWebSocketの方がいい？
     - データベースの通信コスト考えると更新の度にフェッチさせるのは微妙
     - `refetchInterval`をやめてさせてソケット受信したときのみgetQueryを叩いくようにしてみたが、レンダリング結果が一回分ずれたので結局ステートで管理にした…
       - `useQuery`の再フェッチが`run dev`状態と`run build&&start`で挙動が違うのはなぜ？`useEffect`が二回実行されるから？
-    - サインイン中のユーザーとか活動中のルームとかのリアルタイム判定とかするならWebSocketの方がいい？
-- データの取得をクライアントで絞り混んでいるが本来はサーバーで取得できるようにすべき（Supabaseの`rpc`カスタムクエリ？）
+- データの取得をクライアントで絞り混んでいるが本来はサーバーで取得できるようにすべき
+  - Supabaseの`rpc`カスタムクエリ？
 - フォルダ構成やファイル名/関数の命名規則はずっと手探りだった…
   - 最初は`util/hooks/libs/stores/shemas`など細かく分けていたが、コロケーション的に機能依存を元に`future`フォルダにごそっとまとめた
   - じゃあ、`components`フォルダってなんなのさ…。`utils`フォルダも基準が曖昧…。
-    - とりあえずボタンとか汎用パーツとかを`components`、便利関数を`hooks`、全体を横断するライブラリ関係を`libs`として`utils`にぶっ込んだがモヤッとはしてる
+    - とりあえずボタンとか汎用パーツとかを`components`、ビジネスロジックを`features`、他は、便利関数を`hooks`、全体を横断するライブラリ関係を`libs`として`utils`にぶっ込んだがモヤッとはしてる
   - せっかくAppRouterなのでプライベートフォルダ構造でもよかったかも？
   - WebSocketのAPIルートがPageRouterでないと機能しないっぽい（要調査）ので`pages`フォルダを使っているが邪魔…
+- DBテーブルの命名規則はモデル名を`PascalCase`、違うテーブルに関連するものを`_`でつけるようにしたが、多分一般的ではない…？
+  - `created_at`は`createdAt`、`Users`の`id`に関連するなら`User_id`みたいな
+  - （`_`が単語区切りの意味だけだとなんかモヤッとしたんだヨ…）
 - 次回Next.jsでデータベース使うならT3スタックで始めたい
   - Prismaをうまく活用できてないのとtRPCも試したい
 
@@ -269,10 +275,6 @@ https://supabase.com/docs/guides/cli/managing-environments
 
 ## ▼ チートシート
 
-### ■ Zod
-
-https://zenn.dev/uttk/articles/bd264fa884e026
-
 ### ■ Tailwind CSS
 
 https://tailwindcomponents.com/cheatsheet/
@@ -280,6 +282,10 @@ https://tailwindcomponents.com/cheatsheet/
 https://tailwindcomponents.com/
 
 https://zenn.dev/ixkaito/articles/advanced-tailwindcss
+
+### ■ Zod
+
+https://zenn.dev/uttk/articles/bd264fa884e026
 
 ### ■ prisma チートシート (CLI)
 
