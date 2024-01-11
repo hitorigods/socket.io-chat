@@ -10,7 +10,7 @@ type ResponseWebSocket = NextApiResponse & {
 
 const corsMiddleware = cors();
 
-export default function SocketHandler(
+export default function SocketResponse(
 	req: NextApiRequest,
 	res: ResponseWebSocket
 ) {
@@ -34,8 +34,8 @@ export default function SocketHandler(
 			console.log(`client id: ${clientId} disconnected`);
 		});
 
-		socket.on('chat', (data) => {
-			io.emit('chat', data);
+		socket.on('socket:chat', (data) => {
+			io.emit('socket:chat', data);
 			console.log(`Received client id: ${clientId} chat: ${data}`);
 		});
 	});

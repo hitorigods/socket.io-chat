@@ -4,85 +4,21 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 /**
- * userテーブルの初期データを作成する
- */
-async function usersCreate() {
-	const users = [
-		{
-			email: 'test01@test.com',
-			password: bcrypt.hashSync('test01', 8),
-		},
-		{
-			email: 'test02@test.com',
-			password: bcrypt.hashSync('test02', 8),
-		},
-		{
-			email: 'test03@test.com',
-			password: bcrypt.hashSync('test03', 8),
-		},
-	];
-
-	const createdUsers = [];
-	for (const user of users) {
-		createdUsers.push(await prisma.user.create({ data: user }));
-	}
-	return createdUsers;
-}
-
-/**
  * chatテーブルの初期データを作成する
  */
-async function chatCreate(user_ids: string[]) {
+async function chatCreate() {
 	const chats = [
 		{
 			title: 'Test Chat 01',
 			published: true,
-			// user_id: user_ids[0],
 		},
 		{
 			title: 'Test Chat 02',
 			published: false,
-			// user_id: user_ids[0],
 		},
 		{
 			title: 'Test Chat 03',
 			published: false,
-			// user_id: user_ids[0],
-		},
-		{
-			title: 'Test Chat 04',
-			published: false,
-			// user_id: user_ids[0],
-		},
-		{
-			title: 'Test Chat 05',
-			published: false,
-			// user_id: user_ids[0],
-		},
-		{
-			title: 'Test Chat 06',
-			published: true,
-			// user_id: user_ids[1],
-		},
-		{
-			title: 'Test Chat 07',
-			published: true,
-			// user_id: user_ids[0],
-		},
-		{
-			title: 'Test Chat 08',
-			published: true,
-			// user_id: user_ids[1],
-		},
-		{
-			title: 'Test Chat 09',
-			published: true,
-			// user_id: user_ids[0],
-		},
-		{
-			title: 'Test Chat 10 Test Chat 10 Test Chat 10',
-			published: true,
-			// user_id: user_ids[1],
 		},
 	] as any[];
 
@@ -98,11 +34,7 @@ async function chatCreate(user_ids: string[]) {
  */
 async function main() {
 	await prisma.chat.deleteMany();
-	await prisma.user.deleteMany();
-
-	const users = await usersCreate();
-	const user_ids = users.map((user) => user.id);
-	await chatCreate(user_ids);
+	await chatCreate();
 }
 
 main()

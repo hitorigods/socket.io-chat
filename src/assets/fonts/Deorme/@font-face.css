@@ -1,0 +1,8 @@
+/* Webfont: Elderich-Regular */
+@font-face {
+	font-family: 'Deorme';
+	src: url('Deorme.woff') format('woff');
+	font-style: normal;
+	font-weight: normal;
+	text-rendering: optimizeLegibility;
+}
