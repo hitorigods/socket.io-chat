@@ -7,7 +7,7 @@ const nextConfig = {
 		isProd: String(isProd),
 	},
 	images: {
-		domains: ['127.0.0.1'],
+		domains: ['127.0.0.1', process.env.NEXT_PUBLIC_SITE_URL],
 	},
 	transpilePackages: ['jotai-devtools'],
 };

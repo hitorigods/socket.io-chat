@@ -116,15 +116,21 @@ https://socket-io-chat-p8av.onrender.com/
    9. レスポンシブ（モバイルファースト）
    10. 投稿が自分か他人か判定してレイアウト変える
    11. 編集・削除するときのアラートをやめてステータス通知表示（エラー表示と合わせて）
-   12. チャットの入力フォームが最初にフォーカスするように
-   13. エラーのアラートをやめてステータス通知表示（エラー表示と合わせて）
+   12. チャットの入力フォームを最初にフォーカスするように
+   13. 操作ステータス通知表示（エラー表示と合わせて）
 10. README
     1. 関連ファイルをフォルダにまとめる
     2. ⭕ER図のキャプチャ画像を貼る
     3. ❎参考URLをタブ分け
-11. 💀💀💀 **BugFix** 💀💀💀
-    1. SupabaseのスキーマSQLをCIから復元しようとするとエンコードエラー
-    2. リモートSupabaseにPush/Pullでエラー
+11. GitHub
+    1. プルリク→デプロイまでのフロー見直し
+    2. TODO追加機能をIssuesに移動
+12. 💀💀💀 **BugFix** 💀💀💀
+    1. **デプロイ先でソーシャルログインしたらリダイレクト先が127.0.0.1になる**
+    2. **デプロイ先でストレージにアップロードした画像がリンク切れになる**
+    3. nodeパッケージをアップグレードしてバージョン警告を解消
+    4. SupabaseのスキーマSQLをCIから復元しようとするとエンコードエラー
+    5. リモートSupabaseにPush/Pullでエラー
 
 ---
 
@@ -215,6 +221,10 @@ https://hassakulab.com/posts/npm-script-with-dotenv/
 
 https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intro
 
+### ■ Supabase `/supabase/config.toml`に使う環境変数は.envになる
+
+.env.local使えない？
+
 ### ■ Supabase ローカル版でOAuthのリダイレクト先がlocalhostではなく127.0.0.1になってしまう問題
 
 `/supabase/config.toml`のsite_urlをlocalhostにする
@@ -224,7 +234,7 @@ https://supabase.com/dashboard/project/zmjeowldxauntodensjj/api?page=tables-intr
 +site_url = "http://localhost:3000"
 ```
 
-### ■ Supabase ローカル版でOAuth設定に使う環境変数は.envになる（.env.local使えない？）
+※実際は環境変数使う
 
 ### ■ Prisma Migrateをdotenvを使い.env.localで実行
 
