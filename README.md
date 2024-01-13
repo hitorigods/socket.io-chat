@@ -21,21 +21,29 @@ https://socket-io-chat-p8av.onrender.com/
 
 ---
 
-## ▼ 開発・プレビュー手順
+## ▼ 開発環境でのプレビュー手順
 
-### ■ 実行コマンド説明
+### ■ 実行コマンド
 
 【未反映】
 
-### ■ .env .env.local説明
+### ■ .env .env.local
 
 【未反映】
 
 ※Supabaseローカル版のソーシャルログイン設定が.envが利用されるため.env.localが使えなくなる
 
-### ■ Supabase CLI説明
+### ■ Supabase CLI
 
 【未反映】
+
+---
+
+## ▼ 公開時設定
+
+### ■ Supabase クライアント
+
+公開クライアントでのOAuth設定では、「Authentication」→「Providers」の各サービスの有効化とAPI登録。リダイレクト先の「URL Configuration」も忘れずに
 
 ### ■ Renderデプロイ設定
 
@@ -146,7 +154,7 @@ $ yarn start
     1. プルリク→デプロイまでのフロー見直し
     2. TODO追加機能をIssuesに移動
 12. 💀💀💀 **BugFix** 💀💀💀
-    1. **デプロイ先でソーシャルログインしたらリダイレクト先が127.0.0.1になる**
+    1. ⭕デプロイ先でソーシャルログインしたらリダイレクト先がlocalhostになる → Supabaseクライアントの認証→URL設定だった
     2. **デプロイ先でストレージにアップロードした画像がリンク切れになる**
     3. nodeパッケージをアップグレードしてバージョン警告を解消
     4. SupabaseのスキーマSQLをCIから復元しようとするとエンコードエラー
