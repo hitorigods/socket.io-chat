@@ -23,13 +23,33 @@ https://socket-io-chat-p8av.onrender.com/
 
 ## ▼ 開発・プレビュー手順
 
-【未反映】実行コマンド説明
+### ■ 実行コマンド説明
 
-【未反映】.env .env.local説明
+【未反映】
+
+### ■ .env .env.local説明
+
+【未反映】
 
 ※Supabaseローカル版のソーシャルログイン設定が.envが利用されるため.env.localが使えなくなる
 
-【未反映】Supabase CLI説明
+### ■ Supabase CLI説明
+
+【未反映】
+
+### ■ Renderデプロイ設定
+
+Build Command
+
+```
+$ yarn && yarn build
+```
+
+Start Command
+
+```
+$ yarn start
+```
 
 ---
 
