@@ -24,7 +24,7 @@ export const useAuthOauthSignIn = () => {
 			const { error } = await supabase.auth.signInWithOAuth({
 				provider: provider,
 				options: {
-					redirectTo: process.env.NEXT_PUBLIC_SITE_URL,
+					// redirectTo: process.env.NEXT_PUBLIC_SITE_URL,
 				},
 			});
 			if (error) {
