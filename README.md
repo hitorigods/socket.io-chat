@@ -77,7 +77,7 @@ $ yarn start
       3. ❎supabase CLIでseedデータ作る（Snaplet）
 2. デプロイ
    1. ⭕Renderにデプロイ
-   2. .env内容を整理
+   2. 必要な.env内容を整理（NEXT_PUBLICのみのものなど）
    3. ❎サーバー監視サービスでRendar/Supabaseを落ちなくする
 3. フォルダ構成
    1. ⭕atomコンポーネントをコロケーション分離
