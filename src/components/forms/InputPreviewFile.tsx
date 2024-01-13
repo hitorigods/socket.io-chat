@@ -29,12 +29,18 @@ export default function InputPreviewFile({
 						className="flex h-[120px] w-[120px] cursor-pointer items-center justify-center rounded-full duration-350
 						[&>img]:h-full [&>img]:w-full [&>img]:rounded-full [&>img]:object-cover"
 					>
-						<Image
+						<img
+							src={imageUrl}
+							alt={fileName}
+							width="360"
+							height="360"
+						/>
+						{/* <Image
 							src={imageUrl}
 							alt={fileName}
 							width={360}
 							height={360}
-						/>
+						/> */}
 					</span>
 				)}
 				<span

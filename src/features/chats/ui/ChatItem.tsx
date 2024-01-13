@@ -56,13 +56,20 @@ export default function ChatItem({ item }: Props) {
 		<>
 			<li className="flex place-items-center gap-[15px]">
 				<div className="">
-					<Image
+					<img
 						src={item.Profiles?.avatarUrl || imgAvaterDefault}
 						alt={item.Profiles?.nickname || 'No Name'}
 						width={180}
 						height={180}
 						className="h-[60px] w-[60px] rounded-full object-cover"
 					/>
+					{/* <Image
+						src={item.Profiles?.avatarUrl || imgAvaterDefault}
+						alt={item.Profiles?.nickname || 'No Name'}
+						width={180}
+						height={180}
+						className="h-[60px] w-[60px] rounded-full object-cover"
+					/> */}
 				</div>
 				<div className="grid w-[650px] max-w-full gap-[10px] break-words rounded-full bg-dark/50 px-10 py-4 text-white shadow-md transition-all duration-350 ease-in-out">
 					<p className="text-base leading-normal [overflow-wrap:anywhere]">
