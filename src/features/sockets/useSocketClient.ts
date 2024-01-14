@@ -5,7 +5,11 @@ import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
 import { SocketChat, ChatSchema } from '@/features/chats/chatSchemas';
 import { socketAtom } from './socketAtoms';
 
-export const useSocketClient = () => {
+type Props = {
+	roomId: string;
+};
+
+export const useSocketClient = ({ roomId }: Props) => {
 	const [, setChatItemsState] = useAtom(chatItemsAtom);
 	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 	const [, setSocketState] = useAtom(socketAtom);
@@ -59,12 +63,13 @@ export const useSocketClient = () => {
 	};
 
 	const socketClientConnect = async () => {
-		await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`, {
+		await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets/${roomId}`, {
 			method: 'POST',
 		});
 
 		const socket = io({ autoConnect: false });
 		console.log('socket', socket);
+		socket.emit('join', roomId);
 		socket.connect();
 		socketInit(socket);
 		setSocketState(socket);

@@ -1,23 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
-import { useAtom } from 'jotai';
-
 import supabase from '@/utils/libs/supabase';
-import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
+
+type Props = {
+	roomId: string;
+};
 
 export const useChatQuery = () => {
-	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
-	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
-
-	const getFetchChats = async () => {
+	const getFetchChats = async ({ roomId }: Props) => {
 		const { data, error } = await supabase
 			.from('Chats')
 			.select(
-				`id, title, published, createdAt, updatedAt, User_id,
+				`id, title, published, createdAt, updatedAt, User_id, Room_id,
 				Profiles!inner (
 					nickname, avatarUrl
 				)
 			`
 			)
+			.eq('Room_id', roomId || '')
 			.order('createdAt', { ascending: true });
 		if (error) {
 			throw new Error(error.message);
@@ -27,25 +25,11 @@ export const useChatQuery = () => {
 			...item,
 			Profiles: item.Profiles || { nickname: '', avatarUrl: null },
 		}));
-		// setChatItemsState(newData);
 
 		return { data: newData, error };
 	};
 
-	// const queryFn = async () => {
-	// 	const { data } = await getFetchChats();
-	// 	return data;
-	// };
-
-	// const getQueryChats = useQuery({
-	// 	queryKey: ['query:chats'],
-	// 	queryFn,
-	// 	// staleTime: Infinity,
-	// 	// refetchInterval: 10000,
-	// });
-
 	return {
 		getFetchChats,
-		//  getQueryChats
 	};
 };

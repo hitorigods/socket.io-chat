@@ -8,7 +8,6 @@ import {
 	chatEditedAtom,
 	isChatEditedAtom,
 	chatSocketAtom,
-	isChatUpdatedAtom,
 } from '@/features/chats/chatAtom';
 import { socketAtom } from '@/features/sockets/socketAtoms';
 import { useChatMutate } from '@/features/chats/useChatMutate';
@@ -19,21 +18,16 @@ import InputButton from '@/components/buttons/InputButton';
 
 type Props = {
 	userState: UserSchema;
+	roomId: string;
 };
 
-export default function ChatForm({ userState }: Props) {
-	const {
-		createChatPost,
-		updateChatPost,
-		createChatMutation,
-		updateChatMutation,
-	} = useChatMutate();
+export default function ChatForm({ userState, roomId }: Props) {
+	const { createChatPost, updateChatPost } = useChatMutate();
 	const [socketState] = useAtom(socketAtom);
 	const [chatInputState, setChatInputState] = useAtom(chatInputAtom);
 	const [chatEditedState] = useAtom(chatEditedAtom);
 	const [isChatEditedState, setIsChatEditedState] = useAtom(isChatEditedAtom);
 	const [chatSocketState] = useAtom(chatSocketAtom);
-	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
 
 	const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event
@@ -43,7 +37,6 @@ export default function ChatForm({ userState }: Props) {
 
 		if (isChatEditedState) {
 			if (!chatEditedState) return;
-			// 編集中のチャットを取得しtitleを入力内容に置き換えデータベースを更新する
 			const { id, published } = chatEditedState;
 			const newData: UpdateChat = {
 				id,
@@ -52,7 +45,6 @@ export default function ChatForm({ userState }: Props) {
 				published,
 			};
 			await updateChatPost(newData);
-			// await updateChatMutation.mutate(newData);
 		} else {
 			const newData = {
 				title: chatInputState,
@@ -60,11 +52,10 @@ export default function ChatForm({ userState }: Props) {
 				published: true,
 				User_id: userState?.id || '',
 				Profile_id: userState?.Profile_id || '',
-				// TODO: チャットにルームIDを格納し設定する
-				Room_id: '00000000-0000-0000-0000-000000000000',
+				// チャットにルームIDを格納し設定する
+				Room_id: roomId || '',
 			};
 			await createChatPost(newData);
-			// await createChatMutation.mutate(newData);
 		}
 
 		setChatInputState('');

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
@@ -16,10 +16,6 @@ export default function RoomList() {
 
 	const { getQueryRooms } = useRoomQuery();
 	const { data, error, refetch, isLoading, isError } = getQueryRooms;
-
-	useEffect(() => {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	if (isLoading) {
 		return <div>Loading...</div>;

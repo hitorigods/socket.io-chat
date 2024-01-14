@@ -24,7 +24,7 @@ interface Props {
 }
 
 export default function ChatItem({ item }: Props) {
-	const { deleteChatPost, deleteChatMutation } = useChatMutate();
+	const { deleteChatPost } = useChatMutate();
 	const [userState] = useAtom(userAtom);
 	const [socketState] = useAtom(socketAtom);
 	const [, setChatInputState] = useAtom(chatInputAtom);

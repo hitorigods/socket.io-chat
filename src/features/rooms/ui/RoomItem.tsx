@@ -4,7 +4,6 @@ import React from 'react';
 import { useAtom } from 'jotai';
 
 import { useRoomEnter } from '@/features/rooms/useRoomEnter';
-import SubmitButton from '@/components/buttons/SubmitButton';
 import EditButtons from '@/components/buttons/EditButtons';
 import EditButton from '@/components/buttons/EditButton';
 import { userAtom } from '@/features/users/userAtom';
@@ -22,7 +21,7 @@ export default function RoomItem({ item }: Props) {
 	const [, setRoomInputState] = useAtom(roomInputAtom);
 	const [, setRoomEditedState] = useAtom(roomEditedAtom);
 	const [, setIsRoomEditedState] = useAtom(isRoomEditedAtom);
-	const { handleSubmit } = useRoomEnter();
+	const { handleSubmit } = useRoomEnter({ roomId: item.id });
 
 	const handleEdited: React.MouseEventHandler<HTMLButtonElement> = (event) => {
 		event.preventDefault();
@@ -41,7 +40,7 @@ export default function RoomItem({ item }: Props) {
 	};
 
 	return (
-		<>
+		<div className="flex justify-between border-b-[1px] border-solid border-b-white">
 			<button
 				className="grid h-[60px] w-full content-center justify-start transition-colors duration-350 ease-in-out"
 				type="button"
@@ -65,6 +64,6 @@ export default function RoomItem({ item }: Props) {
 					/>
 				</EditButtons>
 			)}
-		</>
+		</div>
 	);
 }

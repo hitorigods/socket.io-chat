@@ -10,7 +10,7 @@ export const chatSchema = z.object({
 	published: z.boolean().default(false),
 	User_id: z.string().uuid(),
 	// Profile_id: z.string().uuid(),
-	// Room_id: z.string().uuid(),
+	Room_id: z.string().uuid(),
 	Profiles: z.object({
 		nickname: z.string().max(20),
 		avatarUrl: z.string().url().nullable(),

@@ -11,20 +11,16 @@ import { useChatQuery } from '@/features/chats/useChatQuery';
 import ChatList from '@/features/chats/ui/ChatList';
 import ChatForm from '@/features/chats/ui/ChatForm';
 
-export default function ChatArea() {
+type Props = {
+	roomId: string;
+};
+
+export default function ChatArea({ roomId }: Props) {
 	const router = useRouter();
 	const [socketState] = useAtom(socketAtom);
 	const [userState] = useAtom(userAtom);
 	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
 	const [, setIsChatUpdatedState] = useAtom(isChatUpdatedAtom);
-	// const { getQueryChats } = useChatQuery();
-	// const {
-	// 	data: queryChats,
-	// 	error: chatsError,
-	// 	refetch: chatsRefetch,
-	// 	isLoading: isChatsLoading,
-	// 	isError: isChatsError,
-	// }: QueryProps = getQueryChats as unknown as QueryProps;
 	const { getFetchChats } = useChatQuery();
 
 	useEffect(() => {
@@ -33,7 +29,9 @@ export default function ChatArea() {
 			return;
 		}
 		(async () => {
-			const { data, error } = await getFetchChats();
+			const { data, error } = await getFetchChats({
+				roomId,
+			});
 			setChatItemsState(data);
 			setIsChatUpdatedState(true);
 		})();
@@ -43,13 +41,11 @@ export default function ChatArea() {
 	return (
 		<>
 			<div className="grid grid-rows-[1fr_auto] content-between gap-[theme(spacing.xl)]">
-				<ChatList
-					chatItems={chatItemsState}
-					// chatsError={chatsError}
-					// isChatsLoading={isChatsLoading}
-					// isChatsError={isChatsError}
+				<ChatList chatItems={chatItemsState} />
+				<ChatForm
+					userState={userState}
+					roomId={roomId}
 				/>
-				<ChatForm userState={userState} />
 			</div>
 		</>
 	);
