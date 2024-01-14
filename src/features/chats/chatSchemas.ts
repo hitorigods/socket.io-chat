@@ -1,9 +1,8 @@
 import { z } from 'zod';
-import { SetStateAction } from 'jotai';
 
 import { Database } from '@/utils/libs/supabase.types';
 
-const chatSchema = z.object({
+export const chatSchema = z.object({
 	id: z.string().uuid(),
 	createdAt: z.string().datetime(),
 	updatedAt: z.string().datetime(),

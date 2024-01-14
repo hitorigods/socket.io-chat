@@ -2,18 +2,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 
 import supabase from '@/utils/libs/supabase';
+import { userAtom } from '@/features/users/userAtom';
+import {
+	chatEditedAtom,
+	chatSocketAtom,
+	chatItemsAtom,
+} from '@/features/chats/chatAtom';
 import {
 	RowChat,
 	InsertChat,
 	UpdateChat,
 	ChatSchema,
 } from '@/features/chats/chatSchemas';
-import {
-	chatEditedAtom,
-	chatSocketAtom,
-	chatItemsAtom,
-} from '@/features/chats/chatAtom';
-import { userAtom } from '@/features/users/userAtom';
 
 export const useChatMutate = () => {
 	const queryClient = useQueryClient();
@@ -73,11 +73,11 @@ export const useChatMutate = () => {
 		};
 		setChatSocketState({ type: 'update', data: newData });
 		setChatItemsState((state) =>
-			state.map((item) => {
-				if (row.id === item.id) {
-					return { ...item, ...newData };
+			state.map((row) => {
+				if (row.id === row.id) {
+					return { ...row, ...newData };
 				} else {
-					return item;
+					return row;
 				}
 			})
 		);
@@ -98,7 +98,7 @@ export const useChatMutate = () => {
 			id,
 		};
 		setChatSocketState({ type: 'delete', data: newData });
-		setChatItemsState((state) => state.filter((item) => id !== item.id));
+		setChatItemsState((state) => state.filter((row) => id !== row.id));
 
 		alert('チャットを削除しました');
 		reset();
@@ -174,11 +174,11 @@ export const useChatMutate = () => {
 			};
 			setChatSocketState({ type: 'update', data: socketData });
 			setChatItemsState((state) =>
-				state.map((item) => {
-					if (variables.id === item.id) {
-						return { ...item, ...socketData };
+				state.map((row) => {
+					if (variables.id === row.id) {
+						return { ...row, ...socketData };
 					} else {
-						return item;
+						return row;
 					}
 				})
 			);
@@ -220,9 +220,7 @@ export const useChatMutate = () => {
 				id: variables,
 			};
 			setChatSocketState({ type: 'delete', data: socketData });
-			setChatItemsState((state) =>
-				state.filter((item) => variables !== item.id)
-			);
+			setChatItemsState((state) => state.filter((row) => variables !== row.id));
 
 			// クエリの更新
 			const previousData = queryClient.getQueryData<UpdateChat[]>([

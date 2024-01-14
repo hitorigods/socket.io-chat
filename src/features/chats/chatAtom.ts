@@ -13,7 +13,7 @@ chatSocketAtom.debugLabel = 'chatSocketAtom';
 export const chatInputAtom = atom('');
 chatInputAtom.debugLabel = 'chatInputAtom';
 
-// 編集チャットの内容
+// チャットの編集内容
 export const chatEditedAtom = atom({} as ChatSchema | null);
 chatEditedAtom.debugLabel = 'chatEditedAtom';
 

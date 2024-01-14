@@ -101,29 +101,35 @@ export interface Database {
       }
       Rooms: {
         Row: {
+          Chat_count: number
           createdAt: string
           id: string
           name: string
+          published: boolean
           updatedAt: string
           User_id: string
         }
         Insert: {
+          Chat_count?: number
           createdAt?: string
           id?: string
           name: string
+          published?: boolean
           updatedAt?: string
           User_id: string
         }
         Update: {
+          Chat_count?: number
           createdAt?: string
           id?: string
           name?: string
+          published?: boolean
           updatedAt?: string
           User_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "rooms_user_id_fkey"
+            foreignKeyName: "Rooms_User_id_fkey"
             columns: ["User_id"]
             isOneToOne: false
             referencedRelation: "users"

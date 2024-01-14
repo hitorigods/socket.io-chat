@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 
-import { useRoomEnter } from '@/features/rooms/useRoomEnter';
+import { useRoomEnter } from '../useRoomEnter';
 import InputButton from '@/components/buttons/InputButton';
 
-export default function SocketFrom() {
+export default function RoomFrom() {
 	const [roomName, setRoomName] = useState('');
 	const { handleSubmit } = useRoomEnter();
 
@@ -18,7 +18,7 @@ export default function SocketFrom() {
 		<>
 			<form onSubmit={handleSubmit}>
 				<InputButton
-					label="接続"
+					label="作成"
 					name="name"
 					placeholder="チャットルーム名を入力してください"
 					value={roomName}

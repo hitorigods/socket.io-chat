@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 
-import SocketFrom from '@/features/sockets/ui/SocketFrom';
-import RoomItem from '@/features/rooms/ui/RoomItem';
-import AuthSignOut from '@/features/auths/ui/AuthSignOut';
 import PageTitle from '@/components/layouts/PageTitle';
+import RoomList from '@/features/rooms/ui/RoomList';
+import RoomFrom from '@/features/rooms/ui/RoomFrom';
+import AuthSignOut from '@/features/auths/ui/AuthSignOut';
 
 export default function Home() {
 	return (
@@ -13,10 +13,8 @@ export default function Home() {
 				caption="トップ"
 			/>
 			<div className="grid justify-center gap-[40px] px-[20px]">
-				<div className="min-w-[400px] max-w-full">
-					<RoomItem />
-				</div>
-				{/* <SocketFrom /> */}
+				<RoomList />
+				<RoomFrom />
 				<AuthSignOut />
 			</div>
 		</Suspense>
