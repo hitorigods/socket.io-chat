@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '@/components/forms/Input';
+import InputSingle from '@/components/forms/InputSingle';
 import TextButton from '@/components/buttons/TextButton';
 
 type Props = {
@@ -20,7 +20,7 @@ export default function InputWithCancel({
 }: Props) {
 	return (
 		<>
-			<Input
+			<InputSingle
 				name={name}
 				type={type}
 				value={value}

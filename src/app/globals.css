@@ -35,6 +35,7 @@
 
 @layer utilities {
 	.scrollbar {
+		scrollbar-gutter: stable;
 	}
 	.scrollbar::-webkit-scrollbar {
 	}

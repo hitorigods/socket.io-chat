@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai';
+import { io } from 'socket.io-client';
 
 import { chatItemsAtom, isChatUpdatedAtom } from '@/features/chats/chatAtom';
 import { SocketChat, ChatSchema } from '@/features/chats/chatSchemas';
@@ -57,7 +58,12 @@ export const useSocketClient = () => {
 		});
 	};
 
-	const socketClientConnect = async (socket: any) => {
+	const socketClientConnect = async () => {
+		await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/sockets`, {
+			method: 'POST',
+		});
+
+		const socket = io({ autoConnect: false });
 		console.log('socket', socket);
 		socket.connect();
 		socketInit(socket);
