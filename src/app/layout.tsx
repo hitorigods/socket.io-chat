@@ -47,7 +47,7 @@ export default function RootLayout({
 						<AuthProvider>
 							<div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
 								<Header />
-								<main className="grid grid-rows-[auto_1fr] items-start justify-center gap-[theme(spacing.content)] px-[theme(spacing.default)] py-[theme(spacing.content)]">
+								<main className="grid grid-rows-[auto_1fr] items-start justify-center gap-[theme(spacing.content)] px-[theme(spacing.default)] pb-[theme(spacing.xl)] pt-[theme(spacing.content)]">
 									{children}
 								</main>
 								<Footer />

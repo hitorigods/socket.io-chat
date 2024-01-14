@@ -4,12 +4,14 @@ type Props = {
 	label: string;
 	isTypeButton?: boolean;
 	isDisabled?: boolean;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function SubmitButton({
 	label,
 	isTypeButton,
 	isDisabled,
+	onClick,
 }: Props) {
 	return (
 		<button
@@ -18,6 +20,7 @@ export default function SubmitButton({
 			disabled:cursor-not-allowed disabled:border-disabled_dark disabled:bg-disabled disabled:text-disabled_dark"
 			type={isTypeButton ? 'button' : 'submit'}
 			disabled={isDisabled}
+			onClick={onClick}
 		>
 			<span className="block indent-[1em] text-2xl font-bold tracking-[1em]">
 				{label}

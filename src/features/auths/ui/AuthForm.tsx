@@ -5,7 +5,7 @@ import { FaGoogle, FaGithub, FaDiscord } from 'react-icons/fa6';
 
 import FormArea from '@/components/forms/FormArea';
 import FormSubmit from '@/components/forms/FormSubmit';
-import Input from '@/components/forms/Input';
+import InputSingle from '@/components/forms/InputSingle';
 import FlexColumns from '@/components/columns/FlexColumns';
 import FlexColumn from '@/components/columns/FlexColumn';
 import TextButton from '@/components/buttons/TextButton';
@@ -49,7 +49,7 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 		<FormArea onSubmit={handleSubmit}>
 			<FlexColumns>
 				<FlexColumn title="メールアドレス">
-					<Input
+					<InputSingle
 						name="email"
 						value={authEmail}
 						placeholder="example@test.com"
@@ -58,7 +58,7 @@ export default function AuthForm({ isLoginMode, setIsLoginMode }: Props) {
 					/>
 				</FlexColumn>
 				<FlexColumn title="パスワード">
-					<Input
+					<InputSingle
 						name="password"
 						type="password"
 						value={authPassword}

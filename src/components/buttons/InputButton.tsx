@@ -7,6 +7,7 @@ type Props = {
 	value: string;
 	disabled?: boolean;
 	isReverse?: boolean;
+	ref?: React.RefObject<HTMLInputElement>;
 	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -20,23 +21,15 @@ export default function InputButton({
 	onChange,
 }: Props) {
 	const inputRef = useRef<HTMLInputElement>(null);
+
 	useEffect(() => {
-		if (value) {
-			inputRef?.current?.focus();
-		}
+		inputRef?.current?.focus();
 	}, [value]);
+
 	return (
-		<label
-			className={`flex w-[500px] overflow-hidden rounded bg-white shadow-md outline outline-4 outline-transparent transition-[outline] duration-350 ease-in-out
-				has-[input:focus+button:data-[is-reverse=true]]:outline-secondary
-				has-[input:focus]:outline-primary
-			`}
-		>
+		<label className={`relative flex w-full min-w-[500px] max-w-full`}>
 			<input
-				className="flex-1 bg-transparent p-3 tracking-widest text-dark outline-0 ring-0 transition-colors duration-350 ease-in-out
-					focus:bg-primary/0
-					focus-visible:border-0
-				"
+				className="h-[55px] flex-1 rounded-md border-[1px] border-solid border-white  bg-white/5 pl-[theme(spacing.sm)] pr-[calc(100px_+_theme(spacing.sm))] tracking-widest text-white transition-colors duration-350 ease-in-out"
 				name={name}
 				value={value}
 				placeholder={placeholder}
@@ -45,14 +38,12 @@ export default function InputButton({
 				onChange={onChange}
 			/>
 			<button
-				className="w-[100px] bg-primary py-3 indent-[.5em] text-lg font-bold tracking-[.5em] text-dark outline-transparent transition-colors duration-350 ease-in-out
-					hover:bg-dark hover:text-white
-					focus-visible:border-0
-					disabled:cursor-not-allowed disabled:bg-disabled disabled:text-disabled_dark
-					data-[is-reverse=true]:bg-dark data-[is-reverse=true]:text-white
-					data-[is-reverse=true]:hover:bg-primary data-[is-reverse=true]:hover:text-dark
-					data-[is-reverse=true]:disabled:bg-disabled data-[is-reverse=true]:disabled:text-disabled_dark
-				"
+				className="absolute inset-y-0 right-0 w-[100px]  rounded-r border-[1px] border-solid border-primary bg-primary py-[theme(spacing.xs)] indent-[.5em] text-lg font-bold tracking-[.5em] text-dark transition-colors duration-350 ease-in-out
+					hover:bg-dark hover:text-primary
+					disabled:cursor-not-allowed disabled:border-disabled disabled:bg-disabled disabled:text-disabled_dark data-[is-reverse=true]:bg-dark
+					data-[is-reverse=true]:text-primary data-[is-reverse=true]:hover:bg-primary
+					data-[is-reverse=true]:hover:text-dark data-[is-reverse=true]:disabled:bg-disabled
+					data-[is-reverse=true]:disabled:text-disabled_dark"
 				disabled={disabled}
 				data-is-reverse={isReverse}
 			>

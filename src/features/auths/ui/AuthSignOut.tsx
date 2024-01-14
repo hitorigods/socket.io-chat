@@ -1,13 +1,15 @@
 'use client';
 
 import { useAuthSignOut } from '@/features/auths/useAuthSignOut';
+import TextButton from '@/components/buttons/TextButton';
 
 export default function AuthSignOut() {
 	const { handleSignOut } = useAuthSignOut();
 
 	return (
-		<>
-			<button onClick={handleSignOut}>サインアウト</button>
-		</>
+		<TextButton
+			label="サインアウト"
+			onClick={handleSignOut}
+		/>
 	);
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAtom } from 'jotai';
 
 import {
@@ -14,6 +14,7 @@ import { socketAtom } from '@/features/sockets/socketAtoms';
 import { useChatMutate } from '@/features/chats/useChatMutate';
 import { UpdateChat } from '@/features/chats/chatSchemas';
 import { UserSchema } from '@/features/users/userSchemas';
+import FormArea from '@/components/forms/FormArea';
 import InputButton from '@/components/buttons/InputButton';
 
 type Props = {
@@ -68,18 +69,18 @@ export default function ChatForm({ userState }: Props) {
 		setIsChatEditedState(false);
 	};
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		socketState?.emit('socket:chat', chatSocketState);
 		console.log('send client chat:', chatSocketState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chatSocketState]);
 
 	return (
-		<section className="">
-			<form
-				onSubmit={handleSubmit}
-				className="grid place-items-center"
-			>
+		<FormArea
+			layoutType={'narrow'}
+			onSubmit={handleSubmit}
+		>
+			<div className="grid px-[50px]">
 				<InputButton
 					label={isChatEditedState ? '更新' : '投稿'}
 					name="name"
@@ -89,7 +90,7 @@ export default function ChatForm({ userState }: Props) {
 					isReverse={isChatEditedState}
 					onChange={(event) => setChatInputState(event.target.value)}
 				/>
-			</form>
-		</section>
+			</div>
+		</FormArea>
 	);
 }
