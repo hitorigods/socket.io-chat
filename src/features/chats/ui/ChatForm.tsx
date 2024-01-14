@@ -45,24 +45,26 @@ export default function ChatForm({ userState }: Props) {
 			if (!chatEditedState) return;
 			// 編集中のチャットを取得しtitleを入力内容に置き換えデータベースを更新する
 			const { id, published } = chatEditedState;
-			const updateChat: UpdateChat = {
+			const newData: UpdateChat = {
 				id,
 				title: chatInputState,
+				// TODO: 非公開設定を追加する
 				published,
 			};
-			await updateChatPost(updateChat);
-			// await updateChatMutation.mutate(updateChat);
+			await updateChatPost(newData);
+			// await updateChatMutation.mutate(newData);
 		} else {
-			const updateChat = {
+			const newData = {
 				title: chatInputState,
+				// TODO: 非公開設定を追加する
 				published: true,
 				User_id: userState?.id || '',
 				Profile_id: userState?.Profile_id || '',
 				// TODO: チャットにルームIDを格納し設定する
 				Room_id: '00000000-0000-0000-0000-000000000000',
 			};
-			await createChatPost(updateChat);
-			// await createChatMutation.mutate(updateChat);
+			await createChatPost(newData);
+			// await createChatMutation.mutate(newData);
 		}
 
 		setChatInputState('');

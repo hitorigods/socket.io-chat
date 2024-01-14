@@ -32,7 +32,7 @@ export const useRoomQuery = () => {
 	const getQueryRooms = useQuery({
 		queryKey: ['query:rooms'],
 		queryFn,
-		// staleTime: Infinity,
+		staleTime: Infinity,
 		// refetchInterval: 10000,
 	});
 

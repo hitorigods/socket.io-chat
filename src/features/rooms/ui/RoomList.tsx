@@ -30,8 +30,14 @@ export default function RoomList() {
 	}
 
 	return (
-		<div className="min-w-[400px] max-w-full">
-			{data && data.map((item: RoomSchema) => <RoomItem key={item.id} />)}
+		<div className="w-[800px] max-w-full">
+			{data &&
+				data.map((item: RoomSchema) => (
+					<RoomItem
+						key={item.id}
+						item={item}
+					/>
+				))}
 		</div>
 	);
 }

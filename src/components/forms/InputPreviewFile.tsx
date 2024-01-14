@@ -35,12 +35,14 @@ export default function InputPreviewFile({
 							width="360"
 							height="360"
 						/>
-						{/* <Image
+						{/* Renderでメモリ不足になるのでImageコンポーネントは使わない
+						<Image
 							src={imageUrl}
 							alt={fileName}
 							width={360}
 							height={360}
-						/> */}
+						/>
+						*/}
 					</span>
 				)}
 				<span
