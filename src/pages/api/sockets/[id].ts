@@ -29,17 +29,21 @@ export default function SocketResponse(
 	});
 
 	io.on('connection', (socket) => {
+		console.log('roomId', roomId);
+
 		socket.join(roomId);
 		const clientId = socket.id;
-		console.log(`client id: ${clientId} connected`);
+		console.log(`client id/roomId: ${clientId}/${roomId} connected`);
 
 		socket.on('disconnect', () => {
-			console.log(`client id: ${clientId} disconnected`);
+			console.log(`client id: ${clientId}/${roomId}  disconnected`);
 		});
 
-		socket.on('socket:chat', (data) => {
-			io.to(roomId).emit('socket:chat', data);
-			console.log(`Received client id: ${clientId} chat: ${data}`);
+		socket.on('socket:chat', (payload) => {
+			io.to(roomId).emit('socket:chat', payload);
+			console.log(
+				`Received client id: ${clientId} roomId: ${roomId} chat: ${payload}`
+			);
 		});
 	});
 

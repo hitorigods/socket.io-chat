@@ -68,8 +68,6 @@ export const useSocketClient = ({ roomId }: Props) => {
 		});
 
 		const socket = io({ autoConnect: false });
-		console.log('socket', socket);
-		socket.emit('join', roomId);
 		socket.connect();
 		socketInit(socket);
 		setSocketState(socket);

@@ -11,6 +11,7 @@ import {
 	chatEditedAtom,
 	isChatEditedAtom,
 	chatItemsAtom,
+	chatSocketAtom,
 } from '@/features/chats/chatAtom';
 
 type Props = {
@@ -24,7 +25,8 @@ export function AuthProvider(props: Props) {
 	const [, setUserState] = useAtom(userAtom);
 	const [, setChatEditedState] = useAtom(chatEditedAtom);
 	const [, setIsChatEditedState] = useAtom(isChatEditedAtom);
-	const [chatItemsState, setChatItemsState] = useAtom(chatItemsAtom);
+	const [, setChatItemsState] = useAtom(chatItemsAtom);
+	const [, setChatSocketState] = useAtom(chatSocketAtom);
 
 	const resetStatus = () => {
 		if (/^\/rooms/.test(String(pathname)) || !socketState) return;
@@ -33,6 +35,7 @@ export function AuthProvider(props: Props) {
 		setChatItemsState([]);
 		setChatEditedState(null);
 		setIsChatEditedState(false);
+		setChatSocketState(null);
 	};
 
 	const sessionValidate = useCallback(async () => {

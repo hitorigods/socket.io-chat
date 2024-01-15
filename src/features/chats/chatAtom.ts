@@ -6,7 +6,7 @@ export const chatItemsAtom = atom([] as ChatSchema[]);
 chatItemsAtom.debugLabel = 'chatItemsAtom';
 
 // ソケットに送るチャットデータ
-export const chatSocketAtom = atom({} as SocketChat | null);
+export const chatSocketAtom = atom(null as SocketChat | null);
 chatSocketAtom.debugLabel = 'chatSocketAtom';
 
 // チャットの入力内容
@@ -14,7 +14,7 @@ export const chatInputAtom = atom('');
 chatInputAtom.debugLabel = 'chatInputAtom';
 
 // チャットの編集内容
-export const chatEditedAtom = atom({} as ChatSchema | null);
+export const chatEditedAtom = atom(null as ChatSchema | null);
 chatEditedAtom.debugLabel = 'chatEditedAtom';
 
 // チャットが編集中か判定
