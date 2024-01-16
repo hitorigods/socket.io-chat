@@ -30,7 +30,7 @@ export function AuthProvider(props: Props) {
 
 	const resetStatus = () => {
 		if (/^\/rooms/.test(String(pathname)) || !socketState) return;
-		socketState?.disconnect();
+		socketState.disconnect();
 		setSocketState(null as any);
 		setChatItemsState([]);
 		setChatEditedState(null);

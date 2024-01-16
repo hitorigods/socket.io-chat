@@ -64,7 +64,7 @@ export default function ChatForm({ userState, roomId }: Props) {
 
 	useEffect(() => {
 		if (!chatSocketState) return;
-		socketState.emit('socket:chat', chatSocketState);
+		socketState?.emit('socket:chat', chatSocketState);
 		console.log('send client chat:', chatSocketState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [chatSocketState]);

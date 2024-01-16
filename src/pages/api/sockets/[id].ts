@@ -29,9 +29,6 @@ export default function SocketResponse(
 	});
 
 	io.on('connection', (socket) => {
-		console.log('roomId', roomId);
-
-		socket.join(roomId);
 		const clientId = socket.id;
 		console.log(`client id/roomId: ${clientId}/${roomId} connected`);
 
